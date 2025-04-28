@@ -44,6 +44,17 @@ ul {
     gap: 20px;
 }
 
+.header-link {
+    color: #333;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+
+.header-link:hover {
+    color: #ff6b6b;
+}
+
 .header-links a:hover {
     color: #ff6b6b;
 }
