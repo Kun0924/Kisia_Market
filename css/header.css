@@ -1,0 +1,119 @@
+/* Header styles */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 43px;
+    color: #006400;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.user-actions a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.cart {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.cart a:hover {
+    background-color: #f8f9fa;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #006400;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Navigation */
+nav {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+}
+
+.main-menu {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 30px;
+}
+
+.main-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.main-menu li a:hover {
+    color: #007bff;
+}
+
+.main-menu li a.active {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .main-menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+} 

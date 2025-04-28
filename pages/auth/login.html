@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - Kisia Shop</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="../../index.html">Kisia Shop</a>
+                </div>
+                <div class="header-right">
+                    <div class="user-actions">
+                        <a href="login.html" class="login active">로그인</a>
+                        <a href="register.html" class="register">회원가입</a>
+                    </div>
+                    <div class="cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="container">
+            <div class="auth-box">
+                <h1>로그인</h1>
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">비밀번호</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" name="remember"> 로그인 상태 유지
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">로그인</button>
+                </form>
+                <div class="auth-links">
+                    <a href="find-password.html" class="forgot-password">비밀번호 찾기</a>
+                    <p>아직 계정이 없으신가요? <a href="register.html">회원가입</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>고객센터</h3>
+                    <p>전화: 123-456-7890</p>
+                    <p>이메일: support@kisiashop.com</p>
+                    <p>운영시간: 평일 09:00 - 18:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>회사 정보</h3>
+                    <p>주소: 서울특별시 강남구</p>
+                    <p>사업자등록번호: 123-45-67890</p>
+                    <p>대표: 홍길동</p>
+                </div>
+                <div class="footer-section">
+                    <h3>소셜 미디어</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Kisia Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
