@@ -35,9 +35,11 @@ header {
 }
 
 .logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 43px;
+    color: #006400;
 }
 
 .header-right {
@@ -62,20 +64,33 @@ header {
     cursor: pointer;
 }
 
-.cart i {
-    font-size: 24px;
+.cart a {
     color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.cart a:hover {
+    background-color: #f8f9fa;
 }
 
 .cart-count {
     position: absolute;
     top: -8px;
     right: -8px;
-    background-color: #ff6b6b;
+    background-color: #006400;
     color: white;
     border-radius: 50%;
-    padding: 2px 6px;
+    width: 18px;
+    height: 18px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Navigation */

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>문의하기 - Kisia Shop</title>
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/category.css">
+    <link rel="stylesheet" href="../../css/mainmenu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -21,10 +21,8 @@
                         <a href="../../pages/auth/register.html" class="register">회원가입</a>
                     </div>
                     <div class="cart">
-                        <a href="../../pages/cart/index.html">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-count">0</span>
-                        </a>
+                        <a href="../../pages/cart/cart.html">장바구니</a>
+                        <span class="cart-count">2</span>
                     </div>
                 </div>
             </div>
@@ -41,41 +39,47 @@
 
     <main>
         <div class="container">
-            <h1>문의하기</h1>
             <div class="inquiry-write-container">
+                <h1>문의하기</h1>
                 <form class="inquiry-form">
                     <div class="form-group">
                         <label for="title">제목</label>
-                        <input type="text" id="title" name="title" required placeholder="문의 제목을 입력해주세요">
+                        <input type="text" id="title" placeholder="제목을 입력하세요" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="category">문의 유형</label>
-                        <select id="category" name="category" required>
-                            <option value="">문의 유형을 선택해주세요</option>
+                        <select id="category" required>
+                            <option value="">문의 유형을 선택하세요</option>
                             <option value="product">상품 문의</option>
                             <option value="delivery">배송 문의</option>
-                            <option value="exchange">교환/반품 문의</option>
                             <option value="payment">결제 문의</option>
-                            <option value="other">기타 문의</option>
+                            <option value="return">반품/교환 문의</option>
+                            <option value="etc">기타 문의</option>
                         </select>
                     </div>
+
                     <div class="form-group">
                         <label for="content">내용</label>
-                        <textarea id="content" name="content" required placeholder="문의 내용을 상세히 입력해주세요"></textarea>
+                        <textarea id="content" placeholder="문의 내용을 입력하세요" required></textarea>
                     </div>
+
                     <div class="form-group">
                         <label for="file">파일 첨부</label>
-                        <input type="file" id="file" name="file">
+                        <input type="file" id="file">
                         <p class="file-info">최대 5MB까지 첨부 가능합니다.</p>
                     </div>
-                    <div class="form-options">
-                        <label>
-                            <input type="checkbox" name="private" required>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="private" name="private">
                             <span>비밀글 설정</span>
                         </label>
+                        <p class="checkbox-info">비밀글 설정 시 작성자와 관리자만 볼 수 있습니다.</p>
                     </div>
+
                     <div class="form-buttons">
-                        <button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='inquiry.html'">취소</button>
                         <button type="submit" class="btn btn-primary">등록</button>
                     </div>
                 </form>
