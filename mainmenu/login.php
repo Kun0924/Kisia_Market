@@ -1,3 +1,8 @@
+<?php
+// 세션 시작 (로그인 처리를 나중에 추가할 때 필요함)
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,54 +10,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 - KISIA SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="common/load-components.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-top">
-            <div class="container">
-                <div class="header-links">
-                    <a href="signup.html">회원가입</a>
-                    <a href="login.html">로그인</a>
-                    <a href="order.html">주문/배송</a>
-                    <a href="customer-service.html">고객센터</a>
-                </div>
-            </div>
-        </div>
-        <div class="header-main">
-            <div class="container">
-                <div class="logo">
-                    <h1><a href="../index.html">KISIA SHOP</a></h1>
-                </div>
-                <div class="search-box">
-                    <input type="text" placeholder="검색어를 입력하세요">
-                    <button><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- Main Menu -->
-    <nav class="main-menu">
-        <div class="container">
-            <ul class="menu-list">
-                <li><a href="all.html">전체상품</a></li>
-                <li><a href="best.html">베스트</a></li>
-                <li><a href="newproduct.html">신상품</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Header -->
+    <?php include 'common/header.php'; ?>
 
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
             <div class="login-container">
                 <h2 class="page-title">로그인</h2>
-                <form class="login-form">
+                <form class="login-form" method="POST" action="login_process.php">
                     <div class="form-group">
                         <label for="username">아이디</label>
                         <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>
@@ -67,9 +39,9 @@
                             <span>아이디 저장</span>
                         </label>
                         <div class="find-links">
-                            <a href="find-id.html">아이디 찾기</a>
+                            <a href="find-id.php">아이디 찾기</a>
                             <span class="divider">|</span>
-                            <a href="find-password.html">비밀번호 찾기</a>
+                            <a href="find-password.php">비밀번호 찾기</a>
                         </div>
                     </div>
                     <div class="form-actions">
@@ -77,10 +49,11 @@
                     </div>
                 </form>
                 <div class="signup-link">
-                    <p>아직 회원이 아니신가요? <a href="signup.html">회원가입</a></p>
+                    <p>아직 회원이 아니신가요? <a href="signup.php">회원가입</a></p>
                 </div>
             </div>
         </div>
     </main>
+
 </body>
-</html> 
+</html>

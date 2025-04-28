@@ -5,47 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - KISIA SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/signup.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/signup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="common/load-components.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-top">
-            <div class="container">
-                <div class="header-links">
-                    <a href="signup.html">회원가입</a>
-                    <a href="login.html">로그인</a>
-                    <a href="order.html">주문/배송</a>
-                    <a href="customer-service.html">고객센터</a>
-                </div>
-            </div>
-        </div>
-        <div class="header-main">
-            <div class="container">
-                <div class="logo">
-                    <h1><a href="../index.html">KISIA SHOP</a></h1>
-                </div>
-                <div class="search-box">
-                    <input type="text" placeholder="검색어를 입력하세요">
-                    <button><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Menu -->
-    <nav class="main-menu">
-        <div class="container">
-            <ul class="menu-list">
-                <li><a href="all.html">전체상품</a></li>
-                <li><a href="best.html">베스트</a></li>
-                <li><a href="newproduct.html">신상품</a></li>
-            </ul>
-        </div>
-    </nav>
+    <?php include 'common/header.php'; ?>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -109,5 +74,6 @@
             </div>
         </div>
     </main>
+
 </body>
 </html> 
