@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 상세 - KISIA SHOP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/customer-service.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .detail-container { max-width: 800px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 40px 30px; }
+        .detail-header { margin-bottom: 30px; }
+        .detail-title { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+        .detail-meta { color: #666; font-size: 14px; }
+        .detail-content { padding: 20px; background: #f8f9fa; border-radius: 8px; margin-bottom: 30px; line-height: 1.6; }
+        .detail-actions { display: flex; justify-content: flex-end; gap: 10px; }
+        .detail-actions button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 15px; }
+        .btn-edit { background: #ffb300; color: #fff; }
+        .btn-delete { background: #ff4444; color: #fff; }
+        .btn-list { background: #1e90ff; color: #fff; }
+        .file-attachments { margin-top: 20px; padding: 15px; background: #fff; border-radius: 4px; }
+        .file-attachments h4 { margin-bottom: 10px; color: #333; }
+        .file-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .file-icon { color: #1e90ff; }
+        .file-name { flex: 1; }
+        .file-size { color: #666; font-size: 14px; }
+        .secret-badge { display: inline-block; padding: 4px 8px; background: #f0f0f0; color: #666; border-radius: 4px; font-size: 14px; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-links">
+                    <a href="signup.html">회원가입</a>
+                    <a href="login.html">로그인</a>
+                    <a href="order.html">주문/배송</a>
+                    <a href="customer-service.html">고객센터</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo">
+                    <h1><a href="../index.html">KISIA SHOP</a></h1>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="검색어를 입력하세요">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Menu -->
+    <nav class="main-menu">
+        <div class="container">
+            <ul class="menu-list">
+                <li><a href="all.html">전체상품</a></li>
+                <li><a href="best.html">베스트</a></li>
+                <li><a href="newproduct.html">신상품</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="detail-container">
+            <div class="detail-header">
+                <h2 class="detail-title" id="postTitle"></h2>
+                <div class="detail-meta" id="postMeta"></div>
+            </div>
+            <div class="detail-content" id="postContent"></div>
+            <div class="file-attachments" id="fileAttachments">
+                <h4>첨부파일</h4>
+                <div id="fileList"></div>
+            </div>
+            <div class="detail-actions">
+                <button class="btn-edit" onclick="editPost()">수정</button>
+                <button class="btn-delete" onclick="deletePost()">삭제</button>
+                <button class="btn-list" onclick="goToList()">목록</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="about.html">회사소개</a>
+                    <a href="terms.html">이용약관</a>
+                    <a href="privacy.html">개인정보처리방침</a>
+                    <a href="contact.html">고객센터</a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="company-info">
+                    <p>상호명: KISIA SHOP</p>
+                    <p>대표: 홍길동</p>
+                    <p>사업자등록번호: 123-45-67890</p>
+                    <p>주소: 서울시 강남구 테헤란로 123</p>
+                    <p>전화: 02-123-4567</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // URL에서 게시글 ID 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        // 게시글 데이터 가져오기
+        function getPostById(id) {
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            return posts.find(post => post.id === parseInt(id));
+        }
+
+        // 파일 크기 포맷팅
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 게시글 상세 정보 표시
+        function showPostDetail() {
+            const post = getPostById(postId);
+            if (!post) {
+                alert('게시글을 찾을 수 없습니다.');
+                window.location.href = 'customer-service.html';
+                return;
+            }
+
+            document.getElementById('postTitle').textContent = post.title;
+            if (post.isSecret) {
+                const secretBadge = document.createElement('span');
+                secretBadge.className = 'secret-badge';
+                secretBadge.textContent = '비밀글';
+                document.getElementById('postTitle').appendChild(secretBadge);
+            }
+            document.getElementById('postMeta').textContent = `번호: ${post.number} | 작성자: ${post.author} | 작성일: ${post.date}`;
+            document.getElementById('postContent').textContent = post.content;
+
+            // 첨부파일 표시
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            if (post.files && post.files.length > 0) {
+                post.files.forEach(file => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <i class="fas fa-paperclip file-icon"></i>
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-size">${formatFileSize(file.size)}</span>
+                    `;
+                    fileList.appendChild(fileItem);
+                });
+            } else {
+                fileList.innerHTML = '<p>첨부된 파일이 없습니다.</p>';
+            }
+        }
+
+        // 게시글 수정
+        function editPost() {
+            window.location.href = `post-edit.html?id=${postId}`;
+        }
+
+        // 게시글 삭제
+        function deletePost() {
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            const updatedPosts = posts.filter(post => post.id !== parseInt(postId));
+            localStorage.setItem('posts', JSON.stringify(updatedPosts));
+
+            alert('게시글이 삭제되었습니다.');
+            window.location.href = 'customer-service.html';
+        }
+
+        // 목록으로 이동
+        function goToList() {
+            window.location.href = 'customer-service.html';
+        }
+
+        // 페이지 로드 시 게시글 상세 정보 표시
+        window.onload = showPostDetail;
+    </script>
+</body>
+</html> 
