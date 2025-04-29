@@ -104,7 +104,7 @@
         </section>
     </main>
     <?php
-    mysqli_close($conn); // 연결 종료
+    //mysqli_close($conn); // 연결 종료
     ?>
 
     <?php include 'mainmenu/common/footer.php'; ?>
