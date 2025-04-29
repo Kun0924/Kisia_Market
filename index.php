@@ -26,59 +26,82 @@
             </div>
         </section>
 
-        <!-- 베스트 상품 -->
-        <section class="best-products">
+        
+        <!-- 신상품 섹션 -->
+        <section class="new-products-section">
             <div class="container">
-                <h2 class="section-title">베스트 상품</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <img src="images/product1.jpg" alt="상품1">
-                        <h3>상품명 1</h3>
-                        <p class="price">10,000원</p>
+                <div class="section-header">
+                    <div class="section-title-container">
+                        <h2 class="section-title">신상품</h2>
+                        <div class="view-more">
+                            <a href="mainmenu/newproduct.php" class="more">더 보기</a>
+                        </div>
                     </div>
-                    <div class="product-card">
-                        <img src="images/product2.jpg" alt="상품2">
-                        <h3>상품명 2</h3>
-                        <p class="price">20,000원</p>
-                    </div>
-                    <div class="product-card">
-                        <img src="images/product3.jpg" alt="상품3">
-                        <h3>상품명 3</h3>
-                        <p class="price">30,000원</p>
-                    </div>
-                </div>
-                <div class="view-more">
-                    <a href="mainmenu/best.php" class="btn-view-more">더보기</a>
+                    <p class="section-description">새롭게 입고된 상품을 만나보세요</p>
                 </div>
             </div>
         </section>
 
-        <!-- 신상품 -->
-        <section class="new-products">
+        <!-- 키보드 섹션 -->
+        <section class="keyboard-section">
             <div class="container">
-                <h2 class="section-title">신상품</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <img src="images/product4.jpg" alt="상품4">
-                        <h3>상품명 4</h3>
-                        <p class="price">40,000원</p>
+                <div class="section-header">
+                    <div class="section-title-container">
+                        <h2 class="section-title">키보드</h2>
+                        <div class="view-more">
+                            <a href="mainmenu/keyboard.php" class="more">더 보기</a>
+                        </div>
                     </div>
-                    <div class="product-card">
-                        <img src="images/product5.jpg" alt="상품5">
-                        <h3>상품명 5</h3>
-                        <p class="price">50,000원</p>
-                    </div>
-                    <div class="product-card">
-                        <img src="images/product6.jpg" alt="상품6">
-                        <h3>상품명 6</h3>
-                        <p class="price">60,000원</p>
-                    </div>
-                </div>
-                <div class="view-more">
-                    <a href="mainmenu/newproduct.php" class="btn-view-more">더보기</a>
+                    <p class="section-description">최고의 키보드를 만나보세요</p>
                 </div>
             </div>
         </section>
+
+        <!-- 마우스 섹션 -->
+        <section class="mouse-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-container">
+                        <h2 class="section-title">마우스</h2>
+                        <div class="view-more">
+                            <a href="mainmenu/mouse.php" class="more">더 보기</a>
+                        </div>
+                    </div>
+                    <p class="section-description">최고의 마우스를 만나보세요</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 마우스 패드 섹션 -->
+        <section class="mousepad-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-container">
+                        <h2 class="section-title">마우스 패드</h2>
+                        <div class="view-more">
+                            <a href="mainmenu/mousepad.php" class="more">더 보기</a>
+                        </div>
+                    </div>
+                    <p class="section-description">최고의 마우스 패드를 만나보세요</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 악세서리 섹션 -->
+        <section class="accessories-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-container">
+                        <h2 class="section-title">악세서리</h2>
+                        <div class="view-more">
+                            <a href="mainmenu/accessory.php" class="more">더 보기</a>
+                        </div>
+                    </div>
+                    <p class="section-description">최고의 악세서리를 만나보세요</p>
+                </div>
+            </div>
+        </section>
+
 
         <!-- 이벤트 배너 -->
         <section class="event-banner">

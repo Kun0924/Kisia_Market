@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KISIA SHOP - 전체상품</title>
+    <title>KISIA SHOP - 마우스</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/all.css">
@@ -15,7 +15,7 @@
     <main class="main-content">
         <div class="container">
             <div class="category-header">
-                <h1>전체상품</h1>
+                <h1>마우스</h1>
             </div>
             
             <div class="filter-section">
@@ -32,17 +32,17 @@
                     <label>가격대</label>
                     <select>
                         <option value="all">전체</option>
-                        <option value="0-50000">5만원 이하</option>
-                        <option value="50000-100000">5만원-10만원</option>
-                        <option value="100000-150000">10만원-15만원</option>
-                        <option value="150000-200000">15만원-20만원</option>
-                        <option value="200000-up">20만원 이상</option>
+                        <option value="0-30000">3만원 이하</option>
+                        <option value="30000-50000">3만원-5만원</option>
+                        <option value="50000-80000">5만원-8만원</option>
+                        <option value="80000-100000">8만원-10만원</option>
+                        <option value="100000-up">10만원 이상</option>
                     </select>
                 </div>
             </div>
 
             <div class="content-section">
-                <p>여기는 전체상품 페이지입니다. 다양한 제품을 구매할 수 있습니다.</p>
+                <p>여기는 마우스 페이지입니다. 다양한 마우스 제품을 구매할 수 있습니다.</p>
             </div>
 
             <div class="pagination">

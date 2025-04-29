@@ -14,12 +14,14 @@
     margin: 0;
 }
 
+/* 로그인 페이지 우측 상단 로고 이슈
 .logo a {
     color: #333;
     text-decoration: none;
     font-size: 1.8rem;
     font-weight: 700;
 }
+*/
 
 .logo a:hover {
     color: #555;
@@ -36,7 +38,7 @@
 
 .page-title {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem;D
     color: #333;
 }
 

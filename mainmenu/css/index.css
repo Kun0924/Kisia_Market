@@ -3,26 +3,28 @@
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner.jpg');
     background-size: cover;
     background-position: center;
-    color: white;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 100px 0;
-    margin-bottom: 50px;
+    color: white;
 }
 
 .banner-content h1 {
-    font-size: 3rem;
+    font-size: 3em;
     margin-bottom: 20px;
 }
 
 .banner-content p {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     margin-bottom: 30px;
 }
 
 .btn-shop {
     display: inline-block;
-    padding: 12px 30px;
-    background-color: #ff6b6b;
+    padding: 15px 30px;
+    background-color: #007bff;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -30,15 +32,35 @@
 }
 
 .btn-shop:hover {
-    background-color: #ff5252;
+    background-color: #0056b3;
 }
 
 /* 섹션 공통 스타일 */
+.section-header {
+    margin: 50px 0 30px;
+}
+
+.section-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 .section-title {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 2rem;
+    text-align: left;
+    font-size: 2em;
     color: #333;
+    margin: 0;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.view-more {
+    margin: 0;
 }
 
 /* 상품 그리드 */
@@ -52,8 +74,9 @@
 .product-card {
     background: white;
     border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: transform 0.3s;
 }
 
@@ -65,64 +88,95 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
 }
 
 .product-card h3 {
-    padding: 15px;
-    margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
 }
 
-.product-card .price {
-    padding: 0 15px 15px;
-    color: #ff6b6b;
+.price {
+    font-size: 1.1em;
+    color: #007bff;
     font-weight: bold;
 }
 
 /* 더보기 버튼 */
-.view-more {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.btn-view-more {
-    display: inline-block;
-    padding: 10px 25px;
-    background-color: #333;
-    color: white;
+.more {
+    /* display: inline-block;  */
+    /* padding: 12px 30px; */
+    /* background-color: #007bff; */
+    color: blue;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.btn-view-more:hover {
-    background-color: #555;
+.more:hover {
+    background-color: #0056b3;
+}
+
+/* 키보드 섹션 */
+.keyboard-products {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+
+/* 마우스 섹션 */
+.mouse-products {
+    padding: 50px 0;
+    background-color: white;
+}
+
+/* 마우스 패드 섹션 */
+.mousepad-products {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+
+/* 악세서리 섹션 */
+.accessory-products {
+    padding: 50px 0;
+    background-color: white;
+}
+
+/* 신상품 섹션 */
+.new-products {
+    padding: 50px 0;
+    background-color: #f8f9fa;
 }
 
 /* 이벤트 배너 */
 .event-banner {
-    background-color: #f8f9fa;
-    padding: 60px 0;
-    margin-top: 50px;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/event-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    color: white;
+    margin: 50px 0;
 }
 
 .event-banner h2 {
-    font-size: 2rem;
+    font-size: 2.5em;
     margin-bottom: 20px;
-    color: #333;
 }
 
 .event-banner p {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     margin-bottom: 30px;
-    color: #666;
 }
 
 .btn-event {
     display: inline-block;
-    padding: 12px 30px;
-    background-color: #4CAF50;
+    padding: 12px 25px;
+    background-color: #ff4757;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -130,5 +184,50 @@
 }
 
 .btn-event:hover {
-    background-color: #45a049;
+    background-color: #ff6b81;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main-banner {
+        height: 400px;
+    }
+
+    .banner-content h1 {
+        font-size: 2.5em;
+    }
+
+    .event-banner {
+        height: 250px;
+    }
+
+    .event-banner h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-banner {
+        height: 300px;
+    }
+
+    .banner-content h1 {
+        font-size: 2em;
+    }
+
+    .event-banner {
+        height: 200px;
+    }
+
+    .event-banner h2 {
+        font-size: 1.5em;
+    }
 } 
