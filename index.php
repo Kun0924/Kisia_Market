@@ -13,20 +13,7 @@
     <?php include 'mainmenu/common/header.php'; ?>
 
     <!-- DB 연결 -->
-    <?php
-        require_once 'mainmenu/common/db.php';
-
-        $sql1 = "SELECT * FROM products ORDER BY id DESC LIMIT 3"; // 신상품 3개 가져오기
-        $result_best = mysqli_query($conn, $sql1);
-
-        $sql2 = "SELECT * FROM products LIMIT 3"; // id 기준으로 오름차순으로 3개 가져오기
-        $result_new = mysqli_query($conn, $sql2);
-
-        // 데이터 복사해서 가져오기 (출력 아님, 그냥 콘솔에서 확인용)
-        // $data = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
-        // $jsonData = json_encode($data);
-        // echo "<script>console.log(" . $jsonData . ");</script>";
-        ?>
+    <?php require_once 'mainmenu/queries/get_new_products.php';?>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -50,10 +37,16 @@
                 <div class="section-header">
                     <div class="section-title-container">
                         <h2 class="section-title">신상품</h2>
-                            <div class="product-grid">
+                            
+
+                        <div class="view-more">
+                            <a href="mainmenu/newproduct.php" class="more">더 보기</a>
+                        </div>
+                    </div>
+                    <div class="product-grid">
                             <?php
-                            if (mysqli_num_rows($result_best) > 0) {
-                                while ($row_best = mysqli_fetch_assoc($result_best)) {
+                            if (mysqli_num_rows($get_new_products) > 0) {
+                                while ($row_best = mysqli_fetch_assoc($get_new_products)) {
                                     // 상품 하나당 하나의 카드 출력
                                     echo '<div class="product-card">';
                                     echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
@@ -66,12 +59,6 @@
                             }
                             ?>
                             </div>
-
-                        <div class="view-more">
-                            <a href="mainmenu/newproduct.php" class="more">더 보기</a>
-                        </div>
-                    </div>
-                    <p class="section-description">새롭게 입고된 상품을 만나보세요</p>
                 </div>
             </div>
         </section>
@@ -136,9 +123,6 @@
             </div>
         </section>
     </main>
-    <?php
-    mysqli_close($conn); // 연결 종료
-    ?>
 
     <?php include 'mainmenu/common/footer.php'; ?>
 </body>
