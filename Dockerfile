@@ -28,3 +28,6 @@ WORKDIR /var/www/html
 
 # 파일 권한 설정
 RUN chown -R www-data:www-data /var/www/html 
+
+# mysqli 설치 추가
+RUN docker-php-ext-install mysqli
