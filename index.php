@@ -20,7 +20,10 @@
                 <div class="banner-content">
                     <h1>KISIA SHOP</h1>
                     <p>최고의 품질과 서비스를 제공합니다</p>
-                    <a href="mainmenu/all.php" class="btn-shop">쇼핑하기</a>
+                    <div class="banner-buttons">
+                        <a href="mainmenu/all.php" class="btn-shop">쇼핑하기</a>
+                        <a href="mainmenu/all.php" class="btn-event">이벤트 보기</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -36,6 +39,9 @@
                         </div>
                     </div>
                     <p class="section-description">새롭게 입고된 상품을 만나보세요</p>
+                </div>
+            </div>
+        </section>
 
         <!-- 키보드 섹션 -->
         <section class="keyboard-section">
@@ -93,18 +99,6 @@
                         </div>
                     </div>
                     <p class="section-description">최고의 악세서리를 만나보세요</p>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 이벤트 배너 -->
-        <section class="event-banner">
-            <div class="container">
-                <div class="banner-content">
-                    <h2>특별 이벤트</h2>
-                    <p>지금 구매하시면 20% 할인!</p>
-                    <a href="mainmenu/all.php" class="btn-event">이벤트 보기</a>
                 </div>
             </div>
         </section>
