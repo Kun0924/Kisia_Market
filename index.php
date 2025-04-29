@@ -12,6 +12,22 @@
 <body>
     <?php include 'mainmenu/common/header.php'; ?>
 
+    <!-- DB 연결 -->
+    <?php
+        require_once 'mainmenu/common/db.php';
+
+        $sql1 = "SELECT * FROM products ORDER BY id DESC LIMIT 3"; // 신상품 3개 가져오기
+        $result_best = mysqli_query($conn, $sql1);
+
+        $sql2 = "SELECT * FROM products LIMIT 3"; // id 기준으로 오름차순으로 3개 가져오기
+        $result_new = mysqli_query($conn, $sql2);
+
+        // 데이터 복사해서 가져오기 (출력 아님, 그냥 콘솔에서 확인용)
+        // $data = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
+        // $jsonData = json_encode($data);
+        // echo "<script>console.log(" . $jsonData . ");</script>";
+        ?>
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- 메인 배너 -->
@@ -34,6 +50,23 @@
                 <div class="section-header">
                     <div class="section-title-container">
                         <h2 class="section-title">신상품</h2>
+                            <div class="product-grid">
+                            <?php
+                            if (mysqli_num_rows($result_best) > 0) {
+                                while ($row_best = mysqli_fetch_assoc($result_best)) {
+                                    // 상품 하나당 하나의 카드 출력
+                                    echo '<div class="product-card">';
+                                    echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                    echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                    echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo '<p>등록된 상품이 없습니다.</p>';
+                            }
+                            ?>
+                            </div>
+
                         <div class="view-more">
                             <a href="mainmenu/newproduct.php" class="more">더 보기</a>
                         </div>
@@ -104,7 +137,7 @@
         </section>
     </main>
     <?php
-    //mysqli_close($conn); // 연결 종료
+    mysqli_close($conn); // 연결 종료
     ?>
 
     <?php include 'mainmenu/common/footer.php'; ?>
