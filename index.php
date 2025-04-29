@@ -12,6 +12,9 @@
 <body>
     <?php include 'mainmenu/common/header.php'; ?>
 
+    <!-- DB 연결 -->
+    <?php require_once 'mainmenu/queries/get_new_products.php';?>
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- 메인 배너 -->
@@ -34,11 +37,28 @@
                 <div class="section-header">
                     <div class="section-title-container">
                         <h2 class="section-title">신상품</h2>
+                            
+
                         <div class="view-more">
                             <a href="mainmenu/newproduct.php" class="more">더 보기</a>
                         </div>
                     </div>
-                    <p class="section-description">새롭게 입고된 상품을 만나보세요</p>
+                    <div class="product-grid">
+                            <?php
+                            if (mysqli_num_rows($get_new_products) > 0) {
+                                while ($row_best = mysqli_fetch_assoc($get_new_products)) {
+                                    // 상품 하나당 하나의 카드 출력
+                                    echo '<div class="product-card">';
+                                    echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                    echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                    echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo '<p>등록된 상품이 없습니다.</p>';
+                            }
+                            ?>
+                            </div>
                 </div>
             </div>
         </section>
@@ -103,9 +123,6 @@
             </div>
         </section>
     </main>
-    <?php
-    //mysqli_close($conn); // 연결 종료
-    ?>
 
     <?php include 'mainmenu/common/footer.php'; ?>
 </body>
