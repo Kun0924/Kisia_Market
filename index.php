@@ -26,12 +26,36 @@
             </div>
         </section>
 
+        <!-- DB 연결 -->
+        <?php
+        require_once 'mainmenu/common/db.php';
+
+        $sql = "SELECT * FROM products LIMIT 3"; // 원하는 만큼 가져오기 (예: 3개)
+        $result = mysqli_query($conn, $sql);
+        ?>
+
         <!-- 베스트 상품 -->
         <section class="best-products">
             <div class="container">
                 <h2 class="section-title">베스트 상품</h2>
                 <div class="product-grid">
-                    <div class="product-card">
+
+                <?php
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        // 상품 하나당 하나의 카드 출력
+                        echo '<div class="product-card">';
+                        echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
+                        echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+                        echo '<p class="price">' . number_format($row['price']) . '원</p>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>등록된 상품이 없습니다.</p>';
+                }
+                ?>
+
+                    <!-- <div class="product-card">
                         <img src="images/product1.jpg" alt="상품1">
                         <h3>상품명 1</h3>
                         <p class="price">10,000원</p>
@@ -45,8 +69,12 @@
                         <img src="images/product3.jpg" alt="상품3">
                         <h3>상품명 3</h3>
                         <p class="price">30,000원</p>
-                    </div>
+                    </div> -->
+
                 </div>
+                <?php
+                mysqli_close($conn); // 연결 종료
+                ?>
                 <div class="view-more">
                     <a href="mainmenu/best.php" class="btn-view-more">더보기</a>
                 </div>
