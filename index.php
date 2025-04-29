@@ -44,21 +44,21 @@
                         </div>
                     </div>
                     <div class="product-grid">
-                            <?php
-                            if (mysqli_num_rows($get_new_products) > 0) {
-                                while ($row_best = mysqli_fetch_assoc($get_new_products)) {
-                                    // 상품 하나당 하나의 카드 출력
-                                    echo '<div class="product-card">';
-                                    echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
-                                    echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
-                                    echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
-                                    echo '</div>';
-                                }
-                            } else {
-                                echo '<p>등록된 상품이 없습니다.</p>';
+                        <?php
+                        if (mysqli_num_rows($get_new_products) > 0) {
+                            while ($row_best = mysqli_fetch_assoc($get_new_products)) {
+                                // 상품 하나당 하나의 카드 출력
+                                echo '<div class="product-card">';
+                                echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
+                                echo '</div>';
                             }
-                            ?>
-                            </div>
+                        } else {
+                            echo '<p>등록된 상품이 없습니다.</p>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </section>
