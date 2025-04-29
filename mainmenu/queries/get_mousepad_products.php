@@ -48,11 +48,11 @@
     }
 
     // 상품 목록 쿼리
-    $sql = "SELECT * FROM products $price_condition category = '키보드' ORDER BY $order_by LIMIT $offset, $items_per_page";
-    $get_keyboard_products = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM products $price_condition category = '마우스패드' ORDER BY $order_by LIMIT $offset, $items_per_page";
+    $get_mousepad_products = mysqli_query($conn, $sql);
 
     // 전체 상품 개수 쿼리 (페이징용)
-    $count_sql = "SELECT COUNT(*) as total FROM products $price_condition category = '키보드'";
+    $count_sql = "SELECT COUNT(*) as total FROM products $price_condition category = '마우스패드'";
     $result_count = mysqli_query($conn, $count_sql);
     $total_row = mysqli_fetch_assoc($result_count);
     $total_items = (int)$total_row['total'];

@@ -28,11 +28,11 @@
     <nav class="main-menu">
         <div class="container">
             <ul class="menu-list">
-                <li><a href="../mainmenu/all.php">전체상품</a></li>
-                <li><a href="../mainmenu/keyboard.php">키보드</a></li>
-                <li><a href="../mainmenu/mouse.php">마우스</a></li>
-                <li><a href="../mainmenu/mousepad.php">마우스 패드</a></li>
-                <li><a href="../mainmenu/accessory.php">악세서리</a></li>
+                <li><a href="../mainmenu/all.php?page=1&sort=newest&price_range=all">전체상품</a></li>
+                <li><a href="../mainmenu/keyboard.php?page=1&sort=newest&price_range=all">키보드</a></li>
+                <li><a href="../mainmenu/mouse.php?page=1&sort=newest&price_range=all">마우스</a></li>
+                <li><a href="../mainmenu/mousepad.php?page=1&sort=newest&price_range=all">마우스 패드</a></li>
+                <li><a href="../mainmenu/accessory.php?page=1&sort=newest&price_range=all">악세서리</a></li>
             </ul>
         </div>
     </nav>
