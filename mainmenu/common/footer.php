@@ -1,4 +1,59 @@
 <html lang="ko"> 
+    <style>
+        .footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        .footer-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .footer-section p {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        .social-links a {
+            color: #666;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #007bff;
+        }
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+        }
+        .footer-bottom p {
+            color: #666;
+            margin: 0;
+        }
+    </style>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
