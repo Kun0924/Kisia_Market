@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="mainmenu/css/style.css">
     <link rel="stylesheet" href="mainmenu/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="common/load-components.js"></script>
 </head>
 <body>
     <?php include 'mainmenu/common/header.php'; ?>
@@ -104,6 +103,9 @@
             </div>
         </section>
     </main>
+    <?php
+    //mysqli_close($conn); // 연결 종료
+    ?>
 
     <?php include 'mainmenu/common/footer.php'; ?>
 </body>
