@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="mainmenu/css/style.css">
     <link rel="stylesheet" href="mainmenu/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="common/load-components.js"></script>
 </head>
 <body>
     <?php include 'mainmenu/common/header.php'; ?>
@@ -30,8 +29,17 @@
         <?php
         require_once 'mainmenu/common/db.php';
 
-        $sql = "SELECT * FROM products LIMIT 3"; // 원하는 만큼 가져오기 (예: 3개)
-        $result = mysqli_query($conn, $sql);
+        $sql1 = "SELECT * FROM products LIMIT 3"; // 원하는 만큼 가져오기 (예: 3개)
+        $result_best = mysqli_query($conn, $sql1);
+
+        $sql2 = "SELECT * FROM products ORDER BY id DESC LIMIT 3"; // id 기준으로 오름차순으로 3개 가져오기
+        $result_new = mysqli_query($conn, $sql2);
+
+        // 데이터 복사해서 가져오기 (출력 아님, 그냥 콘솔에서 확인용)
+        // $data = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
+        // $jsonData = json_encode($data);
+        // echo "<script>console.log(" . $jsonData . ");</script>";
+
         ?>
 
         <!-- 베스트 상품 -->
@@ -41,13 +49,13 @@
                 <div class="product-grid">
 
                 <?php
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
+                if (mysqli_num_rows($result_best) > 0) {
+                    while ($row_best = mysqli_fetch_assoc($result_best)) {
                         // 상품 하나당 하나의 카드 출력
                         echo '<div class="product-card">';
-                        echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
-                        echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
-                        echo '<p class="price">' . number_format($row['price']) . '원</p>';
+                        echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                        echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                        echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                         echo '</div>';
                     }
                 } else {
@@ -72,9 +80,7 @@
                     </div> -->
 
                 </div>
-                <?php
-                mysqli_close($conn); // 연결 종료
-                ?>
+                
                 <div class="view-more">
                     <a href="mainmenu/best.php" class="btn-view-more">더보기</a>
                 </div>
@@ -86,21 +92,22 @@
             <div class="container">
                 <h2 class="section-title">신상품</h2>
                 <div class="product-grid">
-                    <div class="product-card">
-                        <img src="images/product4.jpg" alt="상품4">
-                        <h3>상품명 4</h3>
-                        <p class="price">40,000원</p>
-                    </div>
-                    <div class="product-card">
-                        <img src="images/product5.jpg" alt="상품5">
-                        <h3>상품명 5</h3>
-                        <p class="price">50,000원</p>
-                    </div>
-                    <div class="product-card">
-                        <img src="images/product6.jpg" alt="상품6">
-                        <h3>상품명 6</h3>
-                        <p class="price">60,000원</p>
-                    </div>
+                    
+                    <?php
+                    if (mysqli_num_rows($result_new) > 0) {
+                        while ($row_new = mysqli_fetch_assoc($result_new)) {
+                            // 상품 하나당 하나의 카드 출력
+                            echo '<div class="product-card">';
+                            echo '<img src="' . htmlspecialchars($row_new['image_url']) . '" alt="' . htmlspecialchars($row_new['name']) . '">';
+                            echo '<h3>' . htmlspecialchars($row_new['name']) . '</h3>';
+                            echo '<p class="price">' . number_format($row_new['price']) . '원</p>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p>등록된 상품이 없습니다.</p>';
+                    }
+                    ?>
+
                 </div>
                 <div class="view-more">
                     <a href="mainmenu/newproduct.php" class="btn-view-more">더보기</a>
@@ -119,6 +126,9 @@
             </div>
         </section>
     </main>
+    <?php
+    mysqli_close($conn); // 연결 종료
+    ?>
 
     <?php include 'mainmenu/common/footer.php'; ?>
 </body>
