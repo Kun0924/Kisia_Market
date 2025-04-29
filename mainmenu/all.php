@@ -22,7 +22,7 @@
             <div class="filter-section">
                 <div class="filter-group">
                     <label>정렬</label>
-                    <select>
+                    <select id="sort">
                         <option value="newest">최신순</option>
                         <option value="price-low">가격 낮은순</option>
                         <option value="price-high">가격 높은순</option>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="filter-group">
                     <label>가격대</label>
-                    <select>
+                    <select id="price_range">
                         <option value="all">전체</option>
                         <option value="0-50000">5만원 이하</option>
                         <option value="50000-100000">5만원-10만원</option>
