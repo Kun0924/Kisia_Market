@@ -71,14 +71,14 @@ session_start();
                         <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
                     </div>
                     <div class="form-options">
-                        <label class="remember-me">
+                        <div class="remember-me">
                             <input type="checkbox" id="remember" name="remember">
-                            <span>아이디 저장</span>
-                        </label>
+                            <label for="remember">로그인 상태 유지</label>
+                        </div>
                         <div class="find-links">
-                            <a href="find-id.php">아이디 찾기</a>
+                            <a href="find_id.php">아이디 찾기</a>
                             <span class="divider">|</span>
-                            <a href="find-password.php">비밀번호 찾기</a>
+                            <a href="find_password.php">비밀번호 찾기</a>
                         </div>
                     </div>
                     <div class="form-actions">
