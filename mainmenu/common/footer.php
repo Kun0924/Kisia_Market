@@ -1,4 +1,5 @@
 <html lang="ko"> 
+<<<<<<< HEAD
     <style>
         .footer {
             background-color: #f8f9fa;
@@ -53,6 +54,8 @@
             margin: 0;
         }
     </style>
+=======
+>>>>>>> 4f3c72ad9e87de5590bb9fd2067ffad89e516dc2
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
