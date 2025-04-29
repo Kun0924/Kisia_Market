@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li>
-                <a href="../mainmenu/logout.php">
+                <a href="logout.php">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>로그아웃</span>
                 </a>
