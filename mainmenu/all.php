@@ -23,7 +23,7 @@
                 <div class="filter-group">
                     <label>정렬</label>
                     <select id="sort">
-                        <option value="newest">최신순</option>
+                        <option value="newest" selected>최신순</option>
                         <option value="price-low">가격 낮은순</option>
                         <option value="price-high">가격 높은순</option>
                         <option value="popular">평점 높은순</option>
@@ -32,7 +32,7 @@
                 <div class="filter-group">
                     <label>가격대</label>
                     <select id="price_range">
-                        <option value="all">전체</option>
+                        <option value="all" selected>전체</option>
                         <option value="0-50000">5만원 이하</option>
                         <option value="50000-100000">5만원-10만원</option>
                         <option value="100000-150000">10만원-15만원</option>
@@ -41,6 +41,30 @@
                     </select>
                 </div>
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                const sortSelect = document.getElementById('sort');
+                const priceSelect = document.getElementById('price_range');
+
+                function fetchFilteredProducts() {
+                    const sort = sortSelect.value;
+                    const price = priceSelect.value;
+
+                    fetch(`queries/filter_products.php?sort=${sort}&price=${price}`)
+                        .then(response => response.text())
+                        .then(data => {
+                            document.querySelector('.product-grid').innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('AJAX 오류:', error);
+                        });
+                }
+
+                sortSelect.addEventListener('change', fetchFilteredProducts);
+                priceSelect.addEventListener('change', fetchFilteredProducts);
+            });
+            </script>
 
             <div class="content-section">
                 <div class="product-grid">
