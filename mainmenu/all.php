@@ -11,6 +11,7 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
+    <?php require_once 'queries/get_all_products.php';?>
 
     <main class="main-content">
         <div class="container">
@@ -42,17 +43,35 @@
             </div>
 
             <div class="content-section">
-                <p>여기는 전체상품 페이지입니다. 다양한 제품을 구매할 수 있습니다.</p>
+                <div class="product-grid">
+                    <?php
+                    if (mysqli_num_rows($get_all_products) > 0) {
+                        while ($row = mysqli_fetch_assoc($get_all_products)) {
+                            // 상품 하나당 하나의 카드 출력
+                            echo '<div class="product-card">';
+                            echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
+                            echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+                            echo '<p class="price">' . number_format($row['price']) . '원</p>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p>등록된 상품이 없습니다.</p>';
+                    }
+                    ?>
+                </div>
             </div>
-
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#" class="next">다음 <i class="fas fa-chevron-right"></i></a>
-            </div>
+            <?php
+                echo '<div class="pagination">';
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    $active = $i == $page ? 'active' : '';
+                    echo "<a href='?page=$i' class='$active'>$i</a>";
+                }
+                if ($page < $total_pages) {
+                    $next_page = $page + 1;
+                    echo "<a href='?page=$next_page' class='next'>다음 <i class='fas fa-chevron-right'></i></a>";
+                }
+                echo '</div>';
+            ?>
         </div>
     </main>
 
