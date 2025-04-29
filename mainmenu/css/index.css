@@ -1,3 +1,8 @@
+/* 메인 컨텐츠 */
+.main-content {
+    padding: 20px 0;
+}
+
 /* 메인 배너 */
 .main-banner {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner.jpg');
@@ -19,6 +24,12 @@
 .banner-content p {
     font-size: 1.2em;
     margin-bottom: 30px;
+}
+
+.banner-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }
 
 .btn-shop {
@@ -106,9 +117,6 @@
 
 /* 더보기 버튼 */
 .more {
-    /* display: inline-block;  */
-    /* padding: 12px 30px; */
-    /* background-color: #007bff; */
     color: blue;
     text-decoration: none;
     border-radius: 5px;
@@ -151,16 +159,14 @@
 
 /* 이벤트 배너 */
 .event-banner {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/event-banner.jpg');
     background-size: cover;
     background-position: center;
-    height: 300px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
-    margin: 50px 0;
 }
 
 .event-banner h2 {
@@ -175,7 +181,7 @@
 
 .btn-event {
     display: inline-block;
-    padding: 12px 25px;
+    padding: 15px 30px;
     background-color: #ff4757;
     color: white;
     text-decoration: none;
