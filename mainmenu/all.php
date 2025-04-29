@@ -84,18 +84,18 @@
                     ?>
                 </div>
             </div>
-            <?php
-                echo '<div class="pagination">';
-                for ($i = 1; $i <= $total_pages; $i++) {
-                    $active = $i == $page ? 'active' : '';
-                    echo "<a href='?page=$i' class='$active'>$i</a>";
-                }
-                if ($page < $total_pages) {
-                    $next_page = $page + 1;
-                    echo "<a href='?page=$next_page' class='next'>다음 <i class='fas fa-chevron-right'></i></a>";
-                }
-                echo '</div>';
-            ?>
+            <div class="pagination" id="pagination">
+                <?php
+                    for ($i = 1; $i <= $total_pages; $i++) {
+                        $active = $i == $page ? 'active' : '';
+                        echo "<a href='?page=$i' class='$active'>$i</a>";
+                    }
+                    if ($page < $total_pages) {
+                        $next_page = $page + 1;
+                        echo "<a href='?page=$next_page' class='next'>다음 <i class='fas fa-chevron-right'></i></a>";
+                    }
+                ?>
+            </div>
         </div>
     </main>
 

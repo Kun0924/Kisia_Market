@@ -1,11 +1,20 @@
 <?php
         require_once '/var/www/html/mainmenu/common/db.php';
 
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 6;
+        $offset = ($page - 1) * $limit;
+
         $sort = $_GET['sort'] ?? 'newest';
         $price = $_GET['price'] ?? 'all';
-        
-        $sql = "SELECT * FROM products WHERE 1=1";
-        
+        $category = $_GET['category'] ?? 'all';
+
+        if ($category != 'all') {
+            $sql = "SELECT * FROM products WHERE category = '$category'";
+        } else {
+            $sql = "SELECT * FROM products WHERE 1=1";
+        }
+
         // 가격 조건
         if ($price != 'all') {
             if ($price === '200000-up') {
@@ -30,8 +39,12 @@
             default:
                 $sql .= " ORDER BY created_at DESC";
         }
+
+        $sql .= " LIMIT $offset, $limit";
         
         $result = mysqli_query($conn, $sql);
+
+        
         
         while ($row = mysqli_fetch_assoc($result)) {
             echo '<div class="product-card">';

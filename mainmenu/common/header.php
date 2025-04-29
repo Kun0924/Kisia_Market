@@ -29,7 +29,6 @@
         <div class="container">
             <ul class="menu-list">
                 <li><a href="../mainmenu/all.php">전체상품</a></li>
-                <li><a href="../mainmenu/newproduct.php">신상품</a></li>
                 <li><a href="../mainmenu/keyboard.php">키보드</a></li>
                 <li><a href="../mainmenu/mouse.php">마우스</a></li>
                 <li><a href="../mainmenu/mousepad.php">마우스 패드</a></li>
