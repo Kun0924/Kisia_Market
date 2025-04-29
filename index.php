@@ -23,24 +23,22 @@
                 <div class="banner-content">
                     <h1>KISIA SHOP</h1>
                     <p>최고의 품질과 서비스를 제공합니다</p>
-                    <div class="banner-buttons">
+                    <!-- <div class="banner-buttons">
                         <a href="mainmenu/all.php" class="btn-shop">쇼핑하기</a>
                         <a href="mainmenu/all.php" class="btn-event">이벤트 보기</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
-        
-        <!-- 신상품 섹션 -->
-        <section class="new-products-section">
+
+        <!-- 키보드 섹션 -->
+        <section class="keyboard-section">
             <div class="container">
                 <div class="section-header">
                     <div class="section-title-container">
-                        <h2 class="section-title">신상품</h2>
-                            
-
+                        <h2 class="section-title">키보드</h2>
                         <div class="view-more">
-                            <a href="mainmenu/newproduct.php" class="more">더 보기</a>
+                            <a href="mainmenu/keyboard.php" class="more">더 보기</a>
                         </div>
                     </div>
                     <div class="product-grid">
@@ -59,21 +57,6 @@
                         }
                         ?>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 키보드 섹션 -->
-        <section class="keyboard-section">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-title-container">
-                        <h2 class="section-title">키보드</h2>
-                        <div class="view-more">
-                            <a href="mainmenu/keyboard.php" class="more">더 보기</a>
-                        </div>
-                    </div>
-                    <p class="section-description">최고의 키보드를 만나보세요</p>
                 </div>
             </div>
         </section>
