@@ -6,7 +6,7 @@
                 <div class="header-links">
                     <a href="../mainmenu/login.php" class="header-link">로그인/회원가입</a>
                     <a href="../mainmenu/cart.php" class="header-link">장바구니</a>
-                    <a href="../mainmenu/order.php" class="header-link">주문/배송</a>
+                    <a href="../mainmenu/mypage.php" class="header-link">마이페이지</a>
                     <a href="../mainmenu/customer-service.php" class="header-link">고객센터</a>
                 </div>
             </div>
