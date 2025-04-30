@@ -5,3 +5,5 @@ shell 접속방법:
 mysql -u root -p
 USE kisia_market;
 SET NAMES utf8mb4;
+
+test
