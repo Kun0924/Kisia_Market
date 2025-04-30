@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="ko">    <!-- Header -->
+<html lang="ko">
     <header class="header">
         <div class="header-top">
             <div class="container">
                 <div class="header-links">
-                    <a href="../mainmenu/login.php" class="header-link">로그인/회원가입</a>
-                    <a href="../mainmenu/cart.php" class="header-link">장바구니</a>
-                    <a href="../mainmenu/mypage.php" class="header-link">마이페이지</a>
+                    <?php if ($userId) { ?>
+                        <p class="header-link">안녕하세요 <span style="color: #ff6b6b;"><?php echo $name; ?></span>님</p>
+                        <a href="/mainmenu/queries/logout_process.php" class="header-link">로그아웃</a>
+                        <a href="../mainmenu/cart.php" class="header-link">장바구니</a>
+                        <a href="../mainmenu/mypage.php" class="header-link">마이페이지</a>
+                    <?php } else { ?>
+                        <a href="/mainmenu/login.php" class="header-link">로그인/회원가입</a>
+                    <?php } ?>
                     <a href="../mainmenu/customer-service.php" class="header-link">고객센터</a>
                 </div>
             </div>
@@ -20,10 +25,6 @@
                     <input type="text" name="search_query" placeholder="검색어 입력">
                     <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
-                <!-- <div class="search-box">
-                    <input type="text" placeholder="검색어를 입력하세요" name="search_query">
-                    <button><i class="fas fa-search"></i></button>
-                </div> -->
             </div>
         </div>
     </header>

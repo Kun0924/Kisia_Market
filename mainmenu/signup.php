@@ -1,3 +1,4 @@
+<?php include '/var/www/html/mainmenu/queries/get_header_session.php'; ?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,7 +18,7 @@
         <div class="container">
             <div class="signup-container">
                 <h2 class="page-title">회원가입</h2>
-                <form class="signup-form">
+                <form class="signup-form" action="queries/insert_user.php" method="post">
                     <div class="form-group">
                         <label for="username">아이디</label>
                         <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>

@@ -1,3 +1,4 @@
+<?php include '/var/www/html/mainmenu/queries/get_header_session.php'; ?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,6 +12,7 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
+    <?php require_once 'queries/get_notice.php'; ?>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -34,48 +36,26 @@
                         <span class="header-user">작성자</span>
                         <span class="header-date">작성일</span>
                     </div>
-                    <div class="qna-item notice-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">[공지] 시스템 점검 안내</a>
-                            <span class="qna-meta">1000061</span>
-                            <span class="qna-user">관리자</span>
-                            <span class="qna-date">2024-03-20</span>
-                        </div>
-                    </div>
-                    <div class="qna-item notice-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">[공지] 배송 지연 안내</a>
-                            <span class="qna-meta">1000060</span>
-                            <span class="qna-user">관리자</span>
-                            <span class="qna-date">2024-03-19</span>
-                        </div>
-                    </div>
-                    <div class="qna-item notice-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">[공지] 개인정보 처리방침 변경 안내</a>
-                            <span class="qna-meta">1000059</span>
-                            <span class="qna-user">관리자</span>
-                            <span class="qna-date">2024-03-18</span>
-                        </div>
-                    </div>
-                    <div class="qna-item notice-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">[공지] 신규 회원 혜택 안내</a>
-                            <span class="qna-meta">1000058</span>
-                            <span class="qna-user">관리자</span>
-                            <span class="qna-date">2024-03-17</span>
-                        </div>
-                    </div>
-                    <div class="qna-item notice-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">[공지] 서비스 이용 안내</a>
-                            <span class="qna-meta">1000057</span>
-                            <span class="qna-user">관리자</span>
-                            <span class="qna-date">2024-03-16</span>
-                        </div>
-                    </div>
+
+                    <?php if (mysqli_num_rows($get_notice) > 0): ?>
+                        <?php while ($row = mysqli_fetch_assoc($get_notice)): ?>
+                            <div class="qna-item notice-item">
+                                <div class="qna-info">
+                                    <a href="#" class="qna-title">[공지] <?= htmlspecialchars($row['title']) ?></a>
+                                    <span class="qna-meta"><?= $row['id'] ?></span>
+                                    <span class="qna-user">관리자</span>
+                                    <span class="qna-date"><?= date('Y-m-d', strtotime($row['created_at'])) ?></span>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <p style="padding: 10px;">등록된 공지사항이 없습니다.</p>
+                    <?php endif; ?>
                 </div>
+
             </div>
+
+
             <div class="qna-section" id="qnaSection" style="display: none;">
                 <div class="qna-header">
                     <div class="qna-title">문의사항</div>
@@ -175,12 +155,16 @@
                 </div>
             </div>
             <div class="pagination">
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>&gt;</button>
+                <?php
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    $active = $i == $page ? 'active' : '';
+                    echo "<a href='?page=$i' class='$active'>$i</a>";
+                }
+                if ($page < $total_pages) {
+                    $next_page = $page + 1;
+                    echo "<a href='?page=$next_page' class='next'>다음 <i class='fas fa-chevron-right'></i></a>";
+                }
+                ?>
             </div>
         </div>
     </main>
@@ -267,9 +251,6 @@
 
             // 게시글 배열에 추가
             allPosts.unshift(newPost);
-            
-            // 페이지네이션 업데이트
-            updatePagination();
             
             // 현재 페이지의 게시글 표시
             showPosts();
@@ -382,53 +363,7 @@
             document.getElementById('postDetail').classList.remove('active');
             currentPostId = null;
             
-            updatePagination();
             showPosts();
-        }
-
-        function updatePagination() {
-            const totalPages = Math.ceil(allPosts.length / postsPerPage);
-            const pagination = document.querySelector('.pagination');
-            pagination.innerHTML = '';
-
-            // 이전 페이지 버튼
-            if (currentPage > 1) {
-                const prevBtn = document.createElement('button');
-                prevBtn.textContent = '<';
-                prevBtn.onclick = () => {
-                    currentPage--;
-                    showPosts();
-                    updatePagination();
-                };
-                pagination.appendChild(prevBtn);
-            }
-
-            // 페이지 번호 버튼
-            for (let i = 1; i <= totalPages; i++) {
-                const pageBtn = document.createElement('button');
-                pageBtn.textContent = i;
-                if (i === currentPage) {
-                    pageBtn.classList.add('active');
-                }
-                pageBtn.onclick = () => {
-                    currentPage = i;
-                    showPosts();
-                    updatePagination();
-                };
-                pagination.appendChild(pageBtn);
-            }
-
-            // 다음 페이지 버튼
-            if (currentPage < totalPages) {
-                const nextBtn = document.createElement('button');
-                nextBtn.textContent = '>';
-                nextBtn.onclick = () => {
-                    currentPage++;
-                    showPosts();
-                    updatePagination();
-                };
-                pagination.appendChild(nextBtn);
-            }
         }
 
         // 게시글 데이터를 localStorage에 저장
