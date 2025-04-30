@@ -11,6 +11,23 @@
     margin-bottom: 30px;
     color: #333;
 }
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a {
+    display: inline-flex
+;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s;
+}
 
 /* Section Styles */
 .notice-section, .inquiry-section {

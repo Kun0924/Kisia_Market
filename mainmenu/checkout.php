@@ -1,7 +1,4 @@
-<?php
-// 세션 시작 (필요시)
-session_start();
-?>
+<?php include '/var/www/html/mainmenu/queries/get_header_session.php'; ?>
 
 <!DOCTYPE html>
 <html lang="ko">

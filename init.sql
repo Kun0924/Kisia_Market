@@ -6,6 +6,31 @@ CREATE DATABASE IF NOT EXISTS kisia_market CHARACTER SET utf8mb4 COLLATE utf8mb4
 
 USE kisia_market;
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    phone VARCHAR(20),
+    role VARCHAR(10) NOT NULL DEFAULT 'USER',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS notices (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 공지사항 초기 데이터 삽입  
+INSERT INTO notices (title, content) VALUES
+('서비스 점검 안내', '안녕하세요. 5월 3일 오전 2시부터 4시까지 서버 점검이 예정되어 있습니다.'),
+('신규 기능 출시', '이번 주부터 새로운 검색 기능이 추가됩니다. 많은 이용 바랍니다.'),
+('이벤트 당첨자 발표', '4월 이벤트의 당첨자가 발표되었습니다. 자세한 내용은 이벤트 페이지를 확인해 주세요.');
+
+
 CREATE TABLE IF NOT EXISTS products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
