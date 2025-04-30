@@ -16,10 +16,14 @@
                 <div class="logo">
                     <h1><a href="../../index.php">KISIA SHOP</a></h1>
                 </div>
-                <div class="search-box">
-                    <input type="text" placeholder="검색어를 입력하세요">
+                <form action="../mainmenu/search_result.php" method="get" class="search-box">
+                    <input type="text" name="search_query" placeholder="검색어 입력">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <!-- <div class="search-box">
+                    <input type="text" placeholder="검색어를 입력하세요" name="search_query">
                     <button><i class="fas fa-search"></i></button>
-                </div>
+                </div> -->
             </div>
         </div>
     </header>
