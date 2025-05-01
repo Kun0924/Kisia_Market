@@ -22,11 +22,11 @@
                 <form class="login-form" method="POST" action="queries/login_process.php">
                     <div class="form-group">
                         <label for="username">아이디</label>
-                        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>
+                        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" >
                     </div>
                     <div class="form-group">
                         <label for="password">비밀번호</label>
-                        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+                        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" >
                     </div>
                     <div class="form-options">
                         <div class="remember-me">
