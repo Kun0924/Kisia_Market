@@ -64,7 +64,7 @@
 }
 
 .form-actions {
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
 }
 
 .btn-submit {
@@ -137,3 +137,54 @@
     color: #333;
     text-decoration: underline;
 } 
+.username-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-check-duplicate {
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-check-duplicate:hover {
+    background-color: #e0e0e0;
+}
+
+.validation-message {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* 유효성 검사 메시지 스타일 */
+.validation-message.success {
+    color: #2ecc71;
+}
+
+.validation-message.error {
+    color: #e74c3c;
+}
+
+#username {
+    width: 100%;
+}
+
+.btn-signup{
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
