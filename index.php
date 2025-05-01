@@ -1,4 +1,7 @@
-<?php include '/var/www/html/mainmenu/queries/get_header_session.php'; ?>
+<?php 
+$menu_path = 'mainmenu/';
+include '/var/www/html/mainmenu/queries/get_header_session.php'; 
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
