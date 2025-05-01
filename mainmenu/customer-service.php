@@ -52,9 +52,7 @@
                         <p style="padding: 10px;">등록된 공지사항이 없습니다.</p>
                     <?php endif; ?>
                 </div>
-
             </div>
-
 
             <div class="qna-section" id="qnaSection" style="display: none;">
                 <div class="qna-header">
@@ -112,9 +110,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="write-btn-container">
-                <button class="write-btn" onclick="toggleWriteForm()">글쓰기</button>
+                <div class="write-btn-container">
+                    <button class="write-btn" onclick="window.location.href='inquiry-write.php'">글쓰기</button>
+                </div>
             </div>
             <div class="write-form" id="writeForm">
                 <div class="form-group">

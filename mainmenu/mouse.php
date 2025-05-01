@@ -61,19 +61,20 @@
                         while ($row = mysqli_fetch_assoc($get_mouse_products)) {
                             // 상품 하나당 하나의 카드 출력
                             echo '<div class="product-card">';
+                            echo '<a href="explain/mouse_explain.php?id=' . $row['id'] . '">';
                             echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
+                            echo '</a>';
                             echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
                             echo '<p class="price">' . number_format($row['price']) . '원</p>';
                             echo '</div>';
+
                         }
-                    } else {
-                        echo '<p>등록된 상품이 없습니다.</p>';
-                    }
+                    } 
                     ?>
                 </div>
             </div>
 
-            <div class="pagination">
+            <div class="pagination" id="pagination">
                 <?php
                 $sort = $_GET['sort'] ?? 'newest';
                 $price_range = $_GET['price_range'] ?? 'all';

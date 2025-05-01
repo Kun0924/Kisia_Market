@@ -42,6 +42,12 @@
                         <label for="file">첨부파일</label>
                         <input type="file" id="file" name="file">
                     </div>
+                    <div class="form-group">
+                        <div class="secret-option">
+                            <input type="checkbox" id="isSecret" name="isSecret">
+                            <label for="isSecret">비밀글</label>
+                        </div>
+                    </div>
                     <div class="form-actions">
                         <button type="submit" class="btn-submit">문의하기</button>
                         <a href="customer-service.php" class="btn-cancel">취소</a>
