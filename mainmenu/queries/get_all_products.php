@@ -18,7 +18,7 @@
             $order_by = 'price DESC';
             break;
         case 'popular':
-            $order_by = 'rating DESC'; // 예시로 rating 컬럼을 기준
+            $order_by = 'rating DESC';
             break;
         case 'newest':
         default:

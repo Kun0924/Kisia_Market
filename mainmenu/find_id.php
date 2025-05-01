@@ -22,7 +22,8 @@
             
             <div class="find-form-container">
                 <h2 class="page-title">아이디 찾기</h2>
-                <form class="find-form" action="find_id_process.php" method="POST">
+                <form class="find-form" action="find_result.php" method="POST">
+                    <input type="hidden" name="find_type" value="find_id">
                     <div class="form-group">
                         <label for="name">이름</label>
                         <input type="text" id="name" name="name" required>
@@ -33,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">휴대폰 번호</label>
-                        <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+                        <input type="tel" id="phone" name="phone" placeholder="01000000000" required>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn-find">아이디 찾기</button>
