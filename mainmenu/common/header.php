@@ -23,7 +23,7 @@
                 <div class="logo">
                     <h1><a href="../../index.php">KISIA SHOP</a></h1>
                 </div>
-                <form action="../mainmenu/search_result.php" method="get" class="search-box">
+                <form action="../mainmenu/all.php" method="get" class="search-box">
                     <input type="text" name="search_query" placeholder="검색어 입력">
                     <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
@@ -37,10 +37,10 @@
         <div class="container">
             <ul class="menu-list">
                 <li><a href="<?= $menu_path ?>all.php?category=all">전체상품</a></li>
-                <li><a href="<?= $menu_path ?>keyboard.php">키보드</a></li>
-                <li><a href="<?= $menu_path ?>mouse.php">마우스</a></li>
-                <li><a href="<?= $menu_path ?>mousepad.php">마우스 패드</a></li>
-                <li><a href="<?= $menu_path ?>accessory.php">악세서리</a></li>
+                <li><a href="<?= $menu_path ?>all.php?category=keyboard">키보드</a></li>
+                <li><a href="<?= $menu_path ?>all.php?category=mouse">마우스</a></li>
+                <li><a href="<?= $menu_path ?>all.php?category=mousepad">마우스 패드</a></li>
+                <li><a href="<?= $menu_path ?>all.php?category=accessory">악세서리</a></li>
             </ul>
         </div>
     </nav>

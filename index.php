@@ -38,7 +38,7 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                     <div class="section-title-container">
                         <h2 class="section-title">키보드</h2>
                         <div class="view-more">
-                            <a href="mainmenu/keyboard.php" class="more">더 보기</a>
+                            <a href="mainmenu/all.php?category=keyboard" class="more">더 보기</a>
                         </div>
                     </div>
                     <div class="product-grid">
@@ -70,7 +70,7 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                     <div class="section-title-container">
                         <h2 class="section-title">마우스</h2>
                         <div class="view-more">
-                            <a href="mainmenu/mouse.php" class="more">더 보기</a>
+                            <a href="mainmenu/all.php?category=mouse" class="more">더 보기</a>
                         </div>
                     </div>
                     <div class="product-grid">
@@ -102,7 +102,7 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                     <div class="section-title-container">
                         <h2 class="section-title">마우스 패드</h2>
                         <div class="view-more">
-                            <a href="mainmenu/mousepad.php" class="more">더 보기</a>
+                            <a href="mainmenu/all.php?category=mousepad" class="more">더 보기</a>
                         </div>
                     </div>
                     <div class="product-grid">
@@ -134,7 +134,7 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                     <div class="section-title-container">
                         <h2 class="section-title">악세서리</h2>
                         <div class="view-more">
-                            <a href="mainmenu/accessory.php" class="more">더 보기</a>
+                            <a href="mainmenu/all.php?category=accessory" class="more">더 보기</a>
                         </div>
                     </div>
                     <div class="product-grid">
