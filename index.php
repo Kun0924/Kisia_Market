@@ -47,7 +47,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                             while ($row_best = mysqli_fetch_assoc($get_keyboard_products)) {
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
+                                echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
                                 echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '</a>';
                                 echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
@@ -77,7 +79,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                             while ($row_best = mysqli_fetch_assoc($get_mouse_products)) {
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
+                                echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
                                 echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '</a>';
                                 echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
@@ -107,7 +111,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                             while ($row_best = mysqli_fetch_assoc($get_mousepad_products)) {
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
+                                echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
                                 echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '</a>';
                                 echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
@@ -137,7 +143,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                             while ($row_best = mysqli_fetch_assoc($get_accessory_products)) {
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
+                                echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
                                 echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '</a>';
                                 echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
