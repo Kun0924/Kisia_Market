@@ -36,11 +36,11 @@
     <nav class="main-menu">
         <div class="container">
             <ul class="menu-list">
-                <li><a href="<?= $menu_path ?>all.php?page=1&sort=newest&price_range=all">전체상품</a></li>
-                <li><a href="<?= $menu_path ?>keyboard.php?page=1&sort=newest&price_range=all">키보드</a></li>
-                <li><a href="<?= $menu_path ?>mouse.php?page=1&sort=newest&price_range=all">마우스</a></li>
-                <li><a href="<?= $menu_path ?>mousepad.php?page=1&sort=newest&price_range=all">마우스 패드</a></li>
-                <li><a href="<?= $menu_path ?>accessory.php?page=1&sort=newest&price_range=all">악세서리</a></li>
+                <li><a href="<?= $menu_path ?>all.php?category=all">전체상품</a></li>
+                <li><a href="<?= $menu_path ?>keyboard.php">키보드</a></li>
+                <li><a href="<?= $menu_path ?>mouse.php">마우스</a></li>
+                <li><a href="<?= $menu_path ?>mousepad.php">마우스 패드</a></li>
+                <li><a href="<?= $menu_path ?>accessory.php">악세서리</a></li>
             </ul>
         </div>
     </nav>

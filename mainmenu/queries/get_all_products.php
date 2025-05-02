@@ -5,6 +5,7 @@
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $sort = $_GET['sort'] ?? 'newest';
     $price_range = $_GET['price_range'] ?? 'all';
+    $category = $_GET['category'] ?? 'all';
 
     $items_per_page = 6;
     $offset = ($page - 1) * $items_per_page;
