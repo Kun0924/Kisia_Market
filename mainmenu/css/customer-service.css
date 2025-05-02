@@ -275,7 +275,7 @@
     cursor: pointer;
 }
 
-.qna-meta, .qna-user, .qna-date {
+.qna-meta, .qna-user, .qna-date, .qna-type {
     flex: 1;
     font-size: 13px;
     color: #666;
@@ -512,4 +512,8 @@
         align-items: flex-start;
         gap: 8px;
     }
-} 
+}
+.header-type {
+    flex: 1;
+    text-align: center;
+}

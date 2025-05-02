@@ -18,7 +18,8 @@
         <div class="container">
             <h2 class="page-title">1:1 문의 작성</h2>
             <div class="inquiry-form">
-                <form action="inquiry_process.php" method="POST">
+                <form action="queries/input_inquiry.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div class="form-group">
                         <label for="category">문의 유형</label>
                         <select id="category" name="category" required>
@@ -39,13 +40,36 @@
                         <textarea id="content" name="content" rows="10" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="file">첨부파일</label>
-                        <input type="file" id="file" name="file">
+                        <table class="file-table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">첨부파일1</th>
+                                    <td><input name="file[]" id="file1" type="file" class="file-input"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">첨부파일2</th>
+                                    <td><input name="file[]" id="file2" type="file" class="file-input"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">첨부파일3</th>
+                                    <td><input name="file[]" id="file3" type="file" class="file-input"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">첨부파일4</th>
+                                    <td><input name="file[]" id="file4" type="file" class="file-input"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">첨부파일5</th>
+                                    <td><input name="file[]" id="file5" type="file" class="file-input"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="form-group">
                         <div class="secret-option">
                             <input type="checkbox" id="isSecret" name="isSecret">
                             <label for="isSecret">비밀글</label>
+                            <input type="password" id="secretPassword" name="secretPassword" placeholder="비밀번호" style="display: none;">
                         </div>
                     </div>
                     <div class="form-actions">
@@ -58,5 +82,17 @@
     </main>
 
     <?php include 'common/footer.php'; ?>
+    <script>
+        document.getElementById('isSecret').addEventListener('change', function() {
+            const passwordInput = document.getElementById('secretPassword');
+            if (this.checked) {
+                passwordInput.style.display = 'inline-block';
+                passwordInput.required = true;
+            } else {
+                passwordInput.style.display = 'none';
+                passwordInput.required = false;
+            }
+        });
+    </script>
 </body>
 </html> 

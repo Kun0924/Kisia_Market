@@ -22,7 +22,8 @@
             
             <div class="find-form-container">
                 <h2 class="page-title">비밀번호 찾기</h2>
-                <form class="find-form" action="find_password_process.php" method="POST">
+                <form class="find-form" action="find_result.php" method="POST">
+                    <input type="hidden" name="find_type" value="find_password">
                     <div class="form-group">
                         <label for="user_id">아이디</label>
                         <input type="text" id="user_id" name="user_id" required>
@@ -37,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">휴대폰 번호</label>
-                        <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+                        <input type="tel" id="phone" name="phone" placeholder="01000000000" required>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn-find">비밀번호 찾기</button>

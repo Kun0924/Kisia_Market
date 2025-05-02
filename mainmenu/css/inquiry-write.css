@@ -158,3 +158,24 @@
         width: 100%;
     }
 } 
+.file-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.file-table th,
+.file-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.file-table th {
+    background-color: #f8f9fa;
+    width: 120px;
+    text-align: left;
+}
+
+.file-table .file-input {
+    width: 100%;
+}
