@@ -84,10 +84,14 @@
                     <?php
                     if (mysqli_num_rows($get_all_products) > 0) {
                         while ($row = mysqli_fetch_assoc($get_all_products)) {
-                            // 상품 하나당 하나의 카드 출력
+
+
+                            //상품 하나당 하나의 카드
                             echo '<div class="product-card">';
                             echo '<a href="product_explain.php?id=' . $row['id'] . '">';
-                            echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
+                            // 이미지 경로
+                            $image_path = '/' . $row['image_url']; 
+                            echo '<img src="' . htmlspecialchars($image_path) . '" alt="' . htmlspecialchars($row['name']) . '">';
                             echo '</a>';
                             echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
                             echo '<p class="price">' . number_format($row['price']) . '원</p>';
