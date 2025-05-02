@@ -16,12 +16,31 @@
     <?php
         $sort = $_GET['sort'] ?? 'newest';
         $price_range = $_GET['price_range'] ?? 'all';
+        $category = $_GET['category'] ?? 'all';
+        $search_query = $_GET['search_query'] ?? '';
+        $category_korean = '';
+        switch ($category) {
+            case 'keyboard':
+                $category_korean = '키보드';
+                break;
+            case 'mouse':
+                $category_korean = '마우스';
+                break;
+            case 'mousepad':
+                $category_korean = '마우스패드';
+                break;
+            case 'accessory':
+                $category_korean = '악세서리';
+                break;
+            default:
+                $category_korean = '전체상품';
+        }
     ?>
 
     <main class="main-content">
         <div class="container">
             <div class="category-header">
-                <h1>전체상품</h1>
+                <h1><?= $category_korean ?></h1>
             </div>
             
             <div class="filter-section">
@@ -54,7 +73,9 @@
                 function updateFilters() {
                     const sort = document.getElementById('sort').value;
                     const price_range = document.getElementById('price_range').value;
-                    window.location.href = `?page=1&sort=${sort}&price_range=${price_range}`;
+                    const category = '<?= $category ?>';
+                    const search_query = '<?= $search_query ?>';
+                    window.location.href = `?category=${category}&page=1&sort=${sort}&price_range=${price_range}&search_query=${search_query}`;
                 }
             </script>
 
@@ -83,11 +104,11 @@
 
                     for ($i = 1; $i <= $total_pages; $i++) {
                         $active = $i == $page ? 'active' : '';
-                        echo "<a href='?page=$i&sort=$sort&price_range=$price_range' class='$active'>$i</a>";
+                        echo "<a href='?page=$i&sort=$sort&price_range=$price_range&search_query=$search_query&category=$category' class='$active'>$i</a>";
                     }
                     if ($page < $total_pages) {
                         $next_page = $page + 1;
-                        echo "<a href='?page=$next_page&sort=$sort&price_range=$price_range' class='next'>다음 <i class='fas fa-chevron-right'></i></a>";
+                        echo "<a href='?page=$next_page&sort=$sort&price_range=$price_range&search_query=$search_query&category=$category' class='next'>다음 <i class='fas fa-chevron-right'></i></a>";
                     }
                 ?>
             </div>
