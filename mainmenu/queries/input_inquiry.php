@@ -4,8 +4,8 @@
     $type = $_POST['category'] ?? '';
     $title = $_POST['title'] ?? '';
     $content = $_POST['content'] ?? '';
-    $isSecret = $_POST['isSecret'] ?? 0;
-    $secretPassword = $_POST['secretPassword'] ?? '';
+    $isSecret = isset($_POST['isSecret']) ? 1 : 0;
+    $secretPassword = isset($_POST['secretPassword']) ? $_POST['secretPassword'] : '';
     $userId = $_POST['id'] ?? '';
 
     if ($type == 'order') {
