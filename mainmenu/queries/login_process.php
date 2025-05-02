@@ -15,7 +15,12 @@
         $_SESSION['name'] = $user['name'];
         $_SESSION['role'] = $user['role'];
 
-        header("Location: /index.php");
+        if ($user['userId'] === 'admin') {
+            header("Location: /admin/dashboard_main.php");
+        } else {
+            header("Location: /index.php");
+        }        
+        
         exit();
     } else {
         echo "<script>

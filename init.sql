@@ -20,7 +20,11 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- 유저 초기 데이터 삽입 
 INSERT INTO users (userId, email, password, name, phone)
-VALUES ('test', 'testuser01@example.com', '1234', '테스트유저', '01000000000');
+VALUES 
+('test', 'testuser01@example.com', '1234', '테스트유저', '01000000000'),
+('admin', 'admin@admin.com', 'admin', '관리자 계정', '01012345678');
+
+
 
 -- 공지사항 테이블 생성
 CREATE TABLE IF NOT EXISTS notices (
