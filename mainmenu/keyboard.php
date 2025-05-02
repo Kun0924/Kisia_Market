@@ -61,7 +61,7 @@
                         while ($row = mysqli_fetch_assoc($get_keyboard_products)) {
                             // 상품 하나당 하나의 카드 출력
                             echo '<div class="product-card">';
-                            echo '<a href="explain/keyboard_explain.php?id=' . $row['id'] . '">';
+                            echo '<a href="product_explain.php?id=' . $row['id'] . '">';
                             echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
                             echo '</a>';
                             echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
