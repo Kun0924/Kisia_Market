@@ -6,6 +6,7 @@ CREATE DATABASE IF NOT EXISTS kisia_market CHARACTER SET utf8mb4 COLLATE utf8mb4
 
 USE kisia_market;
 
+-- 유저 테이블 생성
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId VARCHAR(50) NOT NULL UNIQUE,
@@ -17,6 +18,11 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 유저 초기 데이터 삽입 
+INSERT INTO users (userId, email, password, name, phone)
+VALUES ('test', 'testuser01@example.com', '1234', '테스트유저', '01000000000');
+
+-- 공지사항 테이블 생성
 CREATE TABLE IF NOT EXISTS notices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -30,7 +36,43 @@ INSERT INTO notices (title, content) VALUES
 ('신규 기능 출시', '이번 주부터 새로운 검색 기능이 추가됩니다. 많은 이용 바랍니다.'),
 ('이벤트 당첨자 발표', '4월 이벤트의 당첨자가 발표되었습니다. 자세한 내용은 이벤트 페이지를 확인해 주세요.');
 
+-- 문의글 테이블
+CREATE TABLE IF NOT EXISTS inquiry (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    title VARCHAR(255),
+    content TEXT,
+    is_secret BOOLEAN,
+    type VARCHAR(50) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    secret_password VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
+-- 문의글 초기 데이터 삽입 
+INSERT INTO inquiry (user_id, title, content, is_secret, type, secret_password)
+VALUES 
+(1, '배송 문의', '언제쯤 배송되나요?', FALSE, '배송', ''),
+(1, '상품 상태 문의', '박스가 찌그러졌어요. 교환 가능한가요?', TRUE, '상품', '1234'),
+(1, '취소 요청', '결제를 했는데 주문 취소하고 싶습니다.', FALSE, '주문/결제', '');
+
+-- 문의글 이미지 테이블
+CREATE TABLE IF NOT EXISTS inquiry_images (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    inquiry_id INT,
+    image_url VARCHAR(255),
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (inquiry_id) REFERENCES inquiry(id) ON DELETE CASCADE
+);
+
+-- 문의글 이미지 초기 데이터 삽입 
+-- INSERT INTO inquiry_images (inquiry_id, image_url)
+-- VALUES
+-- (1, '/uploads/inquiries/box1.jpg'),
+-- (2, '/uploads/inquiries/damaged_box.jpg'),
+-- (2, '/uploads/inquiries/detail_view.png');
+
+-- 상품 테이블 생성
 CREATE TABLE IF NOT EXISTS products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,

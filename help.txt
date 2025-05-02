@@ -2,8 +2,8 @@ docker-compose down -v
 docker-compose up --build -d
 
 shell 접속방법:
-mysql -u root -p
+mysql -u root -p --default-character-set=utf8mb4
 USE kisia_market;
 SET NAMES utf8mb4;
 
-test
+- 유저 정보애 계좌 정보도 포함?

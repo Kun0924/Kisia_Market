@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    $id = $_SESSION['id'] ?? '';
     $userId = $_SESSION['userId'] ?? '';
     $name = $_SESSION['name'] ?? '';
     $role = $_SESSION['role'] ?? '';
