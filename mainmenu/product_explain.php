@@ -66,10 +66,16 @@ include 'queries/get_header_session.php';
         </div>
 
         <div id="reviews" class="tab-content">
-            <h2>리뷰</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>리뷰</h2>
+                <button id="toggle-review-form" class="write-review-btn">리뷰 작성</button>
+            </div>
 
-             <?php include 'review_form.php'; // 리뷰 작성 폼 ?>
+            <div id="review-form-container" style="display: none; margin-top: 20px;">
+                <?php include 'review_form.php'; ?>
+            </div>
         </div>
+
 
     </div>
 </main>
@@ -114,6 +120,28 @@ window.addEventListener('load', function() {
         const initialTabId = initialTab.getAttribute('data-tab');
         switchTab(initialTabId);
     }
+
+    // 리뷰 폼 토글
+    // 리뷰 작성 버튼 클릭 시 폼 보여주고 버튼 숨기기
+    const toggleBtn = document.getElementById('toggle-review-form');
+    const formContainer = document.getElementById('review-form-container');
+    const cancelBtn = document.getElementById('cancel-review');
+
+    if (toggleBtn && formContainer) {
+        toggleBtn.addEventListener('click', () => {
+            formContainer.style.display = 'block';
+            toggleBtn.style.display = 'none'; // 작성 버튼 숨기기
+        });
+    }
+
+    if (cancelBtn && formContainer && toggleBtn) {
+        cancelBtn.addEventListener('click', () => {
+            formContainer.style.display = 'none';
+            toggleBtn.style.display = 'inline-block'; // 작성 버튼 다시 보이기
+        });
+    }
+
+
 });
 </script>
 

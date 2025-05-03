@@ -122,7 +122,7 @@ INSERT INTO products (name, short_description, description, price, stock, image_
 ('마이크로닉스 WIZMAX GP50', '기본에 충실한 저가형 마우스패드', 'product_dec/mousepad/micronixWIZMAX GP50.jpg', 16100, 40, 'uploads/pad2.png', 3000, 'mousepad'),
 ('Razer FireFly V2', 'RGB 조명이 화려한 게이밍 마우스패드', 'product_dec/mousepad/Razer FireFly V2.jpg', 77000, 80, 'uploads/pad3.png', 2000, 'mousepad'),
 ('ASUS ROG MoonStone ACE L', '단단한 소재의 프리미엄 대형 패드', 'product_dec/mousepad/ASUS ROG MoonStone ACE L.jpg', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad'),
-('CORSAIR MM700 RGB Extended 3XL Cloth', '초대형 RGB 패브릭 패드, 책상 전체를 덮는 크기', 'product_dec/mousepad/CORSAIR MM700 RGB Extended 3XL Cloth.jpg', 2130000, 90, 'uploads/pad5.png', 1500, 'mousepad');
+('CORSAIR MM700 RGB', '초대형 RGB 패브릭 패드, 책상 전체를 덮는 크기', 'product_dec/mousepad/CORSAIR MM700 RGB Extended 3XL Cloth.jpg', 213000, 90, 'uploads/pad5.png', 1500, 'mousepad');
 
 -- 리뷰 테이블 생성
 CREATE TABLE reviews (
