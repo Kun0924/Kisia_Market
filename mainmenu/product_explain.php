@@ -56,7 +56,7 @@ include 'queries/get_header_session.php';
             <?php
             if (!empty($row)) {
                 echo '<h2>상품 설명</h2>';
-                echo '<p>' . htmlspecialchars($row['description']) . '</p>';
+                echo '<p>' . $row['description'] . '</p>';
             } else {
                 echo '<p>상품 정보가 없습니다.</p>';
             }
@@ -64,15 +64,17 @@ include 'queries/get_header_session.php';
         </div>
 
         <div id="reviews" class="tab-content">
-            <h2>리뷰 페이지입니다 <a href="#" class="write-review-btn" onclick="toggleReviewForm(); return false;">글쓰기</a></h2>
+            <h2>리뷰 페이지
+                <?php
+                if (isset($_SESSION['userId'])) {
+                    echo '<a href="#" class="write-review-btn" onclick="toggleReviewForm(); return false;">글쓰기</a>';}
+                ?>
+            </h2>
             
             <div id="reviewFormContainer" style="display: none;">
-                <form id="writeReviewForm" action="insert_review.php" method="POST">
+                <form id="writeReviewForm" action="queries/insert_review.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="product_id" value="<?php echo $_GET['id']; ?>">
-                    <div class="form-group">
-                        <label for="reviewTitle">제목</label>
-                        <input type="text" id="reviewTitle" name="title" required>
-                    </div>
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
                     <div class="form-group">
                         <label for="reviewRating">평점</label>
                         <select id="reviewRating" name="rating" required>
@@ -89,7 +91,7 @@ include 'queries/get_header_session.php';
                     </div>
                     <div class="form-group">
                         <label for="reviewImage">파일 첨부</label>
-                        <input type="file" id="reviewImage" name="review_image">
+                        <input type="file" id="reviewImage" name="file">
                         <p class="file-info">* 파일을 첨부할 수 있습니다</p>
                     </div>
                     <div class="form-buttons">
@@ -100,35 +102,27 @@ include 'queries/get_header_session.php';
             </div>
 
             <div class="reviews-list">
-                <div class="review-item">
-                    <div class="review-header">
-                        <span class="review-author">김**</span>
-                        <span class="review-date">2024-05-01</span>
-                        <span class="review-rating">★★★★★</span>
-                    </div>
-                    <h3 class="review-title">정말 만족스러운 구매입니다</h3>
-                    <p class="review-content">품질이 정말 좋네요. 사용감도 좋고 디자인도 깔끔합니다. 다음에도 구매할 의향 있습니다.</p>
-                </div>
-
-                <div class="review-item">
-                    <div class="review-header">
-                        <span class="review-author">이**</span>
-                        <span class="review-date">2024-04-28</span>
-                        <span class="review-rating">★★★★☆</span>
-                    </div>
-                    <h3 class="review-title">가격 대비 훌륭한 제품</h3>
-                    <p class="review-content">가격이 저렴한데 품질이 생각보다 좋네요. 배송도 빠르고 포장도 잘 되어있었습니다.</p>
-                </div>
-
-                <div class="review-item">
-                    <div class="review-header">
-                        <span class="review-author">박**</span>
-                        <span class="review-date">2024-04-25</span>
-                        <span class="review-rating">★★★★★</span>
-                    </div>
-                    <h3 class="review-title">추천합니다</h3>
-                    <p class="review-content">친구 추천으로 구매했는데 정말 좋네요. 사용하기 편하고 디자인도 예쁩니다. 다음에 또 구매할게요!</p>
-                </div>
+                <?php
+                if (mysqli_num_rows($get_reviews) > 0) {
+                    while ($review = mysqli_fetch_assoc($get_reviews)) {
+                        echo '<div class="review-item">';
+                        echo '<div class="review-header">';
+                            echo '<span class="review-author">' . $review['name'] . '</span>';
+                            echo '<span class="review-date">' . $review['created_at'] . '</span>';
+                            echo '<span class="review-rating">' . str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
+                        echo '</div>';
+                        if ($review['image_url']) {
+                            echo '<div class="review-image">';
+                                echo '<img src="../' . $review['image_url'] . '" alt="리뷰 이미지">';
+                            echo '</div>';
+                        }
+                        echo '<p class="review-content">' . $review['content'] . '</p>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>리뷰가 없습니다.</p>';
+                }
+                ?>  
             </div>
         </div>
 

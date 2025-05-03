@@ -122,3 +122,24 @@ INSERT INTO products (name, description, price, stock, image_url, deliver_price,
 ('Razer FireFly V2', '방수 소재의 게이밍 마우스패드', 77000, 80, 'uploads/pad3.png', 2000, 'mousepad'),
 ('ASUS ROG MoonStone ACE L', '고무 베이스, 미끄럼 방지 기능', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad'),
 ('CORSAIR MM700 RGB Extended 3XL Cloth', '친환경 소재 사용한 마우스패드', 2130000, 90, 'uploads/pad5.png', 1500, 'mousepad');
+
+-- 리뷰 테이블 생성
+CREATE TABLE reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    product_id INT,
+    content TEXT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    image_url VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+-- 리뷰 초기 데이터 삽입
+INSERT INTO reviews (user_id, product_id, content, rating, image_url, created_at)
+VALUES 
+(1, 22, '정말 만족스러운 상품이에요!', 5, 'review_images/review1.png', '2024-05-01 10:30:00'),
+(1, 22, '생각보다 품질이 떨어지네요.', 2, NULL, '2024-05-02 14:20:00'),
+(1, 22, '배송이 빨랐고, 제품도 좋아요.', 4, 'review_images/review2.png', '2024-05-03 09:10:00'),
+(1, 22, '가격 대비 괜찮습니다.', 3, NULL, '2024-05-03 11:45:00');
