@@ -37,8 +37,9 @@
 
             $uniqueFileName = uniqid() . '_' . basename($fileName);
             move_uploaded_file($tmpName, '/var/www/html/inquiry_uploads/' . $uniqueFileName);
+            $image_url = '/inquiry_uploads/' . $uniqueFileName;
 
-            $sql = "INSERT INTO inquiry_images (inquiry_id, image_url) VALUES ($inquiry_id, '$uniqueFileName')";
+            $sql = "INSERT INTO inquiry_images (inquiry_id, image_url) VALUES ($inquiry_id, '$image_url')";
             mysqli_query($conn, $sql);
         } else {
             echo "파일 업로드 오류: " . $_FILES['file']['error'][$i];
