@@ -39,27 +39,60 @@ include 'queries/get_header_session.php';
             echo '</div>';
             echo '</div>';
 
-            echo '<div class="tabs">';
-            echo '<button class="tab-btn active" onclick="openTab(\'description\', this)">상품 설명</button>';
-            echo '<button class="tab-btn" onclick="openTab(\'reviews\', this)">리뷰</button>';
-            echo '</div>';
 
-            echo '<div id="description" class="tab-content active">';
-            echo '<h2>상품 설명</h2>';
-            echo '<p>' . htmlspecialchars($row['description']) . '</p>';
-            echo '</div>';
-
-            echo '<div id="reviews" class="tab-content">';
-            echo '<h2>리뷰</h2>';
-            include 'review_form.php';
-            echo '</div>';
         } else {
             echo '<p>상품을 찾을 수 없습니다.</p>';
         }
         ?>
+
+         
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="description">상품 설명</button>
+            <button class="tab-btn" data-tab="reviews">리뷰</button>
+        </div>
+
+
+        <div id="description" class="tab-content active">
+            <?php
+            if (!empty($row)) {
+                echo '<h2>상품 설명</h2>';
+                echo '<p>' . htmlspecialchars($row['description']) . '</p>';
+            } else {
+                echo '<p>상품 정보가 없습니다.</p>';
+            }
+            ?>
+        </div>
+
+        <div id="reviews" class="tab-content">
+            <h2>리뷰 페이지입니다</h2>
+            <p>여기는 리뷰 페이지입니다.</p>
+        </div>
+
     </div>
 </main>
 
 <?php include 'common/footer.php'; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 모든 탭 비활성화
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            // 클릭된 탭만 활성화
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            button.classList.add('active');
+        });
+    });
+});
+</script>
+
+
 </body>
 </html>
