@@ -31,6 +31,7 @@ include 'queries/get_header_session.php';
             echo '</div>';
             echo '<div class="product-info">';
             echo '<h1>' . htmlspecialchars($row['name']) . '</h1>';
+            echo '<p class="short-description">' . htmlspecialchars($row['short_description']) . '</p>';
             echo '<p class="price">' . number_format($row['price']) . '원</p>';
             echo '<div class="button-group">';
             echo '<button class="cart-btn"><i class="fas fa-shopping-cart"></i> 장바구니</button>';
@@ -56,7 +57,8 @@ include 'queries/get_header_session.php';
             <?php
             if (!empty($row)) {
                 echo '<h2>상품 설명</h2>';
-                echo '<p>' . $row['description'] . '</p>';
+                // echo '<p>' . htmlspecialchars($row['description']) . '</p>';
+                echo '<img src="/' . htmlspecialchars($row['description']) . '" alt="상세 이미지">';
             } else {
                 echo '<p>상품 정보가 없습니다.</p>';
             }
@@ -64,66 +66,9 @@ include 'queries/get_header_session.php';
         </div>
 
         <div id="reviews" class="tab-content">
-            <h2>리뷰 페이지
-                <?php
-                if (isset($_SESSION['userId'])) {
-                    echo '<a href="#" class="write-review-btn" onclick="toggleReviewForm(); return false;">글쓰기</a>';}
-                ?>
-            </h2>
-            
-            <div id="reviewFormContainer" style="display: none;">
-                <form id="writeReviewForm" action="queries/insert_review.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="product_id" value="<?php echo $_GET['id']; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
-                    <div class="form-group">
-                        <label for="reviewRating">평점</label>
-                        <select id="reviewRating" name="rating" required>
-                            <option value="5">★★★★★</option>
-                            <option value="4">★★★★☆</option>
-                            <option value="3">★★★☆☆</option>
-                            <option value="2">★★☆☆☆</option>
-                            <option value="1">★☆☆☆☆</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="reviewContent">내용</label>
-                        <textarea id="reviewContent" name="content" rows="5" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="reviewImage">파일 첨부</label>
-                        <input type="file" id="reviewImage" name="file">
-                        <p class="file-info">* 파일을 첨부할 수 있습니다</p>
-                    </div>
-                    <div class="form-buttons">
-                        <button type="submit" class="submit-btn">작성하기</button>
-                        <button type="button" class="cancel-btn" onclick="toggleReviewForm()">취소</button>
-                    </div>
-                </form>
-            </div>
+            <h2>리뷰</h2>
 
-            <div class="reviews-list">
-                <?php
-                if (mysqli_num_rows($get_reviews) > 0) {
-                    while ($review = mysqli_fetch_assoc($get_reviews)) {
-                        echo '<div class="review-item">';
-                        echo '<div class="review-header">';
-                            echo '<span class="review-author">' . $review['name'] . '</span>';
-                            echo '<span class="review-date">' . $review['created_at'] . '</span>';
-                            echo '<span class="review-rating">' . str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
-                        echo '</div>';
-                        if ($review['image_url']) {
-                            echo '<div class="review-image">';
-                                echo '<img src="../' . $review['image_url'] . '" alt="리뷰 이미지">';
-                            echo '</div>';
-                        }
-                        echo '<p class="review-content">' . $review['content'] . '</p>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo '<p>리뷰가 없습니다.</p>';
-                }
-                ?>  
-            </div>
+             <?php include 'review_form.php'; // 리뷰 작성 폼 ?>
         </div>
 
     </div>
@@ -132,33 +77,44 @@ include 'queries/get_header_session.php';
 <?php include 'common/footer.php'; ?>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const contents = document.querySelectorAll('.tab-content');
 
+    function switchTab(tabId) {
+        // 모든 탭 비활성화
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        contents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // 선택된 탭 활성화
+        const selectedTab = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+        const selectedContent = document.getElementById(tabId);
+        
+        if (selectedTab && selectedContent) {
+            selectedTab.classList.add('active');
+            selectedContent.classList.add('active');
+        }
+    }
+
+    // 탭 버튼 클릭 이벤트
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // 모든 탭 비활성화
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-
-            // 클릭된 탭만 활성화
             const tabId = button.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
-            button.classList.add('active');
+            switchTab(tabId);
         });
     });
-});
 
-function toggleReviewForm() {
-    const formContainer = document.getElementById('reviewFormContainer');
-    
-    if (formContainer.style.display === 'none') {
-        formContainer.style.display = 'block';
-    } else {
-        formContainer.style.display = 'none';
+    // 초기 탭 설정
+    const initialTab = document.querySelector('.tab-btn.active');
+    if (initialTab) {
+        const initialTabId = initialTab.getAttribute('data-tab');
+        switchTab(initialTabId);
     }
-}
+});
 </script>
 
 
