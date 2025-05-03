@@ -124,6 +124,23 @@ INSERT INTO products (name, short_description, description, price, stock, image_
 ('ASUS ROG MoonStone ACE L', '단단한 소재의 프리미엄 대형 패드', 'product_dec/mousepad/ASUS ROG MoonStone ACE L.jpg', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad'),
 ('CORSAIR MM700 RGB Extended 3XL Cloth', '초대형 RGB 패브릭 패드, 책상 전체를 덮는 크기', 'product_dec/mousepad/CORSAIR MM700 RGB Extended 3XL Cloth.jpg', 2130000, 90, 'uploads/pad5.png', 1500, 'mousepad');
 
+-- 장바구니 테이블 생성
+CREATE TABLE cart_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    UNIQUE (user_id, product_id)
+);
+
+INSERT INTO cart_items (user_id, product_id, quantity, added_at) VALUES 
+(1, 5, 2, '2025-05-04 10:23:45'),
+(1, 6, 1, '2025-05-04 11:05:12'),
+(1, 7, 3, '2025-05-04 11:15:30');
+
 -- 리뷰 테이블 생성
 CREATE TABLE reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
