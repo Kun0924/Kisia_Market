@@ -116,7 +116,6 @@
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data.exists);
                 if (data.exists) {
                 message.textContent = "이미 사용 중인 아이디입니다.";
                 message.style.color = "red";

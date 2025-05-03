@@ -13,6 +13,7 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
+    <?php include 'queries/get_cart_items.php'; ?>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -20,22 +21,16 @@
             <div class="cart-container">
                 <h2 class="page-title">장바구니</h2>
                 
-                <?php
-                // 장바구니에 상품이 있는지 확인 (실제로는 세션이나 데이터베이스에서 확인)
-                $hasItems = true; // 임의로 상품이 있다고 설정
-                
-                if (!$hasItems) {
-                    // 장바구니가 비어있을 때
-                    echo '<div class="empty-cart">
+                <?php if (empty($cart_items)) : ?>
+                    <div class="empty-cart">
                         <div class="empty-cart-icon">
                             <i class="fas fa-shopping-cart"></i>
                         </div>
                         <p class="empty-cart-message">장바구니가 비어있습니다.</p>
                         <a href="all.php" class="btn-shop">쇼핑하기</a>
                     </div>';
-                } else {
-                    // 장바구니에 상품이 있을 때
-                    echo '<table class="cart-table">
+                <?php else : ?>
+                    <table class="cart-table">
                         <thead>
                             <tr>
                                 <th>상품정보</th>
@@ -47,72 +42,52 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <?php foreach ($cart_items as $item) : ?>
+                            <tr data-cart-item-id="<?= $item['id'] ?>">
                                 <td>
                                     <div class="product-info">
-                                        <img src="images/product1.jpg" alt="상품 이미지" class="product-image">
-                                        <a href="product-detail.php?id=1" class="product-name">기계식 키보드 (갈축)</a>
+                                        <img src="<?php echo '/' . $item['image_url']; ?>" alt="상품 이미지" class="product-image">
+                                        <a href="product_explain.php?id=<?php echo $item['product_id']; ?>" class="product-name"><?php echo $item['name']; ?></a>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="quantity-control">
                                         <button class="quantity-btn" data-action="decrease">-</button>
-                                        <input type="number" class="quantity-input" value="1" min="1" data-price="150000">
+                                        <input type="number" class="quantity-input" value="1" min="1" data-price="<?php echo $item['price']; ?>">
                                         <button class="quantity-btn" data-action="increase">+</button>
                                     </div>
                                 </td>
-                                <td class="product-price">150,000원</td>
-                                <td class="shipping-fee">2,500원</td>
-                                <td class="total-price">152,500원</td>
+                                <td class="product-price"><?php echo number_format($item['price']); ?>원</td>
+                                <td class="shipping-fee"><?php echo number_format($item['deliver_price']); ?>원</td>
+                                <td class="total-price"><?php echo number_format($item['price'] + $item['deliver_price']); ?>원</td>
                                 <td>
                                     <button class="remove-btn">삭제</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="product-info">
-                                        <img src="images/product2.jpg" alt="상품 이미지" class="product-image">
-                                        <a href="product-detail.php?id=2" class="product-name">무선 마우스 (게이밍)</a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="quantity-control">
-                                        <button class="quantity-btn" data-action="decrease">-</button>
-                                        <input type="number" class="quantity-input" value="1" min="1" data-price="89000">
-                                        <button class="quantity-btn" data-action="increase">+</button>
-                                    </div>
-                                </td>
-                                <td class="product-price">89,000원</td>
-                                <td class="shipping-fee">2,500원</td>
-                                <td class="total-price">91,500원</td>
-                                <td>
-                                    <button class="remove-btn">삭제</button>
-                                </td>
-                            </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                     
                     <div class="cart-summary">
                         <div class="summary-row">
                             <span class="summary-label">상품금액</span>
-                            <span class="summary-value" id="subtotal">239,000원</span>
+                            <span class="summary-value" id="subtotal"><?php echo number_format($subtotal); ?>원</span>
                         </div>
                         <div class="summary-row">
                             <span class="summary-label">배송비</span>
-                            <span class="summary-value" id="shipping-total">5,000원</span>
+                            <span class="summary-value" id="shipping-total"><?php echo number_format($shippingTotal); ?>원</span>
                         </div>
                         <div class="summary-row">
                             <span class="summary-label summary-total">총 결제금액</span>
-                            <span class="summary-value summary-total" id="grand-total">244,000원</span>
+                            <span class="summary-value summary-total" id="grand-total"><?php echo number_format($grandTotal); ?>원</span>
                         </div>
                     </div>
                     
                     <div class="cart-actions">
                         <button class="btn-continue">쇼핑 계속하기</button>
                         <button class="btn-checkout">주문하기</button>
-                    </div>';
-                }
-                ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>
@@ -142,13 +117,26 @@
         document.querySelectorAll('.remove-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const row = this.closest('tr');
-                row.remove();
-                
-                // 가격 재계산 로직
-                updatePrices();
-                
-                // 장바구니가 비어있는지 확인
-                checkEmptyCart();
+                const cartItemId = row.dataset.cartItemId;
+                const id = '<?php echo $id; ?>';
+
+                fetch('/mainmenu/queries/delete_cart_item.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `cart_item_id=${cartItemId}&id=${id}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        row.remove();
+                        updatePrices();
+                        checkEmptyCart();
+                    } else {
+                        alert('삭제 실패');
+                    }
+                });
             });
         });
         
