@@ -64,8 +64,72 @@ include 'queries/get_header_session.php';
         </div>
 
         <div id="reviews" class="tab-content">
-            <h2>리뷰 페이지입니다</h2>
-            <p>여기는 리뷰 페이지입니다.</p>
+            <h2>리뷰 페이지입니다 <a href="#" class="write-review-btn" onclick="toggleReviewForm(); return false;">글쓰기</a></h2>
+            
+            <div id="reviewFormContainer" style="display: none;">
+                <form id="writeReviewForm" action="insert_review.php" method="POST">
+                    <input type="hidden" name="product_id" value="<?php echo $_GET['id']; ?>">
+                    <div class="form-group">
+                        <label for="reviewTitle">제목</label>
+                        <input type="text" id="reviewTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewRating">평점</label>
+                        <select id="reviewRating" name="rating" required>
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewContent">내용</label>
+                        <textarea id="reviewContent" name="content" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewImage">파일 첨부</label>
+                        <input type="file" id="reviewImage" name="review_image">
+                        <p class="file-info">* 파일을 첨부할 수 있습니다</p>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="submit-btn">작성하기</button>
+                        <button type="button" class="cancel-btn" onclick="toggleReviewForm()">취소</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="reviews-list">
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="review-author">김**</span>
+                        <span class="review-date">2024-05-01</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <h3 class="review-title">정말 만족스러운 구매입니다</h3>
+                    <p class="review-content">품질이 정말 좋네요. 사용감도 좋고 디자인도 깔끔합니다. 다음에도 구매할 의향 있습니다.</p>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="review-author">이**</span>
+                        <span class="review-date">2024-04-28</span>
+                        <span class="review-rating">★★★★☆</span>
+                    </div>
+                    <h3 class="review-title">가격 대비 훌륭한 제품</h3>
+                    <p class="review-content">가격이 저렴한데 품질이 생각보다 좋네요. 배송도 빠르고 포장도 잘 되어있었습니다.</p>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="review-author">박**</span>
+                        <span class="review-date">2024-04-25</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <h3 class="review-title">추천합니다</h3>
+                    <p class="review-content">친구 추천으로 구매했는데 정말 좋네요. 사용하기 편하고 디자인도 예쁩니다. 다음에 또 구매할게요!</p>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -91,6 +155,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function toggleReviewForm() {
+    const formContainer = document.getElementById('reviewFormContainer');
+    
+    if (formContainer.style.display === 'none') {
+        formContainer.style.display = 'block';
+    } else {
+        formContainer.style.display = 'none';
+    }
+}
 </script>
 
 
