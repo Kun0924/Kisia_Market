@@ -473,3 +473,9 @@
     background-color: #0056b3;
 }
 
+.review-image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}

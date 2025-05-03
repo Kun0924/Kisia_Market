@@ -18,7 +18,7 @@
         <div class="container">
             <h2 class="page-title">1:1 문의 작성</h2>
             <div class="inquiry-form">
-                <form action="queries/input_inquiry.php" method="POST" enctype="multipart/form-data">
+                <form action="queries/insert_inquiry.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div class="form-group">
                         <label for="category">문의 유형</label>

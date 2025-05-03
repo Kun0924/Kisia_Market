@@ -35,7 +35,7 @@
             $tmpName = $_FILES['file']['tmp_name'][$i];
             $fileName = $_FILES['file']['name'][$i];
 
-            $uniqueFileName = uniqid() . '_' . basename($fileName);
+            $uniqueFileName = uniqid() . '_' . $fileName;
             move_uploaded_file($tmpName, '/var/www/html/inquiry_uploads/' . $uniqueFileName);
             $image_url = '/inquiry_uploads/' . $uniqueFileName;
 
@@ -53,12 +53,12 @@
             window.location.href = '/mainmenu/inquiry_list.php';
         </script>";
     } 
-    // else {
-    //     echo "<script>
-    //         alert('문의에 실패했습니다.');
-    //         history.back();
-    //     </script>";
-    // }
+    else {
+        echo "<script>
+            alert('문의에 실패했습니다.');
+            history.back();
+        </script>";
+    }
 
     mysqli_close($conn);
 ?>

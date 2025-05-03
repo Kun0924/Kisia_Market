@@ -43,7 +43,7 @@
                             <div class="qna-item">
                                 <div class="qna-info">
                                     <?php if ($row['is_secret']): ?>
-                                        <a href="#" class="qna-title">🔒 비밀글입니다</a>
+                                        <a href="inquiry_check_secret.php?id=<?= $row['id'] ?>" class="qna-title">🔒 비밀글입니다</a>
                                     <?php else: ?>
                                         <a href="inquiry_detail.php?id=<?= $row['id'] ?>" class="qna-title">
                                             <?= htmlspecialchars($row['title']) ?>
