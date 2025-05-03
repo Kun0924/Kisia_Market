@@ -10,6 +10,7 @@
         $search_query = 'AND name LIKE "%' . $search_query . '%"';
     }
 
+
     $items_per_page = 6;
     $offset = ($page - 1) * $items_per_page;
 

@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['user_id'])) {
-    echo '<p class="login-message">리뷰를 작성하려면 <a href="../login.php">로그인</a>이 필요합니다.</p>';
+    echo '<p class="login-message">리뷰를 작성하려면 <a href="login.php">로그인</a>이 필요합니다.</p>';
     exit;
 }
 ?>
