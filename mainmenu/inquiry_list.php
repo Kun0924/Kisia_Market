@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>고객센터 - KISIA SHOP</title>
+    <title>문의사항 - KISIA SHOP</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/customer-service.css">
@@ -19,7 +19,7 @@
         <div class="list-container">
             <div class="category-tabs">
                 <a href="customer-service.php"><button class="tab-btn">공지사항</button></a>
-                <a href="inquiry_list.php"><button class="tab-btn" active>문의사항</button></a>
+                <a href="inquiry_list.php"><button class="tab-btn active">문의사항</button></a>
             </div>
 
             <div class="qna-section" id="qnaSection">

@@ -1,7 +1,6 @@
 <?php
     require_once '/var/www/html/mainmenu/common/db.php';
 
-    // URL 파라미터에서 현재 페이지, 정렬 방식, 가격 범위 가져오기
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $sort = $_GET['sort'] ?? 'newest';
     $price_range = $_GET['price_range'] ?? 'all';
@@ -61,7 +60,6 @@
 
     // 상품 목록 쿼리
     $sql = "SELECT * FROM products $price_condition $category $search_query ORDER BY $order_by LIMIT $offset, $items_per_page";
-    error_log("sql!!!!!!!!!!: " . $sql);
     $get_all_products = mysqli_query($conn, $sql);
 
     // 전체 상품 개수 쿼리 (페이징용)
