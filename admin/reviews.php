@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 관리 - KISIA SHOP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <?php include 'sidebar.php'; ?>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+            <header class="admin-header">
+                <h1>리뷰 관리</h1>
+            </header>
+            <div class="content-wrapper">
+                <div class="board-filters">
+                    <select>
+                        <option>전체 상품</option>
+                        <option>키보드</option>
+                        <option>마우스</option>
+                        <option>마우스패드</option>
+                        <option>액세서리</option>
+                    </select>
+                    <select>
+                        <option>전체 평점</option>
+                        <option>5점</option>
+                        <option>4점</option>
+                        <option>3점</option>
+                        <option>2점</option>
+                        <option>1점</option>
+                    </select>
+                    <input type="text" placeholder="검색어 입력">
+                    <button>검색</button>
+                </div>
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>상품명</th>
+                            <th>작성자</th>
+                            <th>평점</th>
+                            <th>내용</th>
+                            <th>작성일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+                        $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at,
+                                    u.name AS user_name, p.name AS product_name
+                                FROM reviews r
+                                LEFT JOIN users u ON r.user_id = u.id
+                                LEFT JOIN products p ON r.product_id = p.id
+                                ORDER BY r.created_at ASC";
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result && $result->num_rows > 0) {
+                            while ($reviews = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $reviews['id'] . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['product_name'] ?? '알 수 없음') . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['user_name'] ?? '알 수 없음') . "</td>";
+                                echo "<td>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
+                                echo "<td>" . nl2br(htmlspecialchars($reviews['content'])) . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['created_at']) . "</td>";
+                                // 관리 부분분
+                                echo "<td>
+                                        <button class='edit-btn' data-id='" . $reviews['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <button class='delete-btn' data-id='" . $reviews['id'] . "'><i class='fas fa-trash'></i></button>
+                                    </td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' class='no-data'>등록된 리뷰가가 없습니다.</td></tr>";
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
