@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS inquiry_images (
 CREATE TABLE IF NOT EXISTS products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
+  short_description VARCHAR(255),
   description TEXT,
   price INT NOT NULL,
   stock INT DEFAULT 0,
@@ -89,39 +90,39 @@ CREATE TABLE IF NOT EXISTS products (
   category VARCHAR(255) NOT NULL
 );
 
--- 액세서리 6개
-INSERT INTO products (name, description, price, stock, image_url, deliver_price, category) VALUES
-('삼성 ssd T7 1TB', '장시간 타이핑에도 편안한 손목 보호대', 1480000, 100, 'uploads/etc1.png', 2000, 'accessory'),
-('앱코 게이밍 헤드셋', '개성있는 키캡으로 키보드 꾸미기', 34000, 50, 'uploads/etc2.png', 2500, 'accessory'),
-('캔스톤 F1BT', '키보드/마우스 연결에 용이한 USB 허브', 70000, 80, 'uploads/etc3.png', 2500, 'accessory'),
-('아펙스 4 블루투스 게임패드', '윤활 도구 포함된 키보드 유지보수 키트', 180000, 60, 'uploads/etc4.png', 2500, 'accessory'),
-('닌텐도 스위치 OLED', '먼지 방지용 키보드 커버', 370000, 150, 'uploads/etc5.png', 1500, 'accessory'),
-('삼성전자 SL-C510', '책상 위 케이블을 깔끔하게 정리', 180000, 200, 'uploads/etc6.png', 1000, 'accessory');
+-- 액세서리 6개 /초고속 전송 속도를 제공하는 외장 SSD
+INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category) VALUES
+('삼성 ssd T7 1TB', '고속 전송이 가능한 1TB 외장 SSD, 휴대용 저장 장치', 'product_dec/accessory/samsungssdT7.jpg', 1480000, 100, 'uploads/etc1.png', 2000, 'accessory'),
+('앱코 게이밍 헤드셋', '가성비 좋은 유선 게이밍 헤드셋, 입문자용으로 인기', 'product_dec/accessory/abckoheadset.jpg', 34000, 50, 'uploads/etc2.png', 2500, 'accessory'),
+('캔스톤 F1BT', '블루투스 스피커 기능이 있는 고출력 사운드바', 'product_dec/accessory/canstone.jpg', 70000, 80, 'uploads/etc3.png', 2500, 'accessory'),
+('아펙스 4 블루투스 게임패드', '콘솔과 PC에 모두 호환되는 무선 게임 컨트롤러', '업데이트 예정', 180000, 60, 'uploads/etc4.png', 2500, 'accessory'),
+('닌텐도 스위치 OLED', '개선된 OLED 화면을 갖춘 닌텐도 최신 휴대용 게임기', 'product_dec/accessory/nintendooled.jpg', 370000, 150, 'uploads/etc5.png', 1500, 'accessory'),
+('삼성전자 SL-C510', '컬러 출력이 가능한 삼성 레이저 프린터', 'product_dec/accessory/samsungSL-C510.jpg', 180000, 200, 'uploads/etc6.png', 1000, 'accessory');
 
 -- 키보드 5개
-INSERT INTO products (name, description, price, stock, image_url, deliver_price, category) VALUES
-('한성컴퓨터 GK698', '정숙하고 부드러운 타건감의 무선 키보드', 39000, 70, 'uploads/keyboard1.png', 3000, 'keyboard'),
-('AULA F87 Pro', 'RGB 백라이트, 기계식 게이밍 키보드', 67000, 90, 'uploads/keyboard2.png', 2000, 'keyboard'),
-('로지텍 MX Keys Mini for Mac', '사무용으로 적합한 무접점 키보드', 125000, 40, 'uploads/keyboard3.png', 3000, 'keyboard'),
-('Razer Huntsman V2 TKL KR', '스위치 교체형 기계식 키보드', 189000, 75, 'uploads/keyboard4.png', 2500, 'keyboard'),
-('ASUS ROG FALCHION ACE HFX', '심플하고 실용적인 유선 키보드', 29900, 100, 'uploads/keyboard5.png', 2000, 'keyboard');
+INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category) VALUES
+('한성컴퓨터 GK698', '기계식 배열의 가성비 좋은 키보드, RGB 백라이트 탑재', '업데이트 예정', 39000, 70, 'uploads/keyboard1.png', 3000, 'keyboard'),
+('AULA F87 Pro', '텐키리스 레이아웃, 게이머를 위한 기계식 키보드', 'product_dec/keyboard/AULA F87 Pro.jpg', 67000, 90, 'uploads/keyboard2.png', 2000, 'keyboard'),
+('로지텍 MX Keys Mini for Mac', '맥 사용자에 최적화된 컴팩트 무선 키보드', '업데이트 예정', 125000, 40, 'uploads/keyboard3.png', 3000, 'keyboard'),
+('Razer Huntsman V2 TKL KR', '광축을 사용하는 고성능 게이밍 키보드', 'product_dec/keyboard/Razer Huntsman V2 TKL KR.jpg', 189000, 75, 'uploads/keyboard4.png', 2500, 'keyboard'),
+('ASUS ROG FALCHION ACE HFX', '컴팩트 디자인에 프로 게이머급 성능 탑재', 'product_dec/keyboard/ASUS ROG FALCHION ACE HFX.jpg', 29900, 100, 'uploads/keyboard5.png', 2000, 'keyboard');
 
 -- 마우스 6개
-INSERT INTO products (name, description, price, stock, image_url, deliver_price, category) VALUES
-('로지텍 지슈라', '인체공학 디자인의 프리미엄 무선 마우스', 139000, 50, 'uploads/mouse1.png', 3000, 'mouse'),
-('Razer Viper V3 Pro', '게이밍용 무선 마우스, 경량 디자인', 329000, 100, 'uploads/mouse2.png', 2000, 'mouse'),
-('삼성 마우스', '고성능 센서의 인체공학 마우스', 9900, 70, 'uploads/mouse3.png', 2500, 'mouse'),
-('앱코 A660', '가성비 좋은 게이밍 마우스', 27000, 150, 'uploads/mouse4.png', 2000, 'mouse'),
-('펄사 X2H 미니 무선 게이밍 마우스', '독특한 접이식 디자인의 블루투스 마우스', 83300, 30, 'uploads/mouse5.png', 3000, 'mouse'),
-('CORSAIR DARKSTAR', '휴대성이 뛰어난 무선 마우스', 187000, 120, 'uploads/mouse6.png', 1500, 'mouse');
+INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category) VALUES
+('로지텍 지슈라', '고성능 FPS 게이밍 마우스, 빠른 반응속도', 'product_dec/mouse/logitecgsuper.jpg', 139000, 50, 'uploads/mouse1.png', 3000, 'mouse'),
+('Razer Viper V3 Pro', '초경량 디자인의 고사양 무선 마우스', 'product_dec/mouse/Razer Viper V3 Pro.jpg', 329000, 100, 'uploads/mouse2.png', 2000, 'mouse'),
+('삼성 마우스', '사무용으로 적합한 보급형 유선 마우스', 'product_dec/mouse/samsungmouse.jpg', 9900, 70, 'uploads/mouse3.png', 2500, 'mouse'),
+('앱코 A660', '가성비 좋은 센서를 탑재한 보급형 마우스', 'product_dec/mouse/abckomouse.jpg', 27000, 150, 'uploads/mouse4.png', 2000, 'mouse'),
+('펄사 X2H 미니 무선 게이밍 마우스', '초경량 무선 마우스, 손이 작은 유저에게 적합', 'product_dec/mouse/pulsarmouse.jpg', 83300, 30, 'uploads/mouse5.png', 3000, 'mouse'),
+('CORSAIR DARKSTAR', 'MMO 게임에 특화된 다버튼 무선 마우스', 'product_dec/mouse/CORSAIR DARKSTAR.jpg', 187000, 120, 'uploads/mouse6.png', 1500, 'mouse');
 
 -- 마우스패드 5개
-INSERT INTO products (name, description, price, stock, image_url, deliver_price, category) VALUES
-('로지텍 POWERPLAY 2', '프로 게이머를 위한 대형 마우스패드', 142000, 60, 'uploads/pad1.png', 2500, 'mousepad'),
-('마이크로닉스 WIZMAX GP50', 'RGB 조명 포함 고급 패드', 16100, 40, 'uploads/pad2.png', 3000, 'mousepad'),
-('Razer FireFly V2', '방수 소재의 게이밍 마우스패드', 77000, 80, 'uploads/pad3.png', 2000, 'mousepad'),
-('ASUS ROG MoonStone ACE L', '고무 베이스, 미끄럼 방지 기능', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad'),
-('CORSAIR MM700 RGB Extended 3XL Cloth', '친환경 소재 사용한 마우스패드', 2130000, 90, 'uploads/pad5.png', 1500, 'mousepad');
+INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category) VALUES
+('로지텍 POWERPLAY 2', '무선 충전 기능을 지원하는 하이엔드 마우스패드', 'product_dec/mousepad/logitecpowerfly.jpg', 142000, 60, 'uploads/pad1.png', 2500, 'mousepad'),
+('마이크로닉스 WIZMAX GP50', '기본에 충실한 저가형 마우스패드', 'product_dec/mousepad/micronixWIZMAX GP50.jpg', 16100, 40, 'uploads/pad2.png', 3000, 'mousepad'),
+('Razer FireFly V2', 'RGB 조명이 화려한 게이밍 마우스패드', 'product_dec/mousepad/Razer FireFly V2.jpg', 77000, 80, 'uploads/pad3.png', 2000, 'mousepad'),
+('ASUS ROG MoonStone ACE L', '단단한 소재의 프리미엄 대형 패드', 'product_dec/mousepad/ASUS ROG MoonStone ACE L.jpg', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad'),
+('CORSAIR MM700 RGB Extended 3XL Cloth', '초대형 RGB 패브릭 패드, 책상 전체를 덮는 크기', 'product_dec/mousepad/CORSAIR MM700 RGB Extended 3XL Cloth.jpg', 2130000, 90, 'uploads/pad5.png', 1500, 'mousepad');
 
 -- 리뷰 테이블 생성
 CREATE TABLE reviews (

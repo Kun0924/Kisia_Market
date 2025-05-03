@@ -145,6 +145,14 @@
 }
 
 /* 상세 설명 스타일 */
+#description img {
+    max-width: 70%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    object-fit: contain;
+}
+
 #description {
     padding: 30px;
     background: white;
