@@ -19,8 +19,6 @@ services:
   # MySQL 데이터베이스
   db:
     image: mysql:8.0
-    ports:
-      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -35,8 +33,6 @@ services:
   # phpMyAdmin (선택사항)
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    ports:
-      - "8080:80"
     environment:
       - PMA_HOST=db
       - PMA_USER=root
