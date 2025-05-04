@@ -51,16 +51,20 @@
                                     echo "<tr>";
                                     echo "<td></td>";
                                     echo "<td>공지사항</td>";
-                                    echo "<td>" . htmlspecialchars($notices['title']) . "</td>";
+                                    echo "<td>" . $notices['title'] . "</td>";
                                     echo "<td>관리자</td>";
-                                    echo "<td>" . htmlspecialchars($notices['created_at']) . "</td>";
+                                    echo "<td>" . $notices['created_at'] . "</td>";
                                     echo "<td>-</td>";
                                     echo "<td>
-                                        <button class='edit-btn' data-id='" . $notices['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $notices['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                            <a href = 'admin_edit.php? id=" . $notices['id'] . "'title = '확인및수정'>
+                                            <button class='edit-btn' data-id='" . $notices['id'] . "'><i class='fas fa-edit'></i></button>
+                                            <a href = 'admin_delete.php? id=" . $notices['id'] . "'title = '삭제'>
+                                            <button class='delete-btn' data-id='" . $notices['id'] . "'><i class='fas fa-trash'></i></button>
+                                        </td>";
                                     echo "</tr>";
                                 }
+                            } else {
+                                echo "<tr><td colspan='7' class='no-data'>등록된 공지사항이이 없습니다.</td></tr>";
                             }
 
                             // 문의사항
@@ -72,20 +76,24 @@
 
                             if ($result2 && mysqli_num_rows($result2) > 0) {
                                 while ($inquiry = mysqli_fetch_assoc($result2)) {
-                                    $title = $inquiry['is_secret'] ? '🔒 비밀글입니다' : htmlspecialchars($inquiry['title']);
+                                    $title = $inquiry['is_secret'] ? '🔒 비밀글입니다' : $inquiry['title'];
                                     echo "<tr>";
                                     echo "<td></td>";
                                     echo "<td>문의사항</td>";
                                     echo "<td>{$title}</td>";
-                                    echo "<td>" . htmlspecialchars($inquiry['name']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($inquiry['created_at']) . "</td>";
+                                    echo "<td>" . $inquiry['name'] . "</td>";
+                                    echo "<td>" . $inquiry['created_at'] . "</td>";
                                     echo "<td>-</td>";
                                     echo "<td>
-                                        <button class='edit-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                            <a href = 'admin_edit.php? id=" . $inquiry['id'] . "'title = '확인및수정'>
+                                            <button class='edit-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-edit'></i></button>
+                                            <a href = 'admin_delete.php? id=" . $inquiry['id'] . "'title = '삭제'>
+                                            <button class='delete-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-trash'></i></button>
+                                        </td>";
                                     echo "</tr>";
                                 }
+                            } else {
+                                echo "<tr><td colspan='7' class='no-data'>등록된 문의사항이이 없습니다.</td></tr>";
                             }
                             ?>
                     </tbody>
