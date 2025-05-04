@@ -53,13 +53,13 @@
                                 <td>
                                     <div class="quantity-control">
                                         <button class="quantity-btn" data-action="decrease">-</button>
-                                        <input type="number" class="quantity-input" value="1" min="1" data-price="<?php echo $item['price']; ?>">
+                                        <input type="number" class="quantity-input" value="<?php echo $item['quantity']; ?>" min="1" data-price="<?php echo $item['price']; ?>">
                                         <button class="quantity-btn" data-action="increase">+</button>
                                     </div>
                                 </td>
-                                <td class="product-price"><?php echo number_format($item['price']); ?>원</td>
-                                <td class="shipping-fee"><?php echo number_format($item['deliver_price']); ?>원</td>
-                                <td class="total-price"><?php echo number_format($item['price'] + $item['deliver_price']); ?>원</td>
+                                <td class="product-price"><?php echo number_format($item['price'] * $item['quantity']); ?>원</td>
+                                <td class="shipping-fee" data-price="<?php echo $item['deliver_price']; ?>"><?php echo number_format($item['deliver_price']); ?>원</td>
+                                <td class="total-price"><?php echo number_format($item['price'] * $item['quantity'] + $item['deliver_price']); ?>원</td>
                                 <td>
                                     <button class="remove-btn">삭제</button>
                                 </td>
@@ -101,11 +101,45 @@
                 const input = this.parentNode.querySelector('.quantity-input');
                 const currentValue = parseInt(input.value);
                 const action = this.getAttribute('data-action');
+                const cartItemId = this.closest('tr').dataset.cartItemId;
+                console.log(cartItemId);
                 
                 if (action === 'increase') {
-                    input.value = currentValue + 1;
+                    fetch('/mainmenu/queries/update_cart_item.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `cart_item_id=${cartItemId}&quantity=${currentValue + 1}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('장바구니 업데이트 성공');
+                            input.value = currentValue + 1;
+                            updatePrices();
+                        } else {
+                            alert(data.message);
+                        }
+                    });
                 } else if (action === 'decrease' && currentValue > 1) {
-                    input.value = currentValue - 1;
+                    fetch('/mainmenu/queries/update_cart_item.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `cart_item_id=${cartItemId}&quantity=${currentValue - 1}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('장바구니 업데이트 성공');
+                            input.value = currentValue - 1;
+                            updatePrices();
+                        } else {
+                            alert(data.message);
+                        }
+                    });
                 }
                 
                 // 가격 계산 로직
@@ -161,8 +195,7 @@
                 if (quantityInput) {
                     const quantity = parseInt(quantityInput.value);
                     const price = parseInt(quantityInput.getAttribute('data-price'));
-                    const shippingFee = 2500; // 각 상품당 배송비
-                    
+                    const shippingFee = parseInt(row.querySelector('.shipping-fee').getAttribute('data-price')); // 각 상품당 배송비
                     const productTotal = quantity * price;
                     const rowTotal = productTotal + shippingFee;
                     
