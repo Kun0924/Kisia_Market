@@ -16,9 +16,9 @@
     $grandTotal = 0;
     
     foreach ($cart_items as $item) {
-        $subtotal += $item['price'];
+        $subtotal += $item['price'] * $item['quantity'];
         $shippingTotal += $item['deliver_price'];
-        $grandTotal += $item['price'] + $item['deliver_price'];
+        $grandTotal += $item['price'] * $item['quantity'] + $item['deliver_price'];
     }
 
     mysqli_close($conn);
