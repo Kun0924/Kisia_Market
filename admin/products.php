@@ -52,14 +52,16 @@
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($product = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($product['id']) . "</td>";
-                                echo "<td>" . htmlspecialchars($product['name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($product['category']) . "</td>";
+                                echo "<td>" . $product['id'] . "</td>";
+                                echo "<td>" . $product['name'] . "</td>";
+                                echo "<td>" . $product['category'] . "</td>";
                                 echo "<td>" . number_format($product['price']) . "원</td>";
-                                echo "<td>" . htmlspecialchars($product['stock']) . "</td>";
+                                echo "<td>" . $product['stock'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
                                 echo "<td>
+                                        <a href = 'admin_edit.php? id=" . $product['id'] . "'title = '확인및수정'>
                                         <button class='edit-btn' data-id='" . $product['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <a href = 'admin_delete.php? id=" . $product['id'] . "'title = '삭제'>
                                         <button class='delete-btn' data-id='" . $product['id'] . "'><i class='fas fa-trash'></i></button>
                                       </td>";
                                 echo "</tr>";

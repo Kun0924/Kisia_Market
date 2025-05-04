@@ -5,31 +5,31 @@
     </div>
     <nav class="admin-menu">
         <ul>
-            <li <?php echo basename($_SERVER['PHP_SELF']) == 'dashboard_main.php' ? 'class="active"' : ''; ?>>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'dashboard_main.php' ? 'class="active"' : ''; ?>>
                 <a href="dashboard_main.php">
                     <i class="fas fa-home"></i>
                     <span>대시보드</span>
                 </a>
             </li>
-            <li <?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'class="active"' : ''; ?>>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'products.php' ? 'class="active"' : ''; ?>>
                 <a href="products.php">
                     <i class="fas fa-box"></i>
                     <span>상품 관리</span>
                 </a>
             </li>
-            <li <?php echo basename($_SERVER['PHP_SELF']) == 'members.php' ? 'class="active"' : ''; ?>>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'members.php' ? 'class="active"' : ''; ?>>
                 <a href="members.php">
                     <i class="fas fa-users"></i>
                     <span>회원 관리</span>
                 </a>
             </li>
-            <li <?php echo basename($_SERVER['PHP_SELF']) == 'reviews.php' ? 'class="active"' : ''; ?>>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'reviews.php' ? 'class="active"' : ''; ?>>
                 <a href="reviews.php">
                     <i class="fas fa-clipboard-list"></i>
                     <span>리뷰 관리</span>
                 </a>
             </li>
-            <li <?php echo basename($_SERVER['PHP_SELF']) == 'board.php' ? 'class="active"' : ''; ?>>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'board.php' ? 'class="active"' : ''; ?>>
                 <a href="board.php">
                     <i class="fas fa-clipboard-list"></i>
                     <span>고객센터 관리</span>
