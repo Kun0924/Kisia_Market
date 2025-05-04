@@ -70,14 +70,14 @@ ul {
 }
 
 .logo h1 {
-    font-size: 24px;
+    font-size: 34px;
     font-weight: 700;
     color: #ff6b6b;
 }
 
 .search-box {
     display: flex;
-    width: 40%;
+    width: 30%;
 }
 
 .search-box input {
@@ -112,7 +112,7 @@ ul {
 
 /* Main Menu Styles */
 .main-menu {
-    background: #333;
+    background: #0c0521;
     padding: 15px 0;
 }
 

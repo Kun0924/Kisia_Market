@@ -43,13 +43,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="7" class="no-data">등록된 상품이 없습니다.</td>
-                        </tr>
+                        <?php
+                        require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+                        $sql = "SELECT * FROM products ORDER BY id asc";
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result && mysqli_num_rows($result) > 0) {
+                            while ($product = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($product['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($product['name']) . "</td>";
+                                echo "<td>" . htmlspecialchars($product['category']) . "</td>";
+                                echo "<td>" . number_format($product['price']) . "원</td>";
+                                echo "<td>" . htmlspecialchars($product['stock']) . "</td>";
+                                echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
+                                echo "<td>
+                                        <button class='edit-btn' data-id='" . $product['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <button class='delete-btn' data-id='" . $product['id'] . "'><i class='fas fa-trash'></i></button>
+                                      </td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' class='no-data'>등록된 상품이 없습니다.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </body>
-</html> 
+</html>

@@ -5,7 +5,7 @@
 
 /* 메인 배너 */
 .main-banner {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/earth.jpg');
     background-size: cover;
     background-position: center;
     height: 500px;
@@ -124,7 +124,7 @@
 }
 
 .more:hover {
-    background-color: #0056b3;
+    background-color: #FFE369;
 }
 
 /* 키보드 섹션 */
