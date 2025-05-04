@@ -40,9 +40,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="7" class="no-data">등록된 회원이 없습니다.</td>
-                        </tr>
+                        <?php
+                        require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+                        
+                        $sql = "SELECT id, userId, name, email, created_at FROM users ORDER BY id ASC";
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result && mysqli_num_rows($result) > 0) {
+                            while ($users = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($users['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($users['userId']) . "</td>";
+                                echo "<td>" . htmlspecialchars($users['name']) . "</td>";
+                                echo "<td>" . htmlspecialchars($users['email']) . "</td>";
+                                echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
+                                echo "<td>-</td>";
+                                echo "<td>
+                                        <button class='edit-btn' data-id='" . $users['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <button class='delete-btn' data-id='" . $users['id'] . "'><i class='fas fa-trash'></i></button>
+                                      </td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' class='no-data'>등록된 회원이 없습니다.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>

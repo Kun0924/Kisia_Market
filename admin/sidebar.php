@@ -23,10 +23,16 @@
                     <span>회원 관리</span>
                 </a>
             </li>
+            <li <?php echo basename($_SERVER['PHP_SELF']) == 'reviews.php' ? 'class="active"' : ''; ?>>
+                <a href="reviews.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>리뷰 관리</span>
+                </a>
+            </li>
             <li <?php echo basename($_SERVER['PHP_SELF']) == 'board.php' ? 'class="active"' : ''; ?>>
                 <a href="board.php">
                     <i class="fas fa-clipboard-list"></i>
-                    <span>게시판 관리</span>
+                    <span>고객센터 관리</span>
                 </a>
             </li>
             <li>

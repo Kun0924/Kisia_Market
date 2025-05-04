@@ -220,4 +220,106 @@ body {
 
 .add-product-btn:hover {
     background-color: #27ae60;
+}
+
+/* 리뷰 관리 페이지 스타일 */
+.review-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.review-filters select,
+.review-filters input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+}
+
+.review-filters select {
+    min-width: 120px;
+}
+
+.review-filters input {
+    flex: 1;
+}
+
+.review-filters button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.review-filters button:hover {
+    background-color: #2980b9;
+}
+
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.review-table th,
+.review-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.review-table th {
+    background-color: #f8f9fa;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.review-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.review-table .view-btn,
+.review-table .delete-btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+.review-table .view-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.review-table .view-btn:hover {
+    background-color: #2980b9;
+}
+
+.review-table .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.review-table .delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* 별점 스타일 */
+.star-rating {
+    color: #f1c40f;
+    font-size: 16px;
 } 

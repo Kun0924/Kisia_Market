@@ -1,7 +1,7 @@
 <html lang="ko"> 
     <style>
         .footer {
-            background-color: #f8f9fa;
+            background-color: #0c0521;
             padding: 40px 0;
             margin-top: 50px;
         }
@@ -21,7 +21,7 @@
             min-width: 250px;
         }
         .footer-section h3 {
-            color: #333;
+            color: white;
             margin-bottom: 20px;
             font-size: 18px;
         }
@@ -60,7 +60,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>고객센터</h3>
-                    <p>전화: 123-456-7890</p>
+                    <p>전화: 010-1234-5678</p>
                     <p>이메일: support@kisiashop.com</p>
                     <p>운영시간: 평일 10:00 - 17:00</p>
                 </div>

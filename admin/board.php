@@ -20,10 +20,8 @@
             <div class="content-wrapper">
                 <div class="board-filters">
                     <select>
-                        <option>전체 게시판</option>
                         <option>공지사항</option>
-                        <option>Q&A</option>
-                        <option>리뷰</option>
+                        <option>문의사항</option>
                     </select>
                     <input type="text" placeholder="제목/내용 검색">
                     <button>검색</button>
@@ -41,9 +39,55 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="7" class="no-data">등록된 게시글이 없습니다.</td>
-                        </tr>
+                        <?php
+                            require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+                            $sql1 = "SELECT id, title, created_at FROM notices ORDER BY created_at DESC";
+                            $result1 = mysqli_query($conn, $sql1);
+
+                            //공지사항
+                            if ($result1 && mysqli_num_rows($result1) > 0) {
+                                while ($notices = mysqli_fetch_assoc($result1)) {
+                                    echo "<tr>";
+                                    echo "<td></td>";
+                                    echo "<td>공지사항</td>";
+                                    echo "<td>" . htmlspecialchars($notices['title']) . "</td>";
+                                    echo "<td>관리자</td>";
+                                    echo "<td>" . htmlspecialchars($notices['created_at']) . "</td>";
+                                    echo "<td>-</td>";
+                                    echo "<td>
+                                        <button class='edit-btn' data-id='" . $notices['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <button class='delete-btn' data-id='" . $notices['id'] . "'><i class='fas fa-trash'></i></button>
+                                    </td>";
+                                    echo "</tr>";
+                                }
+                            }
+
+                            // 문의사항
+                            $sql2 = "SELECT i.id, i.title, i.created_at, u.name, i.is_secret 
+                                    FROM inquiry i
+                                    LEFT JOIN users u ON i.user_id = u.id
+                                    ORDER BY i.created_at DESC";
+                            $result2 = mysqli_query($conn, $sql2);
+
+                            if ($result2 && mysqli_num_rows($result2) > 0) {
+                                while ($inquiry = mysqli_fetch_assoc($result2)) {
+                                    $title = $inquiry['is_secret'] ? '🔒 비밀글입니다' : htmlspecialchars($inquiry['title']);
+                                    echo "<tr>";
+                                    echo "<td></td>";
+                                    echo "<td>문의사항</td>";
+                                    echo "<td>{$title}</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['name']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['created_at']) . "</td>";
+                                    echo "<td>-</td>";
+                                    echo "<td>
+                                        <button class='edit-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <button class='delete-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-trash'></i></button>
+                                    </td>";
+                                    echo "</tr>";
+                                }
+                            }
+                            ?>
                     </tbody>
                 </table>
             </div>
