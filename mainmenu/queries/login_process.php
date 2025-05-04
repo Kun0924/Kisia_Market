@@ -13,6 +13,7 @@
         $_SESSION['id'] = $user['id'];
         $_SESSION['userId'] = $user['userId'];
         $_SESSION['name'] = $user['name'];
+        $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
 
         if ($user['userId'] === 'admin') {

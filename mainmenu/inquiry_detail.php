@@ -22,16 +22,7 @@
                 <?php $row = mysqli_fetch_assoc($get_inquiry); ?>
                 <div class="inquiry-post-header">
                     <span class="inquiry-category">
-                        <?php
-                            $categories = [
-                                'order' => '주문/결제',
-                                'delivery' => '배송',
-                                'return' => '반품/교환',
-                                'product' => '상품',
-                                'etc' => '기타'
-                            ];
-                            echo $categories[$row['type']] ?? '기타';
-                        ?>
+                        <?php echo $row['type'];?>
                     </span>
                     <h2 class="inquiry-post-title"><?= $row['title'] ?></h2>
                     <div class="inquiry-post-meta">

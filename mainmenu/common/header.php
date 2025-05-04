@@ -6,7 +6,7 @@
                 <?php if (!isset($menu_path)) $menu_path = './'; ?>
                 <div class="header-links">
                     <?php if ($userId): ?>
-                        <p class="header-link">안녕하세요 <span style="color: #ff6b6b;"><?= htmlspecialchars($name) ?></span>님</p>
+                        <p class="header-link">안녕하세요 <span style="color: #ff6b6b;"><?= $name ?></span>님</p>
                         <a href="<?= $menu_path ?>queries/logout_process.php" class="header-link">로그아웃</a>
                          <a href="<?= $menu_path ?>cart.php" class="header-link">장바구니</a>
                         <a href="<?= $menu_path ?>mypage.php" class="header-link">마이페이지</a>
