@@ -56,9 +56,11 @@
                                     echo "<td>" . $notices['created_at'] . "</td>";
                                     echo "<td>-</td>";
                                     echo "<td>
-                                        <button class='edit-btn' data-id='" . $notices['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $notices['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                            <a href = 'admin_edit.php? id=" . $notices['id'] . "'title = '확인및수정'>
+                                            <button class='edit-btn' data-id='" . $notices['id'] . "'><i class='fas fa-edit'></i></button>
+                                            <a href = 'admin_delete.php? id=" . $notices['id'] . "'title = '삭제'>
+                                            <button class='delete-btn' data-id='" . $notices['id'] . "'><i class='fas fa-trash'></i></button>
+                                        </td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -83,9 +85,11 @@
                                     echo "<td>" . $inquiry['created_at'] . "</td>";
                                     echo "<td>-</td>";
                                     echo "<td>
-                                        <button class='edit-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                            <a href = 'admin_edit.php? id=" . $inquiry['id'] . "'title = '확인및수정'>
+                                            <button class='edit-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-edit'></i></button>
+                                            <a href = 'admin_delete.php? id=" . $inquiry['id'] . "'title = '삭제'>
+                                            <button class='delete-btn' data-id='" . $inquiry['id'] . "'><i class='fas fa-trash'></i></button>
+                                        </td>";
                                     echo "</tr>";
                                 }
                             } else {
