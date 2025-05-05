@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS products (
 
 -- 액세서리 6개 /초고속 전송 속도를 제공하는 외장 SSD
 INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category) VALUES
-('삼성 ssd T7 1TB', '고속 전송이 가능한 1TB 외장 SSD, 휴대용 저장 장치', 'product_dec/accessory/samsungssdT7.jpg', 1480000, 100, 'uploads/etc1.png', 2000, 'accessory'),
+('삼성 ssd T7 1TB', '고속 전송이 가능한 1TB 외장 SSD, 휴대용 저장 장치', 'product_dec/accessory/samsungssdT7.jpg', 148000, 100, 'uploads/etc1.png', 2000, 'accessory'),
 ('앱코 게이밍 헤드셋', '가성비 좋은 유선 게이밍 헤드셋, 입문자용으로 인기', 'product_dec/accessory/abckoheadset.jpg', 34000, 50, 'uploads/etc2.png', 2500, 'accessory'),
 ('캔스톤 F1BT', '블루투스 스피커 기능이 있는 고출력 사운드바', 'product_dec/accessory/canstone.jpg', 70000, 80, 'uploads/etc3.png', 2500, 'accessory'),
 ('아펙스 4 블루투스 게임패드', '콘솔과 PC에 모두 호환되는 무선 게임 컨트롤러', '업데이트 예정', 180000, 60, 'uploads/etc4.png', 2500, 'accessory'),
