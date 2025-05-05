@@ -20,10 +20,10 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <select>
-                        <option>전체 회원</option>
-                        <option>일반 회원</option>
-                        <option>관리자</option>
+                    <select id="role-filter">
+                        <option value="all">전체 회원</option>
+                        <option value="user">일반 회원</option>
+                        <option value="admin">관리자</option>
                     </select>
                     <input type="text" placeholder="회원명/아이디 검색">
                     <button>검색</button>
@@ -57,9 +57,6 @@
                                 echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
                                 echo "<td>-</td>";
                                 echo "<td>
-                                        <a href='admin_edit.php?id=" . $users['id'] . "' class='edit-btn' title='확인 및 수정'>
-                                            <i class='fas fa-edit'></i>
-                                        </a>
                                         <a href='admin_delete.php?id=" . $users['id'] . "' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>

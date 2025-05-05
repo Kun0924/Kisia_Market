@@ -19,6 +19,11 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
+                    <select>
+                        <option>전체</option>
+                        <option>답변 대기</option>
+                        <option>답변 완료</option>
+                    </select>
                     <input type="text" placeholder="제목/내용 검색">
                     <button class="edit-btn">검색</button>
                 </div>
@@ -48,14 +53,14 @@
                                 while ($inquiry = mysqli_fetch_assoc($result)) {
                                     $title = $inquiry['is_secret'] ? '🔒 비밀글입니다' : $inquiry['title'];
                                     echo "<tr>";
-                                    echo "<td>-</td>"; // 문의 사항 번호호
+                                    echo "<td>" . $inquiry['id'] . "</td>";// 문의 사항 번호
                                     echo "<td>{$title}</td>";
                                     echo "<td>" . $inquiry['user_name'] . "</td>";
                                     echo "<td>" . $inquiry['created_at'] . "</td>";
-                                    echo "<td>-</td>"; // 문의 사항 상태태
+                                    echo "<td>-</td>"; // 문의 사항 상태
                                     echo "<td>
-                                        <a href='admin_edit.php?id=" . $inquiry['id'] . "' class='edit-btn' title='확인 및 수정'>
-                                            <i class='fas fa-edit'></i>
+                                        <a href='admin_edit.php?id=" . $inquiry['id'] . "' class='edit-btn' title='문의답변'>
+                                            <i class='fa fa-reply'></i>
                                         </a>
                                         <a href='admin_delete.php?id=" . $inquiry['id'] . "' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>

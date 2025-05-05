@@ -20,12 +20,12 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <select>
-                        <option>전체 카테고리</option>
-                        <option>키보드</option>
-                        <option>마우스</option>
-                        <option>마우스패드</option>
-                        <option>액세서리</option>
+                    <select id="category-filter">
+                        <option value="all">전체 카테고리</option>
+                        <option value="accessory">액세서리</option>
+                        <option value="keyboard">키보드</option>
+                        <option value="mouse">마우스</option>
+                        <option value="mousepad">마우스패드</option>
                     </select>
                     <input type="text" placeholder="상품명 검색">
                     <button>검색</button>
@@ -77,5 +77,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryFilter = document.getElementById('category-filter');
+        const rows = document.querySelectorAll('tbody tr');
+
+        categoryFilter.addEventListener('change', function () {
+            const selectedCategory = this.value;
+
+            rows.forEach(row => {
+                const category = row.children[2].textContent.trim(); // 3번째 컬럼 = 카테고리
+
+                if (selectedCategory === 'all' || category === selectedCategory) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+
+
 </body>
 </html>

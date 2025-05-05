@@ -339,3 +339,12 @@ body {
     color: white;
     white-space: nowrap;
 }
+
+/* 데이터가 없을 때 */
+.no-data {
+    text-align: center;
+    vertical-align: middle;
+    padding: 40px 0;
+    color: #6c757d;
+    font-size: 15px;
+}

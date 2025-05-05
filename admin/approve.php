@@ -68,7 +68,7 @@
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6' class='no-data'>등록된 주문이 없습니다.</td></tr>";
+                            echo "<tr><td colspan='7' class='no-data'>등록된 주문이 없습니다.</td></tr>";
                         }
                         ?>
                     </tbody>

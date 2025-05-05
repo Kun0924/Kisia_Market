@@ -20,20 +20,28 @@
             <div class="dashboard-content">
                 <div class="dashboard-stats">
                     <div class="stat-card">
-                        <h3>총 주문</h3>
-                        <p>0</p>
-                    </div>
-                    <div class="stat-card">
                         <h3>총 회원</h3>
-                        <p>0</p>
+                        <p>0명</p>
                     </div>
                     <div class="stat-card">
                         <h3>총 상품</h3>
-                        <p>0</p>
+                        <p>0개</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>총 주문</h3>
+                        <p>0건</p>
                     </div>
                     <div class="stat-card">
                         <h3>총 매출</h3>
                         <p>0원</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>리뷰</h3>
+                        <p>0건</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>문의사항</h3>
+                        <p>0건</p>
                     </div>
                 </div>
             </div>
