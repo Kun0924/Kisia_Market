@@ -36,16 +36,85 @@
                         </div>
                         
                         <ul class="mypage-menu">
+                            <li><a href="mypage_profile.php" data-section="profile-edit-section" class="active">회원 정보</a></li>
                             <li><a href="mypage.php" data-section="order-section">주문/배송</a></li>
-                            <li><a href="mypage_profile.php" data-section="profile-edit-section" class="active">회원 정보 수정</a></li>
                             <li><a href="mypage_review.php" data-section="review-section">나의 리뷰</a></li>
                             <li><a href="mypage_inquiry.php" data-section="inquiry-section">1:1 문의내역</a></li>
                         </ul>
                     </div>
 
+                    <div class="mypage-section" id="point-section">
+                        <h3>포인트</h3>
+
+                        <div class="user-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value"><?php echo isset($order_count) ? number_format($order_count) : '0'; ?></div>
+                                    <div class="stat-label">총 주문 횟수</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value"><?php echo isset($shipping_count) ? number_format($shipping_count) : '0'; ?></div>
+                                    <div class="stat-label">배송중인 상품</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="point-container">
+                            <div class="current-point">
+                                <div class="point-label">현재 보유 포인트</div>
+                                <div class="point-value"><?php echo number_format($user['point']); ?> P</div>
+                            </div>
+                            <button id="btnChargePoint" class="btn-charge-point">포인트 충전</button>
+                        </div>
+                        
+                        <!-- 충전 폼 (초기에는 숨겨진 상태) -->
+                        <div id="pointChargeForm" class="point-charge-form" style="display:none;">
+                            <div class="form-header">포인트 충전하기</div>
+                            <div style="color: #666; font-size: 14px; margin-bottom: 15px;">* 천원 단위로만 충전이 가능합니다.</div>
+                            <form action="queries/charge_point.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                                <div class="charge-options">
+                                    <div class="charge-option">
+                                        <input type="radio" id="amount10000" name="charge_amount" value="10000">
+                                        <label for="amount10000">10,000P</label>
+                                    </div>
+                                    <div class="charge-option">
+                                        <input type="radio" id="amount30000" name="charge_amount" value="30000">
+                                        <label for="amount30000">30,000P</label>
+                                    </div>
+                                    <div class="charge-option">
+                                        <input type="radio" id="amount50000" name="charge_amount" value="50000">
+                                        <label for="amount50000">50,000P</label>
+                                    </div>
+                                    <div class="charge-option">
+                                        <input type="radio" id="amount100000" name="charge_amount" value="100000">
+                                        <label for="amount100000">100,000P</label>
+                                    </div>
+                                    <div class="charge-option">
+                                        <input type="radio" id="amountCustom" name="charge_amount" value="custom">
+                                        <label for="amountCustom">직접입력</label>
+                                        <input type="number" id="customAmount" class="custom-amount" name="custom_amount" placeholder="충전할 금액을 입력하세요" min="1000" step="1000" disabled>
+                                    </div>
+                                </div>
+                                <div class="charge-actions">
+                                    <button type="submit" class="btn-submit-charge">충전하기</button>
+                                    <button type="button" id="btnCancelCharge" class="btn-cancel-charge">취소</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     <!-- 회원 정보 수정 섹션 -->
                     <div class="mypage-section" id="profile-edit-section">
-                        <h3>회원 정보 수정</h3>
+                        <h3>회원 정보</h3>
                         <div class="profile-edit-form">
                             <form action="queries/update_user.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
@@ -99,6 +168,30 @@
             }
         }).open();
     });
+    </script>
+    <script>
+        // 충전 버튼 클릭 시 폼 표시
+        document.getElementById('btnChargePoint').addEventListener('click', function() {
+            document.getElementById('pointChargeForm').style.display = 'block';
+        });
+
+        // 취소 버튼 클릭 시 폼 숨김
+        document.getElementById('btnCancelCharge').addEventListener('click', function() {
+            document.getElementById('pointChargeForm').style.display = 'none';
+        });
+
+        // 직접입력 선택 시만 직접입력 필드 활성화
+        document.querySelectorAll('input[name="charge_amount"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                const customAmountField = document.getElementById('customAmount');
+                if (this.value === 'custom' && this.checked) {
+                    customAmountField.disabled = false;
+                    customAmountField.focus();
+                } else {
+                    customAmountField.disabled = true;
+                }
+            });
+        });
     </script>
 </body>
 </html> 

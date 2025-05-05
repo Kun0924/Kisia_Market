@@ -35,7 +35,7 @@ include 'queries/get_header_session.php';
             echo '<p class="price">' . number_format($row['price']) . '원</p>';
             echo '<div class="button-group">';
             echo '<button class="cart-btn" id="addToCartBtn"><i class="fas fa-shopping-cart"></i> 장바구니</button>';
-            echo '<button class="buy-btn">구매하기</button>';
+            echo '<button class="buy-btn" id="buyBtn">구매하기</button>';
             echo '</div>';
             echo '</div>';
             echo '</div>';
@@ -180,6 +180,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert(data.message);
             }
         });
+    });
+
+    // 구매하기 버튼: 구매 페이지로 이동
+    document.getElementById('buyBtn').addEventListener('click', function () {
+        window.location.href = 'checkout.php?type=direct&id=' + '<?php echo $_GET['id']; ?>';
     });
 
     // 계속 쇼핑하기 버튼: 모달 닫기

@@ -27,6 +27,7 @@
             GROUP BY order_id
         ) item_count_table ON o.id = item_count_table.order_id
         WHERE o.user_id = '$userId'
+        ORDER BY o.id DESC
         LIMIT $offset, $items_per_page
     ";
     $result = mysqli_query($conn, $sql);

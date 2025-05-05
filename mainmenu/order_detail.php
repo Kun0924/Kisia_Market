@@ -164,7 +164,10 @@
                 </tr>
             </table>
 
-            <a href="mypage.php" class="btn-back">목록으로</a>
+            <div class="button-group" style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+                <a href="mypage.php" class="btn-back">목록으로</a>
+                <a href="queries/cancel_order.php?order_id=<?php echo $order['id']; ?>" class="btn-back" style="background-color: #dc3545; color: white;">주문 취소</a>
+            </div>
         </div>
     </main>
 

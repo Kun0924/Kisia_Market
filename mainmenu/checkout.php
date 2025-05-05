@@ -15,7 +15,7 @@
 <body>
     <?php include 'common/header.php'; ?>
     <?php require_once 'queries/get_mypage_user.php'; ?>
-    <?php require_once 'queries/get_cart_items.php'; ?>
+    <?php require_once 'queries/get_checkout_items.php'; ?>
     <?php mysqli_close($conn); ?>
 
     <!-- Main Content -->
@@ -37,6 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if ($type == 'cart') : ?>
                                 <?php foreach ($cart_items as $item) : ?>
                                 <tr>
                                     <td>
@@ -49,6 +50,18 @@
                                     <td><?php echo number_format($item['price']); ?>원</td>
                                 </tr>
                                 <?php endforeach; ?>
+                                <?php else : ?>
+                                <tr>
+                                    <td>
+                                        <div class="product-info">
+                                            <img src="/<?php echo $product['image_url']; ?>" alt="상품 이미지" class="product-image">
+                                            <a href="product_explain.php?id=<?php echo $product['id']; ?>" class="product-name"><?php echo $product['name']; ?></a>
+                                        </div>
+                                    </td>
+                                    <td>1</td>
+                                    <td><?php echo number_format($product['price']); ?>원</td>
+                                </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                         
@@ -79,17 +92,27 @@
                         </label>
                     </h3>
                     <form class="checkout-form" id="checkoutForm" method="post" action="queries/insert_order.php">
+                        <input type="hidden" name="type" value="<?php echo $type; ?>">
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
                         <input type="hidden" name="order_amount" value="<?php echo $grandTotal; ?>">
-                        <?php foreach ($cart_items as $item) : ?>
-                        <input type="hidden" name="product_id[]" value="<?php echo $item['id']; ?>">
-                        <input type="hidden" name="quantity[]" value="<?php echo $item['quantity']; ?>">
-                        <input type="hidden" name="price[]" value="<?php echo $item['price']; ?>">
-                        <input type="hidden" name="product_name[]" value="<?php echo $item['name']; ?>">
-                        <input type="hidden" name="product_image_url[]" value="<?php echo $item['image_url']; ?>">
-                        <input type="hidden" name="deliver_price[]" value="<?php echo $item['deliver_price']; ?>">
-                        <?php endforeach; ?>
+                        <?php if ($type == 'cart') : ?>
+                            <?php foreach ($cart_items as $item) : ?>
+                            <input type="hidden" name="product_id[]" value="<?php echo $item['id']; ?>">
+                            <input type="hidden" name="quantity[]" value="<?php echo $item['quantity']; ?>">
+                            <input type="hidden" name="price[]" value="<?php echo $item['price']; ?>">
+                            <input type="hidden" name="product_name[]" value="<?php echo $item['name']; ?>">
+                            <input type="hidden" name="product_image_url[]" value="<?php echo $item['image_url']; ?>">
+                            <input type="hidden" name="deliver_price[]" value="<?php echo $item['deliver_price']; ?>">
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="price" value="<?php echo $product['price']; ?>">
+                            <input type="hidden" name="product_name" value="<?php echo $product['name']; ?>">
+                            <input type="hidden" name="product_image_url" value="<?php echo $product['image_url']; ?>">
+                            <input type="hidden" name="deliver_price" value="<?php echo $product['deliver_price']; ?>">
+                        <?php endif; ?>
                         <div class="form-group">
                             <label for="name">수령인 이름</label>
                             <input type="text" id="name" name="receiver_name" required>

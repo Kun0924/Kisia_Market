@@ -22,29 +22,61 @@
     $product_image_url = $_POST['product_image_url'] ?? '';
     $deliver_price = $_POST['deliver_price'] ?? '';
 
+    $type = $_POST['type'] ?? '';
     $all_success = true;
+    $fail_message = '주문에 실패했습니다.';
 
-    $sql = "INSERT INTO orders (user_id, user_name, order_amount, payment_method, depositor_name, bank_name, receiver_name, receiver_phone, receiver_email, receiver_address, receiver_postcode, receiver_address_detail, delivery_memo) VALUES ('$userId', '$name', '$order_amount', '$payment_method', '$depositor_name', '$bank_name', '$receiver_name', '$receiver_phone', '$receiver_email', '$receiver_address', '$receiver_postcode', '$receiver_address_detail', '$delivery_memo')";
+    $sql = "SELECT point FROM users WHERE id = '$userId'";
     $result = mysqli_query($conn, $sql);
-    if (!$result) {
-        $all_success = false;
+    $user = mysqli_fetch_assoc($result);
+
+    if ($payment_method == 'point') {
+        if ($user['point'] < $order_amount) {
+            $all_success = false;
+            $fail_message = '포인트가 부족합니다.';
+        } else {
+            $sql = "UPDATE users SET point = point - $order_amount WHERE id = '$userId'";
+            $result = mysqli_query($conn, $sql);
+        }
     }
 
-    $order_id = mysqli_insert_id($conn);
-
-    foreach ($product_id as $key => $value) {
-        $sql = "INSERT INTO order_items (order_id, product_id, product_name, product_image_url, quantity, price, deliver_price) VALUES ('$order_id', '$product_id[$key]', '$product_name[$key]', '$product_image_url[$key]', '$quantity[$key]', '$price[$key]', '$deliver_price[$key]')";
+    if ($all_success) {
+        $sql = "INSERT INTO orders (user_id, user_name, order_amount, payment_method, depositor_name, bank_name, receiver_name, receiver_phone, receiver_email, receiver_address, receiver_postcode, receiver_address_detail, delivery_memo) VALUES ('$userId', '$name', '$order_amount', '$payment_method', '$depositor_name', '$bank_name', '$receiver_name', '$receiver_phone', '$receiver_email', '$receiver_address', '$receiver_postcode', '$receiver_address_detail', '$delivery_memo')";
         $result = mysqli_query($conn, $sql);
         if (!$result) {
             $all_success = false;
         }
     }
 
-    // 장바구니 비우기
-    $sql = "DELETE FROM cart_items WHERE user_id = '$userId'";
-    $result = mysqli_query($conn, $sql);
-    if (!$result) {
-        $all_success = false;
+    $order_id = mysqli_insert_id($conn);
+
+    if ($type == 'cart') {
+        if ($all_success) {
+            foreach ($product_id as $key => $value) {
+            $sql = "INSERT INTO order_items (order_id, product_id, product_name, product_image_url, quantity, price, deliver_price) VALUES ('$order_id', '$product_id[$key]', '$product_name[$key]', '$product_image_url[$key]', '$quantity[$key]', '$price[$key]', '$deliver_price[$key]')";
+            $result = mysqli_query($conn, $sql);
+            if (!$result) {
+                $all_success = false;
+                }
+            }
+        }
+    } else if ($type == 'direct') {
+        if ($all_success) {
+            $sql = "INSERT INTO order_items (order_id, product_id, product_name, product_image_url, quantity, price, deliver_price) VALUES ('$order_id', '$product_id', '$product_name', '$product_image_url', '$quantity', '$price', '$deliver_price')";
+            $result = mysqli_query($conn, $sql);
+            if (!$result) {
+                $all_success = false;
+            }
+        }
+    }
+
+    if ($all_success) {
+        // 장바구니 비우기
+        $sql = "DELETE FROM cart_items WHERE user_id = '$userId'";
+        $result = mysqli_query($conn, $sql);
+        if (!$result) {
+            $all_success = false;
+        }
     }
 
     if ($all_success) {
@@ -54,7 +86,7 @@
         </script>";
     } else {
         echo "<script>
-            alert('주문에 실패했습니다.');
+            alert('$fail_message');
             history.back();
         </script>";
     }

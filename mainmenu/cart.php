@@ -116,7 +116,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            console.log('장바구니 업데이트 성공');
+                            console.log(data.result);
                             input.value = currentValue + 1;
                             updatePrices();
                         } else {
@@ -154,6 +154,8 @@
                 const row = this.closest('tr');
                 const cartItemId = row.dataset.cartItemId;
                 const id = '<?php echo $id; ?>';
+                console.log(cartItemId);
+                console.log(id);
 
                 fetch('/mainmenu/queries/delete_cart_item.php', {
                     method: 'POST',
@@ -182,7 +184,7 @@
         
         // 주문하기 버튼
         document.querySelector('.btn-checkout')?.addEventListener('click', function() {
-            window.location.href = 'checkout.php';
+            window.location.href = 'checkout.php?type=cart';
         });
         
         // 가격 계산 함수
