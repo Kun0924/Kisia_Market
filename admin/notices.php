@@ -15,23 +15,21 @@
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
             <header class="admin-header">
-                <h1>게시판 관리</h1>
+                <h1>공지사항 관리</h1>
                 <button class="add-product-btn">공지사항 글쓰기</button>
-                <button class="add-product-btn"></button>
             </header>
             <div class="content-wrapper">
-                <div class="board-filters">
+                <div class="filters">
                     <input type="text" placeholder="제목/내용 검색">
                     <button>검색</button>
                 </div>
-                <table class="board-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>번호</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
-                            <th>조회수</th>
                             <th>관리</th>
                         </tr>
                     </thead>
@@ -50,17 +48,18 @@
                                     echo "<td>" . $notices['title'] . "</td>";
                                     echo "<td>관리자</td>";
                                     echo "<td>" . $notices['created_at'] . "</td>";
-                                    echo "<td>-</td>";
                                     echo "<td>
-                                            <a href = 'admin_edit.php? id=" . $notices['id'] . "'title = '확인및수정'>
-                                            <button class='edit-btn' data-id='" . $notices['id'] . "'><i class='fas fa-edit'></i></button>
-                                            <a href = 'admin_delete.php? id=" . $notices['id'] . "'title = '삭제'>
-                                            <button class='delete-btn' data-id='" . $notices['id'] . "'><i class='fas fa-trash'></i></button>
-                                        </td>";
+                                        <a href='admin_edit.php?id=" . $notices['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                            <i class='fas fa-edit'></i>
+                                        </a>
+                                        <a href='admin_delete.php?id=" . $notices['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
+                                      </td>";
                                     echo "</tr>";
                                 }
                             } else {
-                                echo "<tr><td colspan='7' class='no-data'>등록된 공지사항이이 없습니다.</td></tr>";
+                                echo "<tr><td colspan='7' class='no-data'>등록된 공지사항이 없습니다.</td></tr>";
                             }
                         ?>
                     </tbody>

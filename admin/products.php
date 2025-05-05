@@ -19,7 +19,7 @@
                 <button class="add-product-btn">상품 추가</button>
             </header>
             <div class="content-wrapper">
-                <div class="product-filters">
+                <div class="filters">
                     <select>
                         <option>전체 카테고리</option>
                         <option>키보드</option>
@@ -30,7 +30,7 @@
                     <input type="text" placeholder="상품명 검색">
                     <button>검색</button>
                 </div>
-                <table class="product-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>상품 ID</th>
@@ -59,10 +59,12 @@
                                 echo "<td>" . $product['stock'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
                                 echo "<td>
-                                        <a href = 'admin_edit.php? id=" . $product['id'] . "'title = '확인및수정'>
-                                        <button class='edit-btn' data-id='" . $product['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <a href = 'admin_delete.php? id=" . $product['id'] . "'title = '삭제'>
-                                        <button class='delete-btn' data-id='" . $product['id'] . "'><i class='fas fa-trash'></i></button>
+                                        <a href='admin_edit.php?id=" . $product['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                            <i class='fas fa-edit'></i>
+                                        </a>
+                                        <a href='admin_delete.php?id=" . $product['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
                                       </td>";
                                 echo "</tr>";
                             }

@@ -19,7 +19,7 @@
                 <button class="add-product-btn">회원 추가</button>
             </header>
             <div class="content-wrapper">
-                <div class="member-filters">
+                <div class="filters">
                     <select>
                         <option>전체 회원</option>
                         <option>일반 회원</option>
@@ -28,7 +28,7 @@
                     <input type="text" placeholder="회원명/아이디 검색">
                     <button>검색</button>
                 </div>
-                <table class="member-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>회원 ID</th>
@@ -57,11 +57,13 @@
                                 echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
                                 echo "<td>-</td>";
                                 echo "<td>
-                                        <a href = 'admin_edit.php? id=" . $users['id'] . "'title = '확인및수정'>
-                                        <button class='edit-btn' data-id='" . $users['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <a href = 'admin_delete.php? id=" . $users['id'] . "'title = '삭제'>
-                                        <button class='delete-btn' data-id='" . $users['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                        <a href='admin_edit.php?id=" . $users['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                            <i class='fas fa-edit'></i>
+                                        </a>
+                                        <a href='admin_delete.php?id=" . $users['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
+                                      </td>";
                                 echo "</tr>";
                             }
                         } else {

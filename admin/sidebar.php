@@ -11,10 +11,10 @@
                     <span>대시보드</span>
                 </a>
             </li>
-            <li <?php echo basename($_SERVER['PHP_SELF']) == 'approve.php' ? 'class="active"' : ''; ?>>
-                <a href="approve.php">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>주문 관리</span>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'members.php' ? 'class="active"' : ''; ?>>
+                <a href="members.php">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
                 </a>
             </li>
             <li <?php echo $_SERVER['PHP_SELF'] == 'products.php' ? 'class="active"' : ''; ?>>
@@ -23,10 +23,10 @@
                     <span>상품 관리</span>
                 </a>
             </li>
-            <li <?php echo $_SERVER['PHP_SELF'] == 'members.php' ? 'class="active"' : ''; ?>>
-                <a href="members.php">
-                    <i class="fas fa-users"></i>
-                    <span>회원 관리</span>
+            <li <?php echo basename($_SERVER['PHP_SELF']) == 'approve.php' ? 'class="active"' : ''; ?>>
+                <a href="approve.php">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문 관리</span>
                 </a>
             </li>
             <li <?php echo $_SERVER['PHP_SELF'] == 'reviews.php' ? 'class="active"' : ''; ?>>

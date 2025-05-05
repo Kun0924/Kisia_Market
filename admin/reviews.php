@@ -18,7 +18,7 @@
                 <h1>리뷰 관리</h1>
             </header>
             <div class="content-wrapper">
-                <div class="board-filters">
+                <div class="filters">
                     <select>
                         <option>전체 상품</option>
                         <option>키보드</option>
@@ -37,7 +37,7 @@
                     <input type="text" placeholder="검색어 입력">
                     <button>검색</button>
                 </div>
-                <table class="board-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -67,18 +67,21 @@
                                 echo "<td>" . $reviews['id'] . "</td>";
                                 echo "<td>" . htmlspecialchars($reviews['product_name'] ?? '알 수 없음') . "</td>";
                                 echo "<td>" . htmlspecialchars($reviews['user_name'] ?? '알 수 없음') . "</td>";
-                                echo "<td>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
+                                echo "<td class='star-rating'>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
                                 echo "<td>" . nl2br(htmlspecialchars($reviews['content'])) . "</td>";
                                 echo "<td>" . htmlspecialchars($reviews['created_at']) . "</td>";
-                                // 관리 부분분
                                 echo "<td>
-                                        <button class='edit-btn' data-id='" . $reviews['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $reviews['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                        <a href='admin_edit.php?id=" . $reviews['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                            <i class='fas fa-edit'></i>
+                                        </a>
+                                        <a href='admin_delete.php?id=" . $reviews['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
+                                      </td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='7' class='no-data'>등록된 리뷰가가 없습니다.</td></tr>";
+                            echo "<tr><td colspan='7' class='no-data'>등록된 리뷰가 없습니다.</td></tr>";
                         }
                     ?>
                     </tbody>

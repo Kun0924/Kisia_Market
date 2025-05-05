@@ -46,12 +46,12 @@
                                         <a href="inquiry_check_secret.php?id=<?= $row['id'] ?>" class="qna-title">🔒 비밀글입니다</a>
                                     <?php else: ?>
                                         <a href="inquiry_detail.php?id=<?= $row['id'] ?>" class="qna-title">
-                                            <?= htmlspecialchars($row['title']) ?>
+                                            <?= $row['title'] ?>
                                         </a>
                                     <?php endif; ?>
-                                    <span class="qna-type"><?= htmlspecialchars($row['type']) ?></span>
+                                    <span class="qna-type"><?= $row['type'] ?></span>
                                     <span class="qna-meta"><?= $row['id'] ?></span>
-                                    <span class="qna-user"><?= htmlspecialchars($row['userId']) ?></span>
+                                    <span class="qna-user"><?= $row['userId'] ?></span>
                                     <span class="qna-date"><?= date('Y-m-d', strtotime($row['created_at'])) ?></span>
                                 </div>
                             </div>
