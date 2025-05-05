@@ -38,11 +38,25 @@ body {
 /* 사이드바 메뉴 */
 .admin-menu ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .admin-menu li {
     margin-bottom: 5px;
 }
+
+/* 기본 a 스타일 */
+.admin-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-menu li {
+    margin-bottom: 5px;
+}
+
 
 .admin-menu a {
     display: flex;
@@ -50,23 +64,26 @@ body {
     padding: 15px 20px;
     color: #ecf0f1;
     text-decoration: none;
+    background-color: #2c3e50; /* ✅ 고정 배경 */
     transition: background-color 0.3s;
 }
 
-.admin-menu a:hover,
-.admin-menu .active a {
+/* 마우스를 올렸을 때 살짝 진해지게 */
+.admin-menu a:hover {
     background-color: #34495e;
+    color: white;
+    transition: all 0.3s ease;
 }
+  
 
-.admin-menu .active a {
-    border-left: 4px solid #3498db;
-}
-
+/* 아이콘 정렬 */
 .admin-menu i {
     margin-right: 10px;
     width: 20px;
     text-align: center;
 }
+
+
 
 /* 메인 콘텐츠 */
 .main-content {
