@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
-    <?php include 'queries/get_mypage_review.php'; ?>
+    <?php require_once 'queries/get_mypage_review.php'; ?>
 
     <!-- Main Content -->
     <main class="main-content">

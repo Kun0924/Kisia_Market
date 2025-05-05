@@ -12,7 +12,8 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
-    <?php include 'queries/get_mypage_user.php'; ?>
+    <?php require_once 'queries/get_mypage_user.php'; ?>
+    <?php mysqli_close($conn); ?>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -61,8 +62,19 @@
                                     <input type="tel" id="phone" name="phone" value="<?php echo $user['phone']; ?>">
                                 </div>
                                 <div class="form-group">
+                                    <label for="postcode">우편번호</label>
+                                    <div style="display:flex; gap:8px;">
+                                        <input type="text" id="postcode" name="postcode" value="<?php echo isset($user['postcode']) ? $user['postcode'] : ''; ?>" placeholder="우편번호" readonly style="flex:1;">
+                                        <button type="button" id="btn-search-address" style="flex:none; padding:8px 14px;">주소 검색</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="address">주소</label>
-                                    <input type="text" id="address" name="address" value="<?php echo $user['address']; ?>">
+                                    <input type="text" id="address" name="address" value="<?php echo $user['address']; ?>" placeholder="주소" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address_detail">상세주소</label>
+                                    <input type="text" id="address_detail" name="address_detail" value="<?php echo isset($user['address_detail']) ? $user['address_detail'] : ''; ?>" placeholder="상세주소를 입력하세요">
                                 </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-save">저장하기</button>
@@ -76,5 +88,17 @@
     </main>
 
     <?php include 'common/footer.php'; ?>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+    document.getElementById('btn-search-address')?.addEventListener('click', function() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+                document.getElementById('address_detail').focus();
+            }
+        }).open();
+    });
+    </script>
 </body>
 </html> 

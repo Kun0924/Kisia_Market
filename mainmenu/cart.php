@@ -13,7 +13,8 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
-    <?php include 'queries/get_cart_items.php'; ?>
+    <?php require_once 'queries/get_cart_items.php'; ?>
+    <?php mysqli_close($conn); ?>
 
     <!-- Main Content -->
     <main class="main-content">

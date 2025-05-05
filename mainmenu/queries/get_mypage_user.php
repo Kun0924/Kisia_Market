@@ -7,6 +7,4 @@
     $get_user = mysqli_query($conn, $sql);
 
     $user = mysqli_fetch_assoc($get_user);
-
-    mysqli_close($conn);
 ?>

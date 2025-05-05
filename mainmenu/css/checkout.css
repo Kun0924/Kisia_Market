@@ -102,6 +102,19 @@
     background: #e9ecef;
 }
 
+.product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f4f4f4;
+}
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 /* Payment Methods */
 .payment-methods {
     display: flex;
