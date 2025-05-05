@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
-    <?php include 'queries/get_mypage_inquiry.php'; ?>
+    <?php require_once 'queries/get_mypage_inquiry.php'; ?>
 
     <!-- Main Content -->
     <main class="main-content">

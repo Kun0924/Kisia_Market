@@ -15,15 +15,18 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(50) NOT NULL,
     phone VARCHAR(20),
     address VARCHAR(255),
+    postcode VARCHAR(10),
+    address_detail VARCHAR(255),
+    point INT DEFAULT 0,
     role VARCHAR(10) NOT NULL DEFAULT 'USER',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 유저 초기 데이터 삽입 
-INSERT INTO users (userId, email, password, name, phone, address)
+INSERT INTO users (userId, email, password, name, phone, address, postcode, address_detail)
 VALUES 
-('test', 'testuser01@example.com', '1234', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123'),
-('admin', 'admin@admin.com', 'admin', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123');
+('test', 'testuser01@example.com', '1234', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
+('admin', 'admin@admin.com', 'admin', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
 
 
 
@@ -162,3 +165,43 @@ VALUES
 (1, 22, '생각보다 품질이 떨어지네요.', 2, NULL, '2024-05-02 14:20:00'),
 (1, 22, '배송이 빨랐고, 제품도 좋아요.', 4, 'review_images/review2.png', '2024-05-03 09:10:00'),
 (1, 22, '가격 대비 괜찮습니다.', 3, NULL, '2024-05-03 11:45:00');
+
+-- 주문 테이블 생성
+CREATE TABLE orders (
+  id INT PRIMARY KEY AUTO_INCREMENT,           -- 주문 고유 ID
+  user_id INT NOT NULL,                        -- 주문한 사용자 (users 테이블 참조)
+  user_name VARCHAR(100),                      -- 주문자 이름
+
+  order_amount INT NOT NULL,                   -- 총 주문 금액
+  order_status ENUM('pending', 'paid', 'cancelled') DEFAULT 'pending', -- 주문 상태
+  payment_method ENUM('bank_transfer', 'point') NOT NULL, -- 결제 방식
+
+  depositor_name VARCHAR(100),                 -- 사용자가 입력한 입금자명
+  bank_name VARCHAR(100),                      -- 입금은행
+  deposit_confirmed BOOLEAN DEFAULT FALSE,     -- 입금 확인 여부
+  deposit_confirmed_at DATETIME NULL,          -- 입금 확인 시각
+
+  receiver_name VARCHAR(100),                  -- 수령인 이름
+  receiver_phone VARCHAR(20),                  -- 수령인 연락처
+  receiver_email VARCHAR(100),                 -- 이메일 주소
+  receiver_address VARCHAR(255),               -- 배송지 주소
+  receiver_postcode VARCHAR(10),                     -- 우편번호
+  receiver_address_detail VARCHAR(255),              -- 상세주소
+  delivery_memo VARCHAR(255),              -- 배송 메모
+
+  order_created_at DATETIME DEFAULT NOW()      -- 주문 생성 시각
+);
+
+CREATE TABLE order_items (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  order_id INT NOT NULL,                    -- 주문 ID (orders 테이블 FK)
+  product_id INT NOT NULL,                  -- 상품 ID (products 테이블 FK)
+  product_name VARCHAR(255) NOT NULL,        -- 상품 이름
+  product_image_url VARCHAR(255) NOT NULL,   -- 상품 이미지 URL
+  quantity INT NOT NULL,                    -- 수량
+  price INT NOT NULL,                       -- 주문 당시 단가 (스냅샷용)
+  deliver_price INT NOT NULL,               -- 배송비
+
+  FOREIGN KEY (order_id) REFERENCES orders(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);

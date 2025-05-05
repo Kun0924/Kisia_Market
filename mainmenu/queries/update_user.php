@@ -7,8 +7,10 @@
     $email = $_POST['email'] ?? '';
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
+    $postcode = $_POST['postcode'] ?? '';
+    $address_detail = $_POST['address_detail'] ?? '';
 
-    $sql = "UPDATE users SET name = '$name', email = '$email', phone = '$phone', address = '$address' WHERE id = '$id'";
+    $sql = "UPDATE users SET name = '$name', email = '$email', phone = '$phone', address = '$address', postcode = '$postcode', address_detail = '$address_detail' WHERE id = '$id'";
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
