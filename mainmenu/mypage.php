@@ -36,8 +36,8 @@
                         </div>
                         
                         <ul class="mypage-menu">
+                            <li><a href="mypage_profile.php" data-section="profile-edit-section">회원 정보</a></li>
                             <li><a href="mypage.php" data-section="order-section" class="active">주문/배송</a></li>
-                            <li><a href="mypage_profile.php" data-section="profile-edit-section">회원 정보 수정</a></li>
                             <li><a href="mypage_review.php" data-section="review-section">나의 리뷰</a></li>
                             <li><a href="mypage_inquiry.php" data-section="inquiry-section">1:1 문의내역</a></li>
                         </ul>
@@ -90,7 +90,9 @@
                                     <div class="order-total">
                                         총 결제금액 <span><?php echo number_format($order['order_amount']); ?>원</span>
                                     </div>
-                                    <a href="order_detail.php?order_id=<?php echo $order['id']; ?>" class="btn-detail">상세보기</a>
+                                    <?php if ($order['order_status'] !== 'cancelled') : ?>
+                                        <a href="order_detail.php?order_id=<?php echo $order['id']; ?>" class="btn-detail">상세보기</a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <?php endforeach; ?>

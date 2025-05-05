@@ -36,8 +36,8 @@
                         </div>
                         
                         <ul class="mypage-menu">
+                            <li><a href="mypage_profile.php" data-section="profile-edit-section">회원 정보</a></li>
                             <li><a href="mypage.php" data-section="order-section">주문/배송</a></li>
-                            <li><a href="mypage_profile.php" data-section="profile-edit-section">회원 정보 수정</a></li>
                             <li><a href="mypage_review.php" data-section="review-section" class="active">나의 리뷰</a></li>
                             <li><a href="mypage_inquiry.php" data-section="inquiry-section">1:1 문의내역</a></li>
                         </ul>

@@ -9,7 +9,7 @@
                         <p class="header-link">안녕하세요 <span style="color: #ff6b6b;"><?= $name ?></span>님</p>
                         <a href="<?= $menu_path ?>queries/logout_process.php" class="header-link">로그아웃</a>
                          <a href="<?= $menu_path ?>cart.php" class="header-link">장바구니</a>
-                        <a href="<?= $menu_path ?>mypage.php" class="header-link">마이페이지</a>
+                        <a href="<?= $menu_path ?>mypage_profile.php" class="header-link">마이페이지</a>
                     <?php else: ?>
                         <a href="<?= $menu_path ?>login.php" class="header-link">로그인/회원가입</a>
                     <?php endif; ?>
