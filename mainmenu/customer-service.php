@@ -53,67 +53,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-
-            <div class="qna-section" id="qnaSection" style="display: none;">
-                <div class="qna-header">
-                    <div class="qna-title">문의사항</div>
-                    <div class="qna-search">
-                        <input type="text" placeholder="문의사항 검색">
-                        <button><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-                <div class="qna-list">
-                    <div class="list-header">
-                        <span class="header-title">제목</span>
-                        <span class="header-meta">번호</span>
-                        <span class="header-user">작성자</span>
-                        <span class="header-date">작성일</span>
-                    </div>
-                    <div class="qna-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">q&amp;a test 2</a>
-                            <span class="qna-meta">1000056</span>
-                            <span class="qna-user">홍길동</span>
-                            <span class="qna-date">2020-08-31</span>
-                        </div>
-                    </div>
-                    <div class="qna-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">q&amp;a test 2</a>
-                            <span class="qna-meta">1000055</span>
-                            <span class="qna-user">김철수</span>
-                            <span class="qna-date">2020-08-31</span>
-                        </div>
-                    </div>
-                    <div class="qna-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">q&amp;a test</a>
-                            <span class="qna-meta">1000054</span>
-                            <span class="qna-user">이영희</span>
-                            <span class="qna-date">2020-08-31</span>
-                        </div>
-                    </div>
-                    <div class="qna-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">q&amp;a test</a>
-                            <span class="qna-meta">1000053</span>
-                            <span class="qna-user">박지성</span>
-                            <span class="qna-date">2020-08-31</span>
-                        </div>
-                    </div>
-                    <div class="qna-item">
-                        <div class="qna-info">
-                            <a href="#" class="qna-title">q&amp;a test</a>
-                            <span class="qna-meta">1000052</span>
-                            <span class="qna-user">최민수</span>
-                            <span class="qna-date">2020-08-29</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="write-btn-container">
-                    <button class="write-btn" onclick="window.location.href='inquiry-write.php'">글쓰기</button>
-                </div>
-            </div>
             <div class="pagination">
                 <?php
                 for ($i = 1; $i <= $total_pages; $i++) {
