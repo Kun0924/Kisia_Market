@@ -16,6 +16,7 @@
         <div class="main-content">
             <header class="admin-header">
                 <h1>회원 관리</h1>
+                <button class="add-product-btn">회원 추가</button>
             </header>
             <div class="content-wrapper">
                 <div class="member-filters">
@@ -49,16 +50,18 @@
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($users = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($users['id']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['userId']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['email']) . "</td>";
+                                echo "<td>" . $users['id'] . "</td>";
+                                echo "<td>" . $users['userId'] . "</td>";
+                                echo "<td>" . $users['name'] . "</td>";
+                                echo "<td>" . $users['email'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
                                 echo "<td>-</td>";
                                 echo "<td>
+                                        <a href = 'admin_edit.php? id=" . $users['id'] . "'title = '확인및수정'>
                                         <button class='edit-btn' data-id='" . $users['id'] . "'><i class='fas fa-edit'></i></button>
+                                        <a href = 'admin_delete.php? id=" . $users['id'] . "'title = '삭제'>
                                         <button class='delete-btn' data-id='" . $users['id'] . "'><i class='fas fa-trash'></i></button>
-                                      </td>";
+                                    </td>";
                                 echo "</tr>";
                             }
                         } else {

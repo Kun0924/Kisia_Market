@@ -19,7 +19,7 @@
             </li>
             <li <?php echo $_SERVER['PHP_SELF'] == 'products.php' ? 'class="active"' : ''; ?>>
                 <a href="products.php">
-                    <i class="fas fa-box"></i>
+                    <i class="fas fa-cube"></i>
                     <span>상품 관리</span>
                 </a>
             </li>
@@ -31,14 +31,20 @@
             </li>
             <li <?php echo $_SERVER['PHP_SELF'] == 'reviews.php' ? 'class="active"' : ''; ?>>
                 <a href="reviews.php">
-                    <i class="fas fa-clipboard-list"></i>
+                    <i class="fas fa-pencil"></i>
                     <span>리뷰 관리</span>
                 </a>
             </li>
-            <li <?php echo $_SERVER['PHP_SELF'] == 'board.php' ? 'class="active"' : ''; ?>>
-                <a href="board.php">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>고객센터 관리</span>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'notices.php' ? 'class="active"' : ''; ?>>
+                <a href="notices.php">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>공지사항 관리</span>
+                </a>
+            </li>
+            <li <?php echo $_SERVER['PHP_SELF'] == 'inquiries.php' ? 'class="active"' : ''; ?>>
+                <a href="inquiries.php">
+                    <i class="fas fa-question-circle"></i>
+                    <span>문의사항 관리</span>
                 </a>
             </li>
             <li>
