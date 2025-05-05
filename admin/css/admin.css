@@ -323,3 +323,143 @@ body {
     color: #f1c40f;
     font-size: 16px;
 } 
+
+/* 주문 필터 */
+.order-filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.order-filters input {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 상태 필터 버튼 */
+.order-status-buttons {
+    display: flex;
+    /* gap: 10px; */
+    margin-bottom: 20px;
+}
+
+.status-btn {
+    padding: 8px 14px;
+    background-color: #ecf0f1;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.status-btn.active,
+.status-btn:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+/* 주문 테이블 */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.order-table thead {
+    background-color: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-weight: 500;
+    color: #2c3e50;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.order-table th, .order-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 처리 버튼 */
+.order-action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.order-action-buttons .approve-btn,
+.order-action-buttons .reject-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.order-action-buttons .approve-btn {
+    background-color: #2ecc71;
+}
+
+.order-action-buttons .approve-btn:hover {
+    background-color: #27ae60;
+}
+
+.order-action-buttons .reject-btn {
+    background-color: #e74c3c;
+}
+
+.order-action-buttons .reject-btn:hover {
+    background-color: #c0392b;
+}
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #c0392b;
+    color: white;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+    color: white;
+    white-space: nowrap;
+}
+
+.badge.waiting {
+    background-color: #f39c12; /* 주황 - 대기 */
+}
+
+.badge.approved {
+    background-color: #2ecc71; /* 초록 - 승인 */
+}
+
+.badge.rejected {
+    background-color: #e74c3c; /* 빨강 - 반려 */
+}

@@ -11,6 +11,12 @@
                     <span>대시보드</span>
                 </a>
             </li>
+            <li <?php echo basename($_SERVER['PHP_SELF']) == 'approve.php' ? 'class="active"' : ''; ?>>
+                <a href="approve.php">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문 관리</span>
+                </a>
+            </li>
             <li <?php echo $_SERVER['PHP_SELF'] == 'products.php' ? 'class="active"' : ''; ?>>
                 <a href="products.php">
                     <i class="fas fa-box"></i>
