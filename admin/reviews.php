@@ -18,26 +18,26 @@
                 <h1>리뷰 관리</h1>
             </header>
             <div class="content-wrapper">
-                <div class="board-filters">
-                    <select>
-                        <option>전체 상품</option>
-                        <option>키보드</option>
-                        <option>마우스</option>
-                        <option>마우스패드</option>
-                        <option>액세서리</option>
+                <div class="filters">
+                    <select id="category-filter">
+                        <option value="all">전체 카테고리</option>
+                        <option value="accessory">액세서리</option>
+                        <option value="keyboard">키보드</option>
+                        <option value="mouse">마우스</option>
+                        <option value="mousepad">마우스패드</option>
                     </select>
-                    <select>
-                        <option>전체 평점</option>
-                        <option>5점</option>
-                        <option>4점</option>
-                        <option>3점</option>
-                        <option>2점</option>
-                        <option>1점</option>
+                    <select id="rating-filter">
+                        <option value="all">전체 평점</option>
+                        <option value="5">5점</option>
+                        <option value="4">4점</option>
+                        <option value="3">3점</option>
+                        <option value="2">2점</option>
+                        <option value="1">1점</option>
                     </select>
                     <input type="text" placeholder="검색어 입력">
                     <button>검색</button>
                 </div>
-                <table class="board-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -67,18 +67,18 @@
                                 echo "<td>" . $reviews['id'] . "</td>";
                                 echo "<td>" . htmlspecialchars($reviews['product_name'] ?? '알 수 없음') . "</td>";
                                 echo "<td>" . htmlspecialchars($reviews['user_name'] ?? '알 수 없음') . "</td>";
-                                echo "<td>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
+                                echo "<td class='star-rating'>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
                                 echo "<td>" . nl2br(htmlspecialchars($reviews['content'])) . "</td>";
                                 echo "<td>" . htmlspecialchars($reviews['created_at']) . "</td>";
-                                // 관리 부분분
                                 echo "<td>
-                                        <button class='edit-btn' data-id='" . $reviews['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $reviews['id'] . "'><i class='fas fa-trash'></i></button>
-                                    </td>";
+                                        <a href='admin_delete.php?id=" . $reviews['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
+                                      </td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='7' class='no-data'>등록된 리뷰가가 없습니다.</td></tr>";
+                            echo "<tr><td colspan='7' class='no-data'>등록된 리뷰가 없습니다.</td></tr>";
                         }
                     ?>
                     </tbody>
@@ -86,5 +86,37 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categorySelect = document.getElementById('category-filter');
+        const ratingSelect = document.getElementById('rating-filter');
+        const rows = document.querySelectorAll('tbody tr');
+
+        function applyFilters() {
+            const selectedCategory = categorySelect.value;
+            const selectedRating = ratingSelect.value;
+
+            rows.forEach(row => {
+                const rowCategory = row.getAttribute('data-category');
+                const rowRating = row.getAttribute('data-rating');
+
+                const matchCategory = (selectedCategory === 'all' || rowCategory === selectedCategory);
+                const matchRating = (selectedRating === 'all' || rowRating === selectedRating);
+
+                if (matchCategory && matchRating) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        categorySelect.addEventListener('change', applyFilters);
+        ratingSelect.addEventListener('change', applyFilters);
+    });
+    </script>
+
+            
+
 </body>
 </html> 

@@ -12,32 +12,62 @@
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
 
+        <?php
+        require_once '../mainmenu/common/db.php';
+
+        // 회원 수 조회
+        $member_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users"))[0];
+
+        // 상품 수 조회
+        $product_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM products"))[0];
+
+        // 주문 수 조회
+        // $order_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM orders"))[0];
+
+        // 총 매출 조회
+        // $total_sales = mysqli_fetch_row(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE order_status = 'completed'"))[0];
+
+        // 리뷰 수 조회
+        $review_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM reviews"))[0];
+
+        // 문의사항 수 조회
+        $inquiry_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM inquiry"))[0];
+        ?>
+
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
             <header class="admin-header">
                 <h1>대시보드</h1>
             </header>
-            <div class="dashboard-content">
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <h3>총 주문</h3>
-                        <p>0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>총 회원</h3>
-                        <p>0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>총 상품</h3>
-                        <p>0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>총 매출</h3>
-                        <p>0원</p>
-                    </div>
+
+            <!-- 통계 카드 -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>총 회원</h3>
+                    <p><?= number_format($member_count) ?>명</p>
+                </div>
+                <div class="stat-card">
+                    <h3>총 상품</h3>
+                    <p><?= number_format($product_count) ?>개</p>
+                </div>
+                <div class="stat-card">
+                    <h3>총 주문</h3>
+                    <p>0건</p>
+                </div>
+                <div class="stat-card">
+                    <h3>총 매출</h3>
+                    <p>0원</p>
+                </div>
+                <div class="stat-card">
+                    <h3>리뷰</h3>
+                    <p><?= number_format($review_count) ?>건</p>
+                </div>
+                <div class="stat-card">
+                    <h3>문의사항</h3>
+                    <p><?= number_format($inquiry_count) ?>건</p>
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html> 
+</html>

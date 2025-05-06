@@ -16,18 +16,19 @@
         <div class="main-content">
             <header class="admin-header">
                 <h1>회원 관리</h1>
+                <button class="add-product-btn">회원 추가</button>
             </header>
             <div class="content-wrapper">
-                <div class="member-filters">
-                    <select>
-                        <option>전체 회원</option>
-                        <option>일반 회원</option>
-                        <option>관리자</option>
+                <div class="filters">
+                    <select id="role-filter">
+                        <option value="all">전체 회원</option>
+                        <option value="user">일반 회원</option>
+                        <option value="admin">관리자</option>
                     </select>
                     <input type="text" placeholder="회원명/아이디 검색">
                     <button>검색</button>
                 </div>
-                <table class="member-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>회원 ID</th>
@@ -49,15 +50,16 @@
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($users = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($users['id']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['userId']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['email']) . "</td>";
+                                echo "<td>" . $users['id'] . "</td>";
+                                echo "<td>" . $users['userId'] . "</td>";
+                                echo "<td>" . $users['name'] . "</td>";
+                                echo "<td>" . $users['email'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
                                 echo "<td>-</td>";
                                 echo "<td>
-                                        <button class='edit-btn' data-id='" . $users['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <button class='delete-btn' data-id='" . $users['id'] . "'><i class='fas fa-trash'></i></button>
+                                        <a href='admin_delete.php?id=" . $users['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
                                       </td>";
                                 echo "</tr>";
                             }

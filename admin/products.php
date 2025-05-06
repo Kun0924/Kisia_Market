@@ -19,18 +19,18 @@
                 <button class="add-product-btn">상품 추가</button>
             </header>
             <div class="content-wrapper">
-                <div class="product-filters">
-                    <select>
-                        <option>전체 카테고리</option>
-                        <option>키보드</option>
-                        <option>마우스</option>
-                        <option>마우스패드</option>
-                        <option>액세서리</option>
+                <div class="filters">
+                    <select id="category-filter">
+                        <option value="all">전체 카테고리</option>
+                        <option value="accessory">액세서리</option>
+                        <option value="keyboard">키보드</option>
+                        <option value="mouse">마우스</option>
+                        <option value="mousepad">마우스패드</option>
                     </select>
                     <input type="text" placeholder="상품명 검색">
                     <button>검색</button>
                 </div>
-                <table class="product-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>상품 ID</th>
@@ -59,10 +59,12 @@
                                 echo "<td>" . $product['stock'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
                                 echo "<td>
-                                        <a href = 'admin_edit.php? id=" . $product['id'] . "'title = '확인및수정'>
-                                        <button class='edit-btn' data-id='" . $product['id'] . "'><i class='fas fa-edit'></i></button>
-                                        <a href = 'admin_delete.php? id=" . $product['id'] . "'title = '삭제'>
-                                        <button class='delete-btn' data-id='" . $product['id'] . "'><i class='fas fa-trash'></i></button>
+                                        <a href='admin_edit.php?id=" . $product['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                            <i class='fas fa-edit'></i>
+                                        </a>
+                                        <a href='admin_delete.php?id=" . $product['id'] . "' class='delete-btn' title='삭제'>
+                                            <i class='fas fa-trash'></i>
+                                        </a>
                                       </td>";
                                 echo "</tr>";
                             }
@@ -75,5 +77,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryFilter = document.getElementById('category-filter');
+        const rows = document.querySelectorAll('tbody tr');
+
+        categoryFilter.addEventListener('change', function () {
+            const selectedCategory = this.value;
+
+            rows.forEach(row => {
+                const category = row.children[2].textContent.trim(); // 3번째 컬럼 = 카테고리
+
+                if (selectedCategory === 'all' || category === selectedCategory) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+
+
 </body>
 </html>
