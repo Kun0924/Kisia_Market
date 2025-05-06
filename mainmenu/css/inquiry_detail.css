@@ -95,10 +95,8 @@
     gap: 16px;
 }
 
-.btn-list {
+.btn-list, .btn-edit,.btn-delete{
     padding: 10px 24px;
-    background: #666;
-    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -106,6 +104,21 @@
     transition: background 0.3s;
 }
 
-.btn-list:hover {
-    background: #555;
+.btn-list:hover, .btn-edit:hover, .btn-delete:hover {
+    opacity: 0.9;
+}
+
+.btn-list {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-edit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: white;
 }
