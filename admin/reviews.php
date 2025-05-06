@@ -19,13 +19,6 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <select id="category-filter">
-                        <option value="all">전체 카테고리</option>
-                        <option value="accessory">액세서리</option>
-                        <option value="keyboard">키보드</option>
-                        <option value="mouse">마우스</option>
-                        <option value="mousepad">마우스패드</option>
-                    </select>
                     <select id="rating-filter">
                         <option value="all">전체 평점</option>
                         <option value="5">5점</option>

@@ -51,10 +51,9 @@
 
                             if ($result && mysqli_num_rows($result) > 0) {
                                 while ($inquiry = mysqli_fetch_assoc($result)) {
-                                    $title = $inquiry['is_secret'] ? '🔒 비밀글입니다' : $inquiry['title'];
                                     echo "<tr>";
                                     echo "<td>" . $inquiry['id'] . "</td>";// 문의 사항 번호
-                                    echo "<td>{$title}</td>";
+                                    echo "<td>" . $inquiry['title'] . "</td>";
                                     echo "<td>" . $inquiry['user_name'] . "</td>";
                                     echo "<td>" . $inquiry['created_at'] . "</td>";
                                     echo "<td>-</td>"; // 문의 사항 상태
