@@ -54,15 +54,18 @@ CREATE TABLE IF NOT EXISTS inquiry (
     type VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     secret_password VARCHAR(255),
+    inquiry_status VARCHAR(50) NOT NULL DEFAULT '답변 대기',
+    answer TEXT,
+    answer_at DATETIME,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- 문의글 초기 데이터 삽입 
-INSERT INTO inquiry (user_id, title, content, is_secret, type, secret_password)
+INSERT INTO inquiry (user_id, title, content, is_secret, type, secret_password, inquiry_status, answer, answer_at)
 VALUES 
-(1, '배송 문의', '언제쯤 배송되나요?', FALSE, '배송', ''),
-(1, '상품 상태 문의', '박스가 찌그러졌어요. 교환 가능한가요?', TRUE, '상품', '1234'),
-(1, '취소 요청', '결제를 했는데 주문 취소하고 싶습니다.', FALSE, '주문/결제', '');
+(1, '배송 문의', '언제쯤 배송되나요?', FALSE, '배송', '', '답변 완료', '배송은 오늘 오전 10시에 출발합니다.', '2025-05-06 10:00:00'),
+(1, '상품 상태 문의', '박스가 찌그러졌어요. 교환 가능한가요?', TRUE, '상품', '1234', '답변 완료', '교환은 불가능합니다.', '2025-05-06 10:00:00'),
+(1, '취소 요청', '결제를 했는데 주문 취소하고 싶습니다.', FALSE, '주문/결제', '', '답변 대기', NULL, NULL);
 
 -- 문의글 이미지 테이블
 CREATE TABLE IF NOT EXISTS inquiry_images (

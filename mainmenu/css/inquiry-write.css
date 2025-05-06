@@ -179,3 +179,21 @@
 .file-table .file-input {
     width: 100%;
 }
+
+.existing-file a {
+    text-decoration: none;
+    color: #0066cc;
+}
+
+.existing-file a:hover {
+    text-decoration: underline;
+}
+
+.existing-file input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.existing-file label {
+    color: #ff4444;
+    cursor: pointer;
+}

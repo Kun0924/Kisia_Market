@@ -37,13 +37,16 @@
                         <span class="header-meta">번호</span>
                         <span class="header-user">작성자</span>
                         <span class="header-date">작성일</span>
+                        <span class="header-status">상태</span>
                     </div>
                     <?php if (mysqli_num_rows($get_inquiry) > 0): ?>
                         <?php while ($row = mysqli_fetch_assoc($get_inquiry)): ?>
                             <div class="qna-item">
                                 <div class="qna-info">
                                     <?php if ($row['is_secret']): ?>
-                                        <a href="inquiry_check_secret.php?id=<?= $row['id'] ?>" class="qna-title">🔒 비밀글입니다</a>
+                                        <a href="inquiry_check_secret.php?id=<?= $row['id'] ?>" class="qna-title">
+                                            🔒 비밀글입니다
+                                        </a>
                                     <?php else: ?>
                                         <a href="inquiry_detail.php?id=<?= $row['id'] ?>" class="qna-title">
                                             <?= $row['title'] ?>
@@ -53,6 +56,9 @@
                                     <span class="qna-meta"><?= $row['id'] ?></span>
                                     <span class="qna-user"><?= $row['userId'] ?></span>
                                     <span class="qna-date"><?= date('Y-m-d', strtotime($row['created_at'])) ?></span>
+                                    <span class="<?= $row['inquiry_status'] == '답변 완료' ? 'inquiry-status_done' : 'inquiry-status' ?>">
+                                        <?= $row['inquiry_status'] == '답변 완료' ? '답변 완료' : '답변 대기' ?>
+                                    </span>
                                 </div>
                             </div>
                         <?php endwhile; ?>

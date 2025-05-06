@@ -267,23 +267,19 @@
 }
 
 .qna-title {
-    flex: 3;
-    font-size: 21px;
+    font-size: 14px;
     color: #333;
     text-decoration: none;
-    padding-right: 10px;
-    cursor: pointer;
 }
 
 .qna-meta, .qna-user, .qna-date, .qna-type {
-    flex: 1;
     font-size: 13px;
     color: #666;
-    text-align: center;
 }
 
 .qna-date {
-    text-align: right;
+    width: 80px;
+    text-align: center;
 }
 
 .list-header {
@@ -296,11 +292,12 @@
     font-size: 14px;
 }
 
-.header-title {
-    flex: 3;
+.header-title, .qna-title {
+    flex: 2.5;
+    text-align: left;
 }
 
-.header-meta, .header-user {
+.header-meta, .header-user, .header-date, .header-type, .header-status {
     flex: 1;
     text-align: center;
 }
@@ -308,6 +305,11 @@
 .header-date {
     flex: 1;
     text-align: right;
+}
+
+.header-status {
+    flex: 1;
+    text-align: center;
 }
 
 .write-btn-container {
@@ -373,6 +375,37 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 15px;
+}
+
+/* 각 열의 너비 비율 조정 */
+.header-title, .qna-title {
+    flex: 2.5;
+    text-align: left;
+}
+
+.header-type, .qna-type {
+    flex: 0.8;
+    text-align: center;
+}
+
+.header-meta, .qna-meta {
+    flex: 0.5;
+    text-align: center;
+}
+
+.header-user, .qna-user {
+    flex: 0.8;
+    text-align: center;
+}
+
+.header-date, .qna-date {
+    flex: 0.8;
+    text-align: center;
+}
+
+.header-status {
+    flex: 0.8;
+    text-align: center;
 }
 
 .btn-submit {
@@ -516,4 +549,23 @@
 .header-type {
     flex: 1;
     text-align: center;
+}
+
+.inquiry-status, .inquiry-status_done {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #fff;
+    width: 70px; /* 고정 너비 설정 */
+    text-align: center;
+}
+
+.inquiry-status_done {
+    background: #28a745;
+}
+
+
+.inquiry-status {
+    background: #dc3545;
 }
