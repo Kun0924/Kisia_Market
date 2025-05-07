@@ -289,4 +289,22 @@
         width: 35px;
         height: 35px;
     }
-} 
+}
+
+.list-product-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+    justify-content: center;
+}
+
+.list-product-rating .stars {
+    color: #ffb800;
+    font-size: 14px;
+}
+
+.list-product-rating .rating-count {
+    color: #666;
+    font-size: 13px;
+}

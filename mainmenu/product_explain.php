@@ -32,6 +32,14 @@ include 'queries/get_header_session.php';
             echo '<div class="product-info">';
             echo '<h1>' . htmlspecialchars($row['name']) . '</h1>';
             echo '<p class="short-description">' . htmlspecialchars($row['short_description']) . '</p>';
+            
+            // 평균 평점 표시 수정
+            $avg_rating = isset($row['avg_rating']) ? number_format($row['avg_rating'], 1) : 0;
+            echo '<div class="product-rating">';
+            echo '<div class="star-rating">' . str_repeat('★', floor($avg_rating)) . str_repeat('☆', 5 - floor($avg_rating)) . '</div>';
+            echo '<span class="rating-number">' . $avg_rating . '</span>';
+            echo '</div>';
+            
             echo '<p class="price">' . number_format($row['price']) . '원</p>';
             echo '<div class="button-group">';
             echo '<button class="cart-btn" id="addToCartBtn"><i class="fas fa-shopping-cart"></i> 장바구니</button>';
@@ -39,8 +47,6 @@ include 'queries/get_header_session.php';
             echo '</div>';
             echo '</div>';
             echo '</div>';
-
-
         } else {
             echo '<p>상품을 찾을 수 없습니다.</p>';
         }
@@ -49,7 +55,7 @@ include 'queries/get_header_session.php';
          
         <div class="tabs">
             <button class="tab-btn active" data-tab="description">상품 설명</button>
-            <button class="tab-btn" data-tab="reviews">리뷰</button>
+            <button class="tab-btn" data-tab="reviews">리뷰 (<?php echo $row['review_count']; ?>)</button>
         </div>
 
 
@@ -66,13 +72,15 @@ include 'queries/get_header_session.php';
         </div>
 
         <div id="reviews" class="tab-content">
-        <h2>리뷰 페이지
+            <h2>리뷰 페이지 
                 <?php
                 if (isset($_SESSION['userId'])) {
-                    echo '<a href="#" class="write-review-btn" onclick="toggleReviewForm(); return false;">글쓰기</a>';}
+                    echo '<a href="#" class="write-review-btn" onclick="toggleReviewForm(); return false;">글쓰기</a>';
+                    }
                 ?>
             </h2>
             
+            <!-- 리뷰 작성 -->
             <div id="reviewFormContainer" style="display: none;">
                 <form id="writeReviewForm" action="queries/insert_review.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="product_id" value="<?php echo $_GET['id']; ?>">
@@ -107,24 +115,109 @@ include 'queries/get_header_session.php';
                 <?php
                 if (mysqli_num_rows($get_reviews) > 0) {
                     while ($review = mysqli_fetch_assoc($get_reviews)) {
-                        echo '<div class="review-item">';
+                        echo '<div class="review-item" id="review-' . $review['id'] . '">';
+                        // 일반 리뷰 보기 영역
+                        echo '<div class="review-view">';
                         echo '<div class="review-header">';
                             echo '<span class="review-author">' . $review['name'] . '</span>';
                             echo '<span class="review-date">' . $review['created_at'] . '</span>';
                             echo '<span class="review-rating">' . str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
+                            
+                            if (isset($_SESSION['id']) && $_SESSION['id'] == $review['user_id']) {
+                                echo '<div class="review-actions">';
+                                echo '<button class="edit-btn" onclick="toggleReviewEdit(' . $review['id'] . ')">수정</button>';
+                                echo '<button class="delete-btn" onclick="if(confirm(\'정말로 삭제하시겠습니까?\')) deleteReview(' . $review['id'] . ')">삭제</button>';
+                                echo '</div>';
+                            }
                         echo '</div>';
                         if ($review['image_url']) {
                             echo '<div class="review-image">';
-                                echo '<img src="../' . $review['image_url'] . '" alt="리뷰 이미지">';
+                                echo '<a href="/' . $review['image_url'] . '" target="_blank"><img src="../' . $review['image_url'] . '" alt="리뷰 이미지"></a>';
                             echo '</div>';
                         }
                         echo '<p class="review-content">' . $review['content'] . '</p>';
+                        echo '</div>';
+
+                        // 리뷰 수정 폼 영역
+                        echo '<div class="review-edit" style="display: none;">';
+                        echo '<form class="edit-review-form" onsubmit="updateReview(event, ' . $review['id'] . ')">';
+                        echo '<input type="hidden" name="image_url" value="' . $review['image_url'] . '">';
+                        echo '<div class="form-group">';
+                        echo '<label for="editRating-' . $review['id'] . '">평점</label>';
+                        echo '<select id="editRating-' . $review['id'] . '" name="rating" required>';
+                        for ($i = 5; $i >= 1; $i--) {
+                            $selected = ($i == $review['rating']) ? 'selected' : '';
+                            echo '<option value="' . $i . '" ' . $selected . '>' . str_repeat('★', $i) . str_repeat('☆', 5-$i) . '</option>';
+                        }
+                        echo '</select>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="editContent-' . $review['id'] . '">내용</label>';
+                        echo '<textarea id="editContent-' . $review['id'] . '" name="content" rows="5" required>' . htmlspecialchars($review['content']) . '</textarea>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        if ($review['image_url']) {
+                            echo '<div class="current-image">';
+                            echo '<p>현재 이미지:</p>';
+                            echo '<img src="../' . $review['image_url'] . '" alt="현재 이미지" style="max-width: 200px;">';
+                            echo '<label><input type="checkbox" name="delete_image" id="deleteImage-' . $review['id'] . '"> 이미지 삭제</label>';
+                            echo '</div>';
+                        }
+                        echo '<label for="editImage-' . $review['id'] . '">파일 첨부</label>';
+                        echo '<input type="file" id="editImage-' . $review['id'] . '" name="file">';
+                        echo '<p class="file-info">* 파일을 첨부할 수 있습니다</p>';
+                        echo '</div>';
+                        echo '<div class="form-buttons">';
+                        echo '<button type="submit" class="submit-btn">수정하기</button>';
+                        echo '<button type="button" class="cancel-btn" onclick="toggleReviewEdit(' . $review['id'] . ')">취소</button>';
+                        echo '</div>';
+                        echo '</form>';
+                        echo '</div>';
+                        
                         echo '</div>';
                     }
                 } else {
                     echo '<p>리뷰가 없습니다.</p>';
                 }
                 ?>  
+            </div>
+
+            <!-- 리뷰 수정 폼 -->
+            <div id="editReviewFormContainer" style="display: none;">
+                <form id="editReviewForm" action="queries/update_review.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="review_id" id="editReviewId">
+                    <input type="hidden" name="product_id" value="<?php echo $_GET['id']; ?>">
+                    <div class="form-group">
+                        <label for="editReviewRating">평점</label>
+                        <select id="editReviewRating" name="rating" required>
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editReviewContent">내용</label>
+                        <textarea id="editReviewContent" name="content" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div id="currentImageContainer" style="display: none;">
+                            <p>현재 이미지:</p>
+                            <img id="currentImage" src="" alt="현재 이미지" style="max-width: 200px;">
+                            <label>
+                                <input type="checkbox" name="delete_image" id="deleteImage"> 이미지 삭제
+                            </label>
+                        </div>
+                        <label for="editReviewImage">새 파일 첨부</label>
+                        <input type="file" id="editReviewImage" name="file">
+                        <p class="file-info">* 파일을 첨부할 수 있습니다</p>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="submit-btn">수정하기</button>
+                        <button type="button" class="cancel-btn" onclick="toggleEditReview()">취소</button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -146,6 +239,7 @@ include 'queries/get_header_session.php';
 document.addEventListener('DOMContentLoaded', function () {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const contents = document.querySelectorAll('.tab-content');
+    const id = '<?php if (isset($_SESSION['id'])) { echo $_SESSION['id']; } else { echo ''; } ?>';
 
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -162,29 +256,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 장바구니 버튼 클릭 시 모달 표시
     document.getElementById('addToCartBtn').addEventListener('click', function () {
-        const id = '<?php echo $_SESSION['id']; ?>';
-        const product_id = '<?php echo $_GET['id']; ?>';
+        if (id) {
+            const id = '<?php if (isset($_SESSION['id'])) { echo $_SESSION['id']; } else { echo ''; } ?>';
+            const product_id = '<?php echo $_GET['id']; ?>';
 
-        fetch('/mainmenu/queries/insert_cart_item.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `id=${id}&product_id=${product_id}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('cartModal').style.display = 'flex';
-            } else {
-                alert(data.message);
-            }
-        });
+            fetch('/mainmenu/queries/insert_cart_item.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `id=${id}&product_id=${product_id}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('cartModal').style.display = 'flex';
+                } else {
+                    alert(data.message);
+                }
+            });
+        } else {
+            alert('로그인 후 이용해주세요.');
+            window.location.href = 'login.php';
+        }
     });
 
     // 구매하기 버튼: 구매 페이지로 이동
     document.getElementById('buyBtn').addEventListener('click', function () {
-        window.location.href = 'checkout.php?type=direct&id=' + '<?php echo $_GET['id']; ?>';
+        if (id) {
+            window.location.href = 'checkout.php?type=direct&id=' + '<?php if (isset($_GET['id'])) { echo $_GET['id']; } else { echo ''; } ?>';
+        } else {
+            alert('로그인 후 이용해주세요.');
+            window.location.href = 'login.php';
+        }
     });
 
     // 계속 쇼핑하기 버튼: 모달 닫기
@@ -198,14 +302,84 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// 리뷰 작성 함수
 function toggleReviewForm() {
     const formContainer = document.getElementById('reviewFormContainer');
-    
-    if (formContainer.style.display === 'none') {
+    const editFormContainer = document.getElementById('editReviewFormContainer');
+
+    // 작성 폼 열기 → 수정 폼 닫기
+    if (formContainer.style.display === 'none' || formContainer.style.display === '') {
         formContainer.style.display = 'block';
+        editFormContainer.style.display = 'none';
     } else {
         formContainer.style.display = 'none';
     }
+}
+
+// 리뷰 수정 함수
+function toggleReviewEdit(reviewId) {
+    const reviewItem = document.getElementById(`review-${reviewId}`);
+    const viewArea = reviewItem.querySelector('.review-view');
+    const editArea = reviewItem.querySelector('.review-edit');
+    
+    if (editArea.style.display === 'none') {
+        viewArea.style.display = 'none';
+        editArea.style.display = 'block';
+    } else {
+        viewArea.style.display = 'block';
+        editArea.style.display = 'none';
+    }
+}
+
+// 리뷰 삭제 함수
+function deleteReview(reviewId) {
+    fetch('queries/delete_review.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'review_id=' + reviewId + '&product_id=<?php echo $_GET['id']; ?>'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('리뷰가 삭제되었습니다.');
+            location.reload();
+        } else {
+            alert('리뷰 삭제에 실패했습니다.');
+        }
+    });
+}
+
+// 리뷰 수정 함수
+function updateReview(event, reviewId) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    formData.append('review_id', reviewId);
+    formData.append('product_id', '<?php echo $_GET['id']; ?>');
+    formData.append('image_url', '<?php echo $row['image_url']; ?>');
+
+    // 이미지 삭제 체크박스 상태 추가
+    const deleteImageCheckbox = document.getElementById(`deleteImage-${reviewId}`);
+    if (deleteImageCheckbox && deleteImageCheckbox.checked) {
+        formData.append('delete_image', '1');
+    }
+
+    fetch('queries/update_review.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('리뷰가 수정되었습니다.');
+            location.reload();
+        } else {
+            alert('리뷰 수정에 실패했습니다.');
+        }
+    });
 }
 
 </script>

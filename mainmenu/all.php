@@ -84,8 +84,6 @@
                     <?php
                     if (mysqli_num_rows($get_all_products) > 0) {
                         while ($row = mysqli_fetch_assoc($get_all_products)) {
-
-
                             //상품 하나당 하나의 카드
                             echo '<div class="product-card">';
                             echo '<a href="product_explain.php?id=' . $row['id'] . '">';
@@ -94,6 +92,14 @@
                             echo '<img src="' . htmlspecialchars($image_path) . '" alt="' . htmlspecialchars($row['name']) . '">';
                             echo '</a>';
                             echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+                            
+                            // 평균 평점 표시 수정
+                            $avg_rating = isset($row['avg_rating']) ? number_format($row['avg_rating'], 1) : 0;
+                            echo '<div class="list-product-rating">';
+                            echo '<div class="star-rating">' . str_repeat('★', floor($avg_rating)) . str_repeat('☆', 5 - floor($avg_rating)) . '</div>';
+                            echo '<span class="rating-number">' . $avg_rating . '</span>';
+                            echo '</div>';
+                            
                             echo '<p class="price">' . number_format($row['price']) . '원</p>';
                             echo '</div>';
                         }

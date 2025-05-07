@@ -29,7 +29,7 @@
             $order_by = 'price DESC';
             break;
         case 'popular':
-            $order_by = 'rating DESC';
+            $order_by = 'avg_rating DESC';
             break;
         case 'newest':
         default:

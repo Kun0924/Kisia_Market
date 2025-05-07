@@ -25,8 +25,10 @@
                 <div class="notice-header">
                     <div class="notice-title">공지사항</div>
                     <div class="notice-search">
-                        <input type="text" placeholder="공지사항 검색">
-                        <button><i class="fas fa-search"></i></button>
+                        <form action="customer-service.php" method="get">
+                            <input type="text" name="search_query" placeholder="공지사항 검색">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
                     </div>
                 </div>
                 <div class="notice-list">
@@ -41,7 +43,7 @@
                         <?php while ($row = mysqli_fetch_assoc($get_notice)): ?>
                             <div class="qna-item notice-item">
                                 <div class="qna-info">
-                                    <a href="notice_detail.php?id=<?= $row['id'] ?>" class="qna-title">[공지] <?= htmlspecialchars($row['title']) ?></a>
+                                    <a href="notice_detail.php?id=<?= $row['id'] ?>" class="qna-title"><?= htmlspecialchars($row['title']) ?></a>
                                     <span class="qna-meta"><?= $row['id'] ?></span>
                                     <span class="qna-user">관리자</span>
                                     <span class="qna-date"><?= date('Y-m-d', strtotime($row['created_at'])) ?></span>
