@@ -91,7 +91,7 @@
                             로그인한 회원 정보와 동일
                         </label>
                     </h3>
-                    <form class="checkout-form" id="checkoutForm" method="post" action="queries/insert_order.php">
+                    <form class="checkout-form" name="checkoutForm" id="checkoutForm" method="post" action="queries/insert_order.php">
                         <input type="hidden" name="type" value="<?php echo $type; ?>">
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
                         <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
@@ -138,7 +138,7 @@
                         </div>
                         <div class="form-group">
                             <label for="address-detail">상세주소</label>
-                            <input type="text" id="address-detail" name="receiver_address_detail" placeholder="상세주소를 입력하세요">
+                            <input type="text" id="address-detail" name="receiver_address_detail" placeholder="상세주소를 입력하세요" required>
                         </div>
                         <div class="form-group">
                             <label for="delivery-memo">배송 메모</label>
@@ -187,7 +187,7 @@
                         <!-- 결제 버튼 -->
                         <div class="checkout-actions">
                             <button type="button" class="btn-cancel">취소</button>
-                            <button type="submit" class="btn-payment">결제하기</button>
+                            <button type="button" class="btn-payment" onclick="return validateForm()">결제하기</button>
                         </div>
                     </form>
                 </section>
@@ -217,14 +217,42 @@
                 window.location.href = 'cart.php';
             }
         });
-        
-        // 결제하기 버튼
-        document.querySelector('.btn-payment')?.addEventListener('click', function() {
-            // 결제 처리 로직
-            // alert('결제가 완료되었습니다.');
-            window.location.href = 'order-complete.php';
-        });
 
+        function validateForm() {
+            const postcode = document.querySelector('input[name="receiver_postcode"]');
+            const address = document.querySelector('input[name="receiver_address"]');
+            const detailAddress = document.querySelector('input[name="receiver_address_detail"]');
+            const depositorName = document.querySelector('input[name="depositor-name"]');
+            const bankName = document.querySelector('select[name="bank-name"]');
+            const paymentBank = document.querySelector('input[id="payment-bank"]');
+
+            if(postcode.value == '') {
+                alert('우편번호를 입력하세요.');
+                return false;
+            }
+            if(address.value == '') {
+                alert('주소를 입력하세요.');
+                return false;
+            }
+            if(detailAddress.value == '') {
+                alert('상세주소를 입력하세요.');
+                return false;
+            }
+
+            if(paymentBank.checked) {
+                console.log(paymentBank.checked);
+                if(depositorName.value == '') {
+                    alert('입금자명을 입력하세요.');
+                    return false;
+                }
+                if(bankName.value == '') {
+                    alert('입금은행을 선택하세요.');
+                    return false;
+                }
+            }
+            document.checkoutForm.submit();
+        }
+        
         const userInfo = {
             name: "<?php echo $user['name']; ?>",
             phone: "<?php echo $user['phone']; ?>",

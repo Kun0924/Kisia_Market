@@ -59,13 +59,18 @@
                                         <a href="inquiry_detail.php?id=<?php echo $i['id']; ?>">
                                             <h4>
                                                 <?php if($i['is_secret']) echo '<i class="fas fa-lock"></i> '; ?>
-                                                <?php echo htmlspecialchars($i['title']); ?>
+                                                <?php echo $i['title']; ?>
                                             </h4>
                                         </a>
                                         <div class="inquiry-info-group">
-                                            <span class="inquiry-type"><?php echo htmlspecialchars($i['type']); ?></span>
+                                            <span class="inquiry-type"><?php echo $i['type']; ?></span>
                                             <span class="inquiry-date"><?php echo date('Y-m-d', strtotime($i['created_at'])); ?></span>
-                                            <span class="inquiry-status">답변완료</span>
+                                            <?php if($i['inquiry_status'] == '답변 대기') : ?>
+                                                <span class="inquiry-status">답변 대기</span>
+                                            <?php elseif($i['inquiry_status'] == '답변 완료') : ?>
+                                                <span class="inquiry-status_done">답변 완료</span>
+                                            <?php endif; ?>
+
                                         </div>
                                     </div>
                                 </div>

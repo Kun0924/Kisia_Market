@@ -54,6 +54,10 @@
 
                 <div class="inquiry-actions">
                     <a href="inquiry_list.php" class="btn-list">목록으로</a>
+                    <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $row['user_id']) { ?>
+                        <a href="inquiry-edit.php?id=<?= $row['id'] ?>" class="btn-edit">수정하기</a>
+                        <a href="javascript:void(0);" onclick="confirmDelete(<?= $row['id'] ?>)" class="btn-delete">삭제하기</a>
+                    <?php } ?>
                 </div>
 
                 <?php } else { ?>
@@ -67,5 +71,12 @@
     </main>
 
     <?php include 'common/footer.php'; ?>
+    <script>
+    function confirmDelete(inquiryId) {
+        if (confirm('정말로 이 문의글을 삭제하시겠습니까?')) {
+            window.location.href = 'queries/delete_inquiry.php?id=' + inquiryId;
+        }
+    }
+    </script>
 </body>
 </html>
