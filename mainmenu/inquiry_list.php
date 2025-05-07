@@ -26,8 +26,10 @@
                 <div class="qna-header">
                     <div class="qna-title">문의사항</div>
                     <div class="qna-search">
-                        <input type="text" placeholder="문의사항 검색">
-                        <button><i class="fas fa-search"></i></button>
+                        <form action="inquiry_list.php" method="get">
+                            <input type="text" name="search_query" placeholder="문의사항 검색">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
                     </div>
                 </div>
                 <div class="qna-list">

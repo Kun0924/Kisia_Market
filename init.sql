@@ -94,7 +94,9 @@ CREATE TABLE IF NOT EXISTS products (
   image_url VARCHAR(500),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   deliver_price INT DEFAULT 0,
-  category VARCHAR(255) NOT NULL
+  category VARCHAR(255) NOT NULL,
+  avg_rating FLOAT(2,1) DEFAULT 0,
+  review_count INT DEFAULT 0
 );
 
 -- 액세서리 6개 /초고속 전송 속도를 제공하는 외장 SSD
@@ -124,12 +126,12 @@ INSERT INTO products (name, short_description, description, price, stock, image_
 ('CORSAIR DARKSTAR', 'MMO 게임에 특화된 다버튼 무선 마우스', 'product_dec/mouse/CORSAIR DARKSTAR.jpg', 187000, 120, 'uploads/mouse6.png', 1500, 'mouse');
 
 -- 마우스패드 5개
-INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category) VALUES
-('로지텍 POWERPLAY 2', '무선 충전 기능을 지원하는 하이엔드 마우스패드', 'product_dec/mousepad/logitecpowerfly.jpg', 142000, 60, 'uploads/pad1.png', 2500, 'mousepad'),
-('마이크로닉스 WIZMAX GP50', '기본에 충실한 저가형 마우스패드', 'product_dec/mousepad/micronixWIZMAX GP50.jpg', 16100, 40, 'uploads/pad2.png', 3000, 'mousepad'),
-('Razer FireFly V2', 'RGB 조명이 화려한 게이밍 마우스패드', 'product_dec/mousepad/Razer FireFly V2.jpg', 77000, 80, 'uploads/pad3.png', 2000, 'mousepad'),
-('ASUS ROG MoonStone ACE L', '단단한 소재의 프리미엄 대형 패드', 'product_dec/mousepad/ASUS ROG MoonStone ACE L.jpg', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad'),
-('CORSAIR MM700 RGB', '초대형 RGB 패브릭 패드, 책상 전체를 덮는 크기', 'product_dec/mousepad/CORSAIR MM700 RGB Extended 3XL Cloth.jpg', 213000, 90, 'uploads/pad5.png', 1500, 'mousepad');
+INSERT INTO products (name, short_description, description, price, stock, image_url, deliver_price, category, avg_rating, review_count) VALUES
+('로지텍 POWERPLAY 2', '무선 충전 기능을 지원하는 하이엔드 마우스패드', 'product_dec/mousepad/logitecpowerfly.jpg', 142000, 60, 'uploads/pad1.png', 2500, 'mousepad', 0, 0),
+('마이크로닉스 WIZMAX GP50', '기본에 충실한 저가형 마우스패드', 'product_dec/mousepad/micronixWIZMAX GP50.jpg', 16100, 40, 'uploads/pad2.png', 3000, 'mousepad', 0, 0),
+('Razer FireFly V2', 'RGB 조명이 화려한 게이밍 마우스패드', 'product_dec/mousepad/Razer FireFly V2.jpg', 77000, 80, 'uploads/pad3.png', 2000, 'mousepad', 0, 0),
+('ASUS ROG MoonStone ACE L', '단단한 소재의 프리미엄 대형 패드', 'product_dec/mousepad/ASUS ROG MoonStone ACE L.jpg', 160000, 100, 'uploads/pad4.png', 2000, 'mousepad', 0, 0),
+('CORSAIR MM700 RGB', '초대형 RGB 패브릭 패드, 책상 전체를 덮는 크기', 'product_dec/mousepad/CORSAIR MM700 RGB Extended 3XL Cloth.jpg', 213000, 90, 'uploads/pad5.png', 1500, 'mousepad', 3.5, 4);
 
 -- 장바구니 테이블 생성
 CREATE TABLE cart_items (

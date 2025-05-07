@@ -52,6 +52,26 @@
                 </div>
                 <?php } ?>
 
+                <!-- 답변 영역 추가 -->
+                <?php if ($row['inquiry_status'] == '답변 완료') { ?>
+                <div class="inquiry-answer">
+                    <div class="answer-header">
+                        <h3><i class="fas fa-reply"></i> 답변</h3>
+                        <div class="answer-meta">
+                            <span class="answer-author">답변자: 관리자</span>
+                            <span class="answer-date">답변일: <?= date("Y-m-d", strtotime($row['answer_at'])) ?></span>
+                        </div>
+                    </div>
+                    <div class="answer-content">
+                        <?= nl2br($row['answer']) ?>
+                    </div>
+                </div>
+                <?php } else { ?>
+                <div class="inquiry-no-answer">
+                    <p><i class="fas fa-clock"></i> 답변 대기중입니다.</p>
+                </div>
+                <?php } ?>
+
                 <div class="inquiry-actions">
                     <a href="inquiry_list.php" class="btn-list">목록으로</a>
                     <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $row['user_id']) { ?>

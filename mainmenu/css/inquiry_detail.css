@@ -122,3 +122,53 @@
     background-color: #f44336;
     color: white;
 }
+
+.inquiry-answer {
+    margin-top: 30px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.answer-header {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.answer-header h3 {
+    color: #1a73e8;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.answer-header i {
+    margin-right: 5px;
+}
+
+.answer-meta {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.answer-meta span {
+    margin-right: 15px;
+}
+
+.answer-content {
+    line-height: 1.6;
+    color: #333;
+}
+
+.inquiry-no-answer {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff8e6;
+    border-radius: 8px;
+    text-align: center;
+    color: #856404;
+}
+
+.inquiry-no-answer i {
+    margin-right: 5px;
+}
