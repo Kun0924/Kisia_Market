@@ -19,10 +19,13 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <select>
-                        <option>전체</option>
-                        <option>답변 대기</option>
-                        <option>답변 완료</option>
+                    <select id="typeFilter">
+                        <option value="전체">전체</option>
+                        <option value="배송">배송</option>
+                        <option value="상품">상품</option>
+                        <option value="주문/결제">주문/결제</option>
+                        <option value="반품/교환">반품/교환</option>
+                        <option value="기타">기타</option>
                     </select>
                     <input type="text" placeholder="제목/내용 검색">
                     <button class="edit-btn">검색</button>
@@ -32,6 +35,7 @@
                     <thead>
                         <tr>
                             <th>번호</th>
+                            <th>문의유형</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
@@ -53,6 +57,7 @@
                                 while ($inquiry = mysqli_fetch_assoc($result)) {
                                     echo "<tr>";
                                     echo "<td>" . $inquiry['id'] . "</td>";// 문의 사항 번호
+                                    echo "<td>" . $inquiry['type'] . "</td>"; //문의 유형
                                     echo "<td>" . $inquiry['title'] . "</td>";
                                     echo "<td>" . $inquiry['user_name'] . "</td>";
                                     echo "<td>" . $inquiry['created_at'] . "</td>";
@@ -76,5 +81,23 @@
             </div>
         </div>
     </div>
+    <script>
+    document.getElementById('typeFilter').addEventListener('change', function () {
+        const selectedType = this.value;
+        const rows = document.querySelectorAll('table tbody tr');
+
+        rows.forEach(row => {
+            const typeCell = row.cells[1]; // 두 번째 열: 문의유형
+            if (!typeCell) return;
+
+            if (selectedType === '전체' || typeCell.textContent.trim() === selectedType) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+    </script>
+
 </body>
 </html> 

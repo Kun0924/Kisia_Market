@@ -16,15 +16,10 @@
         <div class="main-content">
             <header class="admin-header">
                 <h1>회원 관리</h1>
-                <button class="add-product-btn">회원 추가</button>
+                <a href="members_add.php" class="add-product-btn">회원 추가</a>
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <select id="role-filter">
-                        <option value="all">전체 회원</option>
-                        <option value="user">일반 회원</option>
-                        <option value="admin">관리자</option>
-                    </select>
                     <input type="text" placeholder="회원명/아이디 검색">
                     <button>검색</button>
                 </div>

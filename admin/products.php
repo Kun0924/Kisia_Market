@@ -16,7 +16,7 @@
         <div class="main-content">
             <header class="admin-header">
                 <h1>상품 관리</h1>
-                <button class="add-product-btn">상품 추가</button>
+                <a href="products_add.php" class="add-product-btn">상품 추가</a>
             </header>
             <div class="content-wrapper">
                 <div class="filters">
