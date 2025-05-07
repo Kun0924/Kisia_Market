@@ -16,7 +16,7 @@
         <div class="main-content">
             <header class="admin-header">
                 <h1>공지사항 관리</h1>
-                <button class="add-product-btn">공지사항 글쓰기</button>
+                <a href="notices_add.php" class="add-product-btn">공지사항 글쓰기</a>
             </header>
             <div class="content-wrapper">
                 <div class="filters">
