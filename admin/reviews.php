@@ -58,11 +58,11 @@
                             while ($reviews = $result->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>" . $reviews['id'] . "</td>";
-                                echo "<td>" . htmlspecialchars($reviews['product_name'] ?? '알 수 없음') . "</td>";
-                                echo "<td>" . htmlspecialchars($reviews['user_name'] ?? '알 수 없음') . "</td>";
-                                echo "<td class='star-rating'>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
-                                echo "<td>" . nl2br(htmlspecialchars($reviews['content'])) . "</td>";
-                                echo "<td>" . htmlspecialchars($reviews['created_at']) . "</td>";
+                                echo "<td>" . $reviews['product_name'] ?? '알 수 없음' . "</td>";
+                                echo "<td>" . $reviews['user_name'] ?? '알 수 없음' . "</td>";
+                                echo "<td class='star-rating' data-rating='" . (int)$reviews['rating'] . "'>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
+                                echo "<td>" . nl2br($reviews['content']) . "</td>";
+                                echo "<td>" . $reviews['created_at'] . "</td>";
                                 echo "<td>
                                         <a href='admin_delete.php?id=" . $reviews['id'] . "' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
@@ -81,35 +81,26 @@
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const categorySelect = document.getElementById('category-filter');
         const ratingSelect = document.getElementById('rating-filter');
         const rows = document.querySelectorAll('tbody tr');
 
-        function applyFilters() {
-            const selectedCategory = categorySelect.value;
-            const selectedRating = ratingSelect.value;
+        ratingSelect.addEventListener('change', function () {
+            const selectedRating = this.value;
 
             rows.forEach(row => {
-                const rowCategory = row.getAttribute('data-category');
-                const rowRating = row.getAttribute('data-rating');
+                const ratingTd = row.querySelector('td[data-rating]');
+                if (!ratingTd) return;
 
-                const matchCategory = (selectedCategory === 'all' || rowCategory === selectedCategory);
-                const matchRating = (selectedRating === 'all' || rowRating === selectedRating);
+                const rowRating = ratingTd.getAttribute('data-rating');
 
-                if (matchCategory && matchRating) {
+                if (selectedRating === 'all' || rowRating === selectedRating) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
                 }
             });
-        }
-
-        categorySelect.addEventListener('change', applyFilters);
-        ratingSelect.addEventListener('change', applyFilters);
+        });
     });
     </script>
-
-            
-
 </body>
 </html> 
