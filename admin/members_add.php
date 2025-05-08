@@ -2,25 +2,17 @@
 require_once '../mainmenu/common/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // 사용자 입력을 그대로 사용
+    $userId = $_POST['userId'] ?? '';
     $name = $_POST['name'] ?? '';
-    $category = $_POST['category'] ?? '';
-    $price = $_POST['price'] ?? '';
-    $stock = $_POST['stock'] ?? '';
-    $image_url = $_FILES['image']['name'] ?? '';
-    $desc_url = $_FILES['description']['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $phone = $_POST['phone'] ?? '';
 
-    // 파일 업로드 (파일명 무작위화, 확장자 필터링 없이 그대로 저장)
-    $uploadDir = '../uploads/';
-    move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $image_url);
-    move_uploaded_file($_FILES['description']['tmp_name'], $uploadDir . $desc_url);
-
-    // SQL 구문에 사용자 입력 직접 삽입 (SQL Injection 취약)
-    $sql = "INSERT INTO products (name, category, price, stock, image_url, description, created_at)
-            VALUES ('$name', '$category', '$price', '$stock', 'uploads/$image_url', 'uploads/$desc_url', NOW())";
+    $sql = "INSERT INTO users (userId, name, email, password, phone, created_at)
+            VALUES ('$userId', '$name', '$email', '$hashed_password', '$phone', NOW())";
 
     if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('상품이 등록되었습니다.'); location.href='products.php';</script>";
+        echo "<script>alert('회원이 등록되었습니다.'); location.href='members.php';</script>";
     } else {
         echo "<script>alert('등록 실패: " . mysqli_error($conn) . "');</script>";
     }
@@ -72,16 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             outline: none;
         }
 
-        .checkbox-group {
-            margin-top: 10px;
-        }
-
-        .checkbox-group label {
-            display: inline-block;
-            margin-right: 15px;
-            font-size: 14px;
-        }
-
         .form-buttons {
             display: flex;
             justify-content: space-between;
@@ -89,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             margin-top: 16px;
         }
 
-        .add-product-btn {
+        .add-member-btn {
             flex: 1;
             padding: 10px;
             font-size: 15px;
@@ -102,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             transition: background-color 0.3s;
         }
 
-        .add-product-btn:hover {
+        .add-member-btn:hover {
             background-color: #27ae60;
         }
 
@@ -126,49 +108,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <?php include 'topbar.php'; ?>
+<div class="admin-container">
+    <?php include 'topbar.php'; ?>
 
-        <div class="main-content">
-            <header class="admin-header">
-                <h1>회원 추가</h1>
-            </header>
+    <div class="main-content">
+        <header class="admin-header">
+            <h1>회원 추가</h1>
+        </header>
 
-            <div class="content-wrapper">
-                <form class="admin-form" method="POST" action="">
-                    <label>
-                        이름
-                        <input type="text" name="username" placeholder="회원 이름을 입력하세요" required>
-                    </label>
+        <div class="content-wrapper">
+        <form class="admin-form" method="POST" action="">
+            <label>
+                이름
+                <input type="text" name="name" placeholder="이름을 입력하세요" required>
+            </label>
 
-                    <label>
-                        아이디
-                        <input type="text" name="real_id" placeholder="아이디를 입력하세요" required>
-                    </label>
+            <label>
+                아이디
+                <input type="text" name="userId" placeholder="아이디를 입력하세요" required>
+            </label>
 
-                    <label>
-                        비밀번호
-                        <input type="password" name="password" placeholder="비밀번호를 입력하세요" required>
-                    </label>
+            <label>
+                비밀번호
+                <input type="password" name="password" placeholder="비밀번호를 입력하세요" required>
+            </label>
 
-                    <label>
-                        이메일
-                        <input type="email" name="email" placeholder="이메일을 입력하세요" required>
-                    </label>
+            <label>
+                이메일
+                <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+            </label>
 
-                    <label>
-                        전화번호
-                        <input type="tel" name="phone" placeholder="전화번호를 입력하세요">
-                    </label>
+            <label>
+                전화번호
+                <input type="tel" name="phone" placeholder="전화번호를 입력하세요">
+            </label>
 
-                    <div class="form-buttons">
-                        <a href="members.php" class="cancel-btn">취소</a>
-                        <button type="submit" class="add-product-btn">등록</button>
-                    </div>
-                </form>
+            <div class="form-buttons">
+                <a href="members.php" class="cancel-btn">취소</a>
+                <button type="submit" class="add-member-btn">등록</button>
             </div>
+        </form>
+
         </div>
     </div>
+</div>
 </body>
 </html>
-

@@ -37,7 +37,7 @@
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
             <header class="admin-header">
-                <h1>대시보드</h1>
+                <h1>관리자 대시보드</h1>
             </header>
 
             <!-- 통계 카드 -->
@@ -58,7 +58,6 @@
                     <h3>총 매출</h3>
                     <p><?= number_format($total_sales) ?>원</p>
                 </div>
-
                 <div class="stat-card">
                     <h3>리뷰</h3>
                     <p><?= number_format($review_count) ?>건</p>
