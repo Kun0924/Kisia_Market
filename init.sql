@@ -224,5 +224,5 @@ CREATE TABLE order_items (
 -- 주문 상세 초기 데이터 삽입
 INSERT INTO order_items (order_id, product_id, product_name, product_image_url, quantity, price, deliver_price)
 VALUES 
-(1, 1, '상품1', 'uploads/accessory/keyboard1.png', 2, 50000, 2500),
-(1, 2, '상품2', 'uploads/accessory/keyboard2.png', 1, 30000, 1500);
+(1, 1, '상품1', 'uploads/keyboard1.png', 2, 50000, 2500),
+(1, 2, '상품2', 'uploads/keyboard2.png', 1, 30000, 1500);
