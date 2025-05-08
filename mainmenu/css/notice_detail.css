@@ -46,3 +46,28 @@
     margin-top: 24px;
     word-break: break-all;
 }
+
+.notice-actions {
+    margin-top: 112px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.btn-list, .btn-edit,.btn-delete{
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-list:hover{
+    opacity: 0.9;
+}
+
+.btn-list {
+    background-color: #f0f0f0;
+    color: #333;
+}

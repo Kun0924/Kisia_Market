@@ -16,7 +16,7 @@
             i.id, i.title, i.type, i.is_secret, i.created_at, i.inquiry_status,
             u.userId, u.name
         FROM inquiry i
-        JOIN users u ON i.user_id = u.id
+        LEFT JOIN users u ON i.user_id = u.id
         $search_query
         ORDER BY i.id DESC
         LIMIT $offset, $items_per_page

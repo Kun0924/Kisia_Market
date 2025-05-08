@@ -33,6 +33,9 @@
             <?php } else { ?>
                 <p>공지사항이 없습니다.</p>
             <?php } ?>
+            <div class="notice-actions">
+                <a href="customer-service.php" class="btn-list">목록으로</a>
+            </div>
         </div>
     </div>
 </main>

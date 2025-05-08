@@ -1,7 +1,15 @@
 <?php
     require_once '/var/www/html/mainmenu/common/db.php';
 
-    $order_id = $_GET['order_id'];
+    $user_id = $_POST['user_id'];
+    $order_id = $_POST['order_id'];
+    $price = $_POST['price'];
+    $payment_method = $_POST['payment_method'];
+
+    if ($payment_method == 'point') {
+        $sql = "UPDATE users SET point = point + $price WHERE id = $user_id";
+        $result = mysqli_query($conn, $sql);
+    }
 
     $sql = "UPDATE orders SET order_status = 'cancelled' WHERE id = $order_id";
     $result = mysqli_query($conn, $sql);
