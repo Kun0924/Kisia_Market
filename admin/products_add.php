@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <!-- 상품 이미지 업로드 -->
                     <label>
                         상품 이미지 업로드
-                        <input type="file" name="product_image" accept="image/*">
+                        <input type="file" name="product_image" accept="../uploads/*">
                     </label>
 
                     <!-- 가격 -->
