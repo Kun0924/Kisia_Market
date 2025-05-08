@@ -49,10 +49,10 @@
                                     echo "<td>관리자</td>";
                                     echo "<td>" . $notices['created_at'] . "</td>";
                                     echo "<td>
-                                        <a href='admin_edit.php?id=" . $notices['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                        <a href='notices_edit.php?id=" . $notices['id'] . "' class='edit-btn' title='게시글 수정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $notices['id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $notices['id'] . "&type=notices' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";

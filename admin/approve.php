@@ -61,7 +61,7 @@
                                         <a href='admin_edit.php?id=" . $orders['order_id'] . "' class='edit-btn' title='확인 및 수정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $orders['order_id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $orders['order_id'] . "&type=orders' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";

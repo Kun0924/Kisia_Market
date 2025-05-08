@@ -27,7 +27,7 @@
                         <option value="2">2점</option>
                         <option value="1">1점</option>
                     </select>
-                    <input type="text" placeholder="검색어 입력">
+                    <input type="text" placeholder="">
                     <button>검색</button>
                 </div>
                 <table class="table">
@@ -64,7 +64,7 @@
                                 echo "<td>" . nl2br($reviews['content']) . "</td>";
                                 echo "<td>" . $reviews['created_at'] . "</td>";
                                 echo "<td>
-                                        <a href='admin_delete.php?id=" . $reviews['id'] . "' class='delete-btn' title='삭제'>
+                                       <a href='admin_delete.php?id=" . $reviews['id'] . "&type=reviews' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";

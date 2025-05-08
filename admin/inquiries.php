@@ -61,12 +61,12 @@
                                     echo "<td>" . $inquiry['title'] . "</td>";
                                     echo "<td>" . $inquiry['user_name'] . "</td>";
                                     echo "<td>" . $inquiry['created_at'] . "</td>";
-                                    echo "<td>-</td>"; // 문의 사항 상태
+                                    echo "<td>" . $inquiry['inquiry_status'] . "</td>"; // 문의 사항 상태
                                     echo "<td>
-                                        <a href='admin_edit.php?id=" . $inquiry['id'] . "' class='edit-btn' title='문의답변'>
+                                        <a href='answer.php?id=" . $inquiry['id'] . "' class='edit-btn' title='문의답변'>
                                             <i class='fa fa-reply'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $inquiry['id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $inquiry['id'] . "&type=inquiry' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";

@@ -52,12 +52,14 @@
                                 echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
                                 echo "<td>-</td>";
                                 echo "<td>
-                                        <a href='admin_delete.php?id=" . $users['id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $users['id'] . "&type=users' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
-                                      </td>";
+                                    </td>";
+                        
                                 echo "</tr>";
                             }
+
                         } else {
                             echo "<tr><td colspan='7' class='no-data'>등록된 회원이 없습니다.</td></tr>";
                         }

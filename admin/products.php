@@ -59,10 +59,10 @@
                                 echo "<td>" . $product['stock'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
                                 echo "<td>
-                                        <a href='admin_edit.php?id=" . $product['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                        <a href='products_edit.php?id=" . $product['id'] . "' class='edit-btn' title='상품 수정정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $product['id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $product['id'] . "&type=products' class='delete-btn'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";
