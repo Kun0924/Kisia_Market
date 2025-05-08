@@ -20,8 +20,10 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <input type="text" placeholder="제목/내용 검색">
-                    <button>검색</button>
+                    <form method="GET" action="">
+                        <input type="text" name="search_query" placeholder="공지사항 제목 검색" value="<?= $_GET['search_query'] ?? '' ?>">
+                        <button type="submit">검색</button>
+                    </form>
                 </div>
                 <table class="table">
                     <thead>
@@ -37,7 +39,13 @@
                         <?php
                             require_once '../mainmenu/common/db.php'; // mysqli 연결됨
 
-                            $sql = "SELECT * FROM notices ORDER BY created_at DESC";
+                            $search_query = $_GET['search_query'] ?? '';
+                            if ($search_query !== '') {
+                                $sql = "SELECT * FROM notices WHERE title LIKE '%$search_query%' ORDER BY id ASC";
+                            } else {
+                                $sql = "SELECT * FROM notices ORDER BY created_at DESC";
+                            }
+
                             $result = mysqli_query($conn, $sql);
 
                             //공지사항

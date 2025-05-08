@@ -27,8 +27,10 @@
                         <option value="mousepad">마우스패드</option>
                         <option value="accessory">액세서리</option>
                     </select>
-                    <input type="text" placeholder="상품명 검색">
-                    <button>검색</button>
+                    <form method="GET" action="">
+                        <input type="text" name="search_query" placeholder="상품명 검색" value="<?= $_GET['search_query'] ?? '' ?>">
+                        <button type="submit">검색</button>
+                    </form>
                 </div>
                 <table class="table">
                     <thead>
@@ -46,7 +48,13 @@
                         <?php
                         require_once '../mainmenu/common/db.php'; // mysqli 연결됨
 
-                        $sql = "SELECT * FROM products ORDER BY id asc";
+                        $search_query = $_GET['search_query'] ?? '';
+                        if ($search_query !== '') {
+                            $sql = "SELECT * FROM products WHERE name LIKE '%$search_query%' ORDER BY id ASC";
+                        } else {
+                            $sql = "SELECT * FROM products ORDER BY id ASC";
+                        }
+
                         $result = mysqli_query($conn, $sql);
 
                         if ($result && mysqli_num_rows($result) > 0) {

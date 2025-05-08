@@ -27,8 +27,10 @@
                         <option value="accessory">액세서리</option>
                     </select>
 
-                    <input type="text" placeholder="">
-                    <button>검색</button>
+                    <form method="GET" action="">
+                        <input type="text" name="search_query" placeholder="상품명 및 사용자 검색" value="<?= $_GET['search_query'] ?? '' ?>">
+                        <button type="submit">검색</button>
+                    </form>
                 </div>
                 <table class="table">
                     <thead>
@@ -46,12 +48,23 @@
                     <?php
                         require_once '../mainmenu/common/db.php'; // mysqli 연결됨
 
-                        $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at,
+                        $search_query = $_GET['search_query'] ?? '';
+                        if ($search_query !== '') {
+                            $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at,
+                                    u.name AS user_name, p.name AS product_name, p.category AS product_category 
+                                    FROM reviews r
+                                    LEFT JOIN users u ON r.user_id = u.id
+                                    LEFT JOIN products p ON r.product_id = p.id
+                                    WHERE p.name LIKE '%$search_query%' or u.name LIKE '%$search_query%' 
+                                    ORDER BY id ASC";
+                        } else {
+                            $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at,
                                     u.name AS user_name, p.name AS product_name, p.category AS product_category
-                                FROM reviews r
-                                LEFT JOIN users u ON r.user_id = u.id
-                                LEFT JOIN products p ON r.product_id = p.id
-                                ORDER BY r.created_at ASC";
+                                    FROM reviews r
+                                    LEFT JOIN users u ON r.user_id = u.id
+                                    LEFT JOIN products p ON r.product_id = p.id
+                                    ORDER BY r.created_at ASC";
+                        }
                         $result = mysqli_query($conn, $sql);
 
                         if ($result && $result->num_rows > 0) {
