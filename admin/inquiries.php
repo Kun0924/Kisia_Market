@@ -73,7 +73,7 @@
                                     echo "</tr>";
 
                                     // 상세내용 행 추가
-                                    echo "<tr id='detail-" . $inquiry['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                    echo "<tr id='inquiries_detail-" . $inquiry['id'] . "' style='display: none; background-color: #f9f9f9;'>";
                                     echo "<td colspan='7'>";
                                     echo "<strong>문의 내용:</strong><br>" . nl2br($inquiry['content']) . "<br><br>";
                                     if (!empty($inquiry['answer'])) {
