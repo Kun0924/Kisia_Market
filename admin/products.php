@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'topbar.php'; ?>
 
         <!-- 메인 콘텐츠 -->
         <div class="main-content">

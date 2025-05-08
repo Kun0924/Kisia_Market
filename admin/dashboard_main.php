@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'topbar.php'; ?>
 
         <?php
         require_once '../mainmenu/common/db.php';

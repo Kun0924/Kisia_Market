@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'topbar.php'; ?>
 
         <div class="main-content">
             <header class="admin-header">
