@@ -56,7 +56,7 @@
                                     <?php endif; ?>
                                     <span class="qna-type"><?= $row['type'] ?></span>
                                     <span class="qna-meta"><?= $row['id'] ?></span>
-                                    <span class="qna-user"><?= $row['userId'] ?></span>
+                                    <span class="qna-user"><?= $row['userId'] ? $row['userId'] : '탈퇴한 회원' ?></span>
                                     <span class="qna-date"><?= date('Y-m-d', strtotime($row['created_at'])) ?></span>
                                     <span class="<?= $row['inquiry_status'] == '답변 완료' ? 'inquiry-status_done' : 'inquiry-status' ?>">
                                         <?= $row['inquiry_status'] == '답변 완료' ? '답변 완료' : '답변 대기' ?>

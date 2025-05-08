@@ -149,6 +149,12 @@
                                     <button type="submit" class="btn-save">저장하기</button>
                                 </div>
                             </form>
+                            <div class="withdrawal-section">
+                                <form action="queries/delete_user.php" method="POST">
+                                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
+                                    <button type="submit" class="btn-withdrawal" onclick="return confirm('정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')">회원 탈퇴</button>
+                                </form>
+                            </div>
                         </div>
                     </div>                    
                 </div>

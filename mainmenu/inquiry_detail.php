@@ -26,7 +26,7 @@
                     </span>
                     <h2 class="inquiry-post-title"><?= $row['title'] ?></h2>
                     <div class="inquiry-post-meta">
-                        <span class="inquiry-author">작성자: <?= $row['name'] ?></span>
+                        <span class="inquiry-author">작성자: <?= $row['name'] ? $row['name'] : '탈퇴한 회원' ?></span>
                         <span class="inquiry-date">작성일: <?= date("Y-m-d", strtotime($row['created_at'])) ?></span>
                         <?php if ($row['is_secret']) { ?>
                             <span class="inquiry-secret"><i class="fas fa-lock"></i> 비밀글</span>

@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS inquiry (
     inquiry_status VARCHAR(50) NOT NULL DEFAULT '답변 대기',
     answer TEXT,
     answer_at DATETIME,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- 문의글 초기 데이터 삽입 
@@ -140,8 +140,8 @@ CREATE TABLE cart_items (
     product_id INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
     added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
     UNIQUE (user_id, product_id)
 );
 
@@ -159,8 +159,8 @@ CREATE TABLE reviews (
     rating INT CHECK (rating BETWEEN 1 AND 5),
     image_url VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
 -- 리뷰 초기 데이터 삽입
@@ -174,7 +174,7 @@ VALUES
 -- 주문 테이블 생성
 CREATE TABLE orders (
   id INT PRIMARY KEY AUTO_INCREMENT,           -- 주문 고유 ID
-  user_id INT NOT NULL,                        -- 주문한 사용자 (users 테이블 참조)
+  user_id INT,                        -- 주문한 사용자 (users 테이블 참조)
   user_name VARCHAR(100),                      -- 주문자 이름
 
   order_amount INT NOT NULL,                   -- 총 주문 금액
@@ -194,19 +194,20 @@ CREATE TABLE orders (
   receiver_address_detail VARCHAR(255),              -- 상세주소
   delivery_memo VARCHAR(255),              -- 배송 메모
 
-  order_created_at DATETIME DEFAULT NOW()      -- 주문 생성 시각
+  order_created_at DATETIME DEFAULT NOW(),      -- 주문 생성 시각
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE order_items (
   id INT PRIMARY KEY AUTO_INCREMENT,
   order_id INT NOT NULL,                    -- 주문 ID (orders 테이블 FK)
-  product_id INT NOT NULL,                  -- 상품 ID (products 테이블 FK)
+  product_id INT,                  -- 상품 ID (products 테이블 FK)
   product_name VARCHAR(255) NOT NULL,        -- 상품 이름
   product_image_url VARCHAR(255) NOT NULL,   -- 상품 이미지 URL
   quantity INT NOT NULL,                    -- 수량
   price INT NOT NULL,                       -- 주문 당시 단가 (스냅샷용)
   deliver_price INT NOT NULL,               -- 배송비
 
-  FOREIGN KEY (order_id) REFERENCES orders(id),
-  FOREIGN KEY (product_id) REFERENCES products(id)
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
 );

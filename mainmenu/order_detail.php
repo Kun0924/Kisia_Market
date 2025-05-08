@@ -25,6 +25,8 @@
         .order-summary-row .value { font-weight: 600; color: #1976d2; }
         .btn-back { display: inline-block; margin-top: 24px; background: #1976d2; color: #fff; padding: 10px 28px; border-radius: 5px; text-decoration: none; }
         .btn-back:hover { background: #1256a3; }
+        .btn-cancel { display: inline-block; margin-top: 24px; background: #dc3545; color: #fff; padding: 10px 28px; border-radius: 5px; text-decoration: none; }
+        .btn-cancel:hover { background:rgb(113, 20, 29); }
         .product-info-row { display: flex; align-items: center; gap: 12px; }
         .product-name { font-weight: 500; }
     </style>
@@ -166,7 +168,13 @@
 
             <div class="button-group" style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
                 <a href="mypage.php" class="btn-back">목록으로</a>
-                <a href="queries/cancel_order.php?order_id=<?php echo $order['id']; ?>" class="btn-back" style="background-color: #dc3545; color: white;">주문 취소</a>
+                <form action="queries/cancel_order.php" method="post">
+                    <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                    <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
+                    <input type="hidden" name="price" value="<?php echo $order['order_amount']; ?>">
+                    <input type="hidden" name="payment_method" value="<?php echo $order['payment_method']; ?>">
+                    <a class="btn-cancel" onclick="this.closest('form').submit();" style="background-color: #dc3545; color: white;">주문 취소</a>
+                </form>
             </div>
         </div>
     </main>

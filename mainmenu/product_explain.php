@@ -119,7 +119,7 @@ include 'queries/get_header_session.php';
                         // 일반 리뷰 보기 영역
                         echo '<div class="review-view">';
                         echo '<div class="review-header">';
-                            echo '<span class="review-author">' . $review['name'] . '</span>';
+                            echo '<span class="review-author">' . ($review['name'] ? $review['name'] : '탈퇴한 회원') . '</span>';
                             echo '<span class="review-date">' . $review['created_at'] . '</span>';
                             echo '<span class="review-rating">' . str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
                             
