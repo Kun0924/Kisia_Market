@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li>
-                <a href="approve.php">
+                <a href="orders.php">
                     <i class="fas fa-shopping-cart"></i>
                     <span>주문 관리</span>
                 </a>

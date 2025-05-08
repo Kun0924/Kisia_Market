@@ -22,10 +22,10 @@
         $product_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM products"))[0];
 
         // 주문 수 조회
-        // $order_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM orders"))[0];
+        $order_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM orders WHERE deposit_confirmed = 1"))[0];
 
         // 총 매출 조회
-        // $total_sales = mysqli_fetch_row(mysqli_query($conn, "SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE order_status = 'completed'"))[0];
+        $total_sales = mysqli_fetch_row(mysqli_query($conn, "SELECT COALESCE(SUM(order_amount), 0) FROM orders WHERE order_status = 'completed'"))[0];
 
         // 리뷰 수 조회
         $review_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM reviews"))[0];
@@ -52,12 +52,13 @@
                 </div>
                 <div class="stat-card">
                     <h3>총 주문</h3>
-                    <p>0건</p>
+                    <p><?= number_format($order_count) ?>건</p>
                 </div>
                 <div class="stat-card">
                     <h3>총 매출</h3>
-                    <p>0원</p>
+                    <p><?= number_format($total_sales) ?>원</p>
                 </div>
+
                 <div class="stat-card">
                     <h3>리뷰</h3>
                     <p><?= number_format($review_count) ?>건</p>
