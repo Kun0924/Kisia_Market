@@ -14,6 +14,7 @@
     $receiver_postcode = $_POST['receiver_postcode'] ?? '';
     $receiver_address_detail = $_POST['receiver_address_detail'] ?? '';
     $delivery_memo = $_POST['delivery_memo'] ?? '';
+    $order_status = 'pending';
     
     $product_id = $_POST['product_id'] ?? '';
     $quantity = $_POST['quantity'] ?? '';
@@ -31,6 +32,7 @@
     $user = mysqli_fetch_assoc($result);
 
     if ($payment_method == 'point') {
+        $order_status = 'paid';
         if ($user['point'] < $order_amount) {
             $all_success = false;
             $fail_message = '포인트가 부족합니다.';
@@ -41,7 +43,8 @@
     }
 
     if ($all_success) {
-        $sql = "INSERT INTO orders (user_id, user_name, order_amount, payment_method, depositor_name, bank_name, receiver_name, receiver_phone, receiver_email, receiver_address, receiver_postcode, receiver_address_detail, delivery_memo) VALUES ('$userId', '$name', '$order_amount', '$payment_method', '$depositor_name', '$bank_name', '$receiver_name', '$receiver_phone', '$receiver_email', '$receiver_address', '$receiver_postcode', '$receiver_address_detail', '$delivery_memo')";
+        $sql = "INSERT INTO orders (user_id, user_name, order_amount, payment_method, depositor_name, bank_name, receiver_name, receiver_phone, receiver_email, receiver_address, receiver_postcode, receiver_address_detail, delivery_memo, order_status)
+         VALUES ('$userId', '$name', '$order_amount', '$payment_method', '$depositor_name', '$bank_name', '$receiver_name', '$receiver_phone', '$receiver_email', '$receiver_address', '$receiver_postcode', '$receiver_address_detail', '$delivery_memo', '$order_status')";
         $result = mysqli_query($conn, $sql);
         if (!$result) {
             $all_success = false;
