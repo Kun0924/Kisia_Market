@@ -69,7 +69,7 @@
                                 echo "</tr>";
 
                                 // 상세 정보 행
-                                echo "<tr class='product-detail' id='detail-" . $product['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                echo "<tr id='product_detail-" . $product['id'] . "' class='product-detail'>";
                                 echo "<td colspan='7'>";
                                 echo "<strong>상품명:</strong> " . $product['name'] . "<br>";
                                 echo "<strong>카테고리:</strong> " . $product['category'] . "<br>";
@@ -98,9 +98,9 @@
             const selected = this.value;
 
             rows.forEach(row => {
-                const id = row.getAttribute('data-id');
-                const category = row.cells[2].textContent.trim(); // 3번째 열 = 카테고리
-                const detailRow = document.getElementById('detail-' + id);
+                const id = row.dataset.id;
+                const category = row.cells[2].textContent.trim();
+                const detailRow = document.getElementById('product_detail-' + id);
 
                 if (selected === 'all' || category === selected) {
                     row.style.display = '';
@@ -112,18 +112,21 @@
             });
         });
 
-        // 상세보기 토글
         document.querySelectorAll('.product-row').forEach(row => {
-            row.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');
-                const detailRow = document.getElementById('detail-' + id);
+            row.addEventListener('click', function (e) {
+                // 버튼 클릭 시 상세 열림 방지
+                if (e.target.closest('a')) return;
+
+                const id = this.dataset.id;
+                const detailRow = document.getElementById('product_detail-' + id);
                 if (detailRow) {
-                    detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+                    detailRow.style.display = detailRow.style.display === 'none' || detailRow.style.display === '' ? 'table-row' : 'none';
                 }
             });
         });
     });
     </script>
+
 
 
 </body>

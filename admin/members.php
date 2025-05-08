@@ -60,7 +60,7 @@
                                 echo "</tr>";
 
                                 // 상세 정보 추가
-                                echo "<tr id='detail-" . $users['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                echo "<tr id='user_detail-" . $users['id'] . "' class='user-detail'>";
                                 echo "<td colspan='7'>";
                                 echo "<strong>아이디:</strong> " . $users['userId'] . "<br>";
                                 echo "<strong>이름:</strong> " . $users['name'] . "<br>";
@@ -81,9 +81,9 @@
     </div>
     <script>
     function toggleDetail(id) {
-        const detailRow = document.getElementById('detail-' + id);
+        const detailRow = document.getElementById('user_detail-' + id);
         if (detailRow) {
-            detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+            detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
         }
     }
     </script>

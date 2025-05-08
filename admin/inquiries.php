@@ -73,7 +73,7 @@
                                     echo "</tr>";
 
                                     // 상세내용 행 추가
-                                    echo "<tr id='inquiries_detail-" . $inquiry['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                    echo "<tr id='inquiries_detail-" . $inquiry['id'] . "' class='inquiry-detail'>";
                                     echo "<td colspan='7'>";
                                     echo "<strong>문의 내용:</strong><br>" . nl2br($inquiry['content']) . "<br><br>";
                                     if (!empty($inquiry['answer'])) {
@@ -99,32 +99,43 @@
     </div>
 
     <script>
-    document.getElementById('typeFilter').addEventListener('change', function () {
-        const selectedType = this.value;
+    document.addEventListener('DOMContentLoaded', function () {
+        // 필터링 기능
+        const typeFilter = document.getElementById('typeFilter');
         const rows = document.querySelectorAll('table tbody tr');
 
-        rows.forEach(row => {
-            const typeCell = row.cells[1];
-            if (!typeCell || row.id.startsWith("detail-")) return;
+        typeFilter.addEventListener('change', function () {
+            const selectedType = this.value;
 
-            if (selectedType === '전체' || typeCell.textContent.trim() === selectedType) {
-                row.style.display = '';
-                const detailRow = document.getElementById('detail-' + row.cells[0].textContent);
-                if (detailRow) detailRow.style.display = 'none'; // 필터시 상세 내용 숨기기
-            } else {
-                row.style.display = 'none';
-                const detailRow = document.getElementById('detail-' + row.cells[0].textContent);
-                if (detailRow) detailRow.style.display = 'none';
-            }
+            rows.forEach(row => {
+                // 원래 데이터 행인지 확인
+                if (!row.id.startsWith('inquiries_detail-')) {
+                    const typeCell = row.cells[1];
+                    const id = row.cells[0].textContent.trim();
+                    const detailRow = document.getElementById('inquiries_detail-' + id);
+
+                    if (selectedType === '전체' || typeCell.textContent.trim() === selectedType) {
+                        row.style.display = '';
+                        if (detailRow) detailRow.style.display = 'none';
+                    } else {
+                        row.style.display = 'none';
+                        if (detailRow) detailRow.style.display = 'none';
+                    }
+                }
+            });
         });
-    });
 
-    function toggleDetail(id) {
-        const row = document.getElementById('detail-' + id);
-        if (row) {
-            row.style.display = row.style.display === 'none' ? '' : 'none';
-        }
-    }
+        // 상세보기 토글 기능
+        window.toggleDetail = function (id) {
+            const detailRow = document.getElementById('inquiries_detail-' + id);
+            if (detailRow) {
+                detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
+            }
+        };
+    });
     </script>
+
+    </script>
+
 </body>
 </html>

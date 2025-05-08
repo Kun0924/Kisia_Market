@@ -57,7 +57,7 @@
                                         </a>
                                       </td>";
                                     echo "</tr>";
-                                    echo "<tr id='detail-" . $notices['id'] . "' class='notice-detail' style='display:none; background-color:#f9f9f9;'>";
+                                    echo "<tr id='notice_detail-" . $notices['id'] . "' class='notice-detail'>";
                                     echo "<td colspan='5'>";
                                     echo "<strong>공지 내용:</strong><br>" . nl2br($notices['content']) . "<br>";
                                     echo "</td>";
@@ -74,18 +74,20 @@
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const rows = document.querySelectorAll('.notice-row');
-        rows.forEach(row => {
-            row.addEventListener('click', function () {
-                const id = row.getAttribute('data-id');
-                const detailRow = document.getElementById('detail-' + id);
+        document.querySelectorAll('.notice-row').forEach(row => {
+            row.addEventListener('click', function (e) {
+                if (e.target.closest('a')) return; // 수정/삭제 버튼 클릭 시 무시
+
+                const id = this.getAttribute('data-id');
+                const detailRow = document.getElementById('notice_detail-' + id);
                 if (detailRow) {
-                    detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+                    detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
                 }
             });
         });
     });
     </script>
+
 
 </body>
 </html> 

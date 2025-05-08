@@ -69,7 +69,7 @@
                                         </a>
                                       </td>";
                                 echo "</tr>";
-                                echo "<tr class='review-detail' id='detail-" . $reviews['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                echo "<tr id='review_detail-" . $reviews['id'] . "' class='review-detail'>";
                                 echo "<td colspan='7'>";
                                 echo "<strong>상품명:</strong> " . ($reviews['product_name'] ?? '알 수 없음') . "<br>";
                                 echo "<strong>작성자:</strong> " . ($reviews['user_name'] ?? '알 수 없음') . "<br>";
@@ -99,11 +99,10 @@
 
             rows.forEach(row => {
                 const id = row.getAttribute('data-id');
-                const categoryCell = row.cells[1]?.textContent.trim(); // 카테고리
+                const category = row.cells[1]?.textContent.trim();
+                const detailRow = document.getElementById('review_detail-' + id);
 
-                const detailRow = document.getElementById('detail-' + id);
-
-                if (selected === 'all' || categoryCell === selected) {
+                if (selected === 'all' || category === selected) {
                     row.style.display = '';
                     if (detailRow) detailRow.style.display = 'none';
                 } else {
@@ -113,18 +112,20 @@
             });
         });
 
-        // 상세 보기 토글
         document.querySelectorAll('.review-row').forEach(row => {
-            row.addEventListener('click', function () {
+            row.addEventListener('click', function (e) {
+                if (e.target.closest('a')) return; // 버튼 클릭 시 무시
+
                 const id = this.getAttribute('data-id');
-                const detailRow = document.getElementById('detail-' + id);
+                const detailRow = document.getElementById('review_detail-' + id);
                 if (detailRow) {
-                    detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+                    detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
                 }
             });
         });
     });
     </script>
+
 
 </body>
 </html> 
