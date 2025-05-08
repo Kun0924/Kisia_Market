@@ -1,3 +1,34 @@
+<?php
+require_once '../mainmenu/common/db.php';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $userId = trim($_POST['userId'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+
+    if ($userId === '' || $password === '' || $name === '' || $email === '' || $phone === '') {
+        echo "<script>alert('모든 항목을 입력해주세요.'); history.back();</script>";
+        exit;
+    }
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO users (userId, password, name, email, phone, created_at)
+            VALUES ('$userId', '$hashedPassword', '$name', '$email', '$phone', NOW())";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "<script>alert('회원이 등록되었습니다.'); location.href='members.php';</script>";
+    } else {
+        echo "<script>alert('등록 실패: " . mysqli_error($conn) . "');</script>";
+    }
+
+    mysqli_close($conn);
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -96,7 +127,7 @@
             <h1>회원 추가</h1>
         </header>
         <div class="content-wrapper">
-            <form class="admin-form">
+            <form class="admin-form" method="post" action="">
                 <label>
                     아이디
                     <input type="text" name="userId" placeholder="아이디를 입력하세요" required>

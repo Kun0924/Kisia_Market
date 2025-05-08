@@ -51,7 +51,7 @@
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($product = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
+                                echo "<tr class='product-row' data-id='" . $product['id'] . "'>";
                                 echo "<td>" . $product['id'] . "</td>";
                                 echo "<td>" . $product['name'] . "</td>";
                                 echo "<td>" . $product['category'] . "</td>";
@@ -59,13 +59,24 @@
                                 echo "<td>" . $product['stock'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
                                 echo "<td>
-                                        <a href='admin_edit.php?id=" . $product['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                        <a href='products_edit.php?id=" . $product['id'] . "' class='edit-btn' title='상품 수정정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $product['id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $product['id'] . "&type=products' class='delete-btn'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";
+                                echo "</tr>";
+
+                                // 상세 정보 행
+                                echo "<tr id='product_detail-" . $product['id'] . "' class='product-detail'>";
+                                echo "<td colspan='7'>";
+                                echo "<strong>상품명:</strong> " . $product['name'] . "<br>";
+                                echo "<strong>카테고리:</strong> " . $product['category'] . "<br>";
+                                echo "<strong>가격:</strong> " . number_format($product['price']) . "원<br>";
+                                echo "<strong>재고:</strong> " . $product['stock'] . "<br>";
+                                echo "<strong>등록일:</strong> " . $product['created_at'] . "<br>";
+                                echo "</td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -81,23 +92,41 @@
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const categoryFilter = document.getElementById('category-filter');
-        const rows = document.querySelectorAll('tbody tr');
+        const rows = document.querySelectorAll('tbody tr.product-row');
 
         categoryFilter.addEventListener('change', function () {
-            const selectedCategory = this.value;
+            const selected = this.value;
 
             rows.forEach(row => {
-                const category = row.children[2].textContent.trim(); // 3번째 컬럼 = 카테고리
+                const id = row.dataset.id;
+                const category = row.cells[2].textContent.trim();
+                const detailRow = document.getElementById('product_detail-' + id);
 
-                if (selectedCategory === 'all' || category === selectedCategory) {
+                if (selected === 'all' || category === selected) {
                     row.style.display = '';
+                    if (detailRow) detailRow.style.display = 'none';
                 } else {
                     row.style.display = 'none';
+                    if (detailRow) detailRow.style.display = 'none';
+                }
+            });
+        });
+
+        document.querySelectorAll('.product-row').forEach(row => {
+            row.addEventListener('click', function (e) {
+                // 버튼 클릭 시 상세 열림 방지
+                if (e.target.closest('a')) return;
+
+                const id = this.dataset.id;
+                const detailRow = document.getElementById('product_detail-' + id);
+                if (detailRow) {
+                    detailRow.style.display = detailRow.style.display === 'none' || detailRow.style.display === '' ? 'table-row' : 'none';
                 }
             });
         });
     });
     </script>
+
 
 
 </body>

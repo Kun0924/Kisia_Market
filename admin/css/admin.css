@@ -74,7 +74,6 @@ body {
     color: white;
     transition: all 0.3s ease;
 }
-  
 
 /* 아이콘 정렬 */
 .admin-menu i {
@@ -82,8 +81,6 @@ body {
     width: 20px;
     text-align: center;
 }
-
-
 
 /* 메인 콘텐츠 */
 .main-content {
@@ -365,3 +362,19 @@ body {
     color: #6c757d;
     font-size: 15px;
 }
+
+/* 상세 정보 섹션 스타일 */
+.user-detail,
+.inquiries_detail,
+.notice-detail,
+.product-detail,
+.review-detail,
+.order-detail {
+    display: none;
+    background-color: #f9f9f9;
+    color: #333333;
+    font-size: 17px;
+    line-height: 1.5;
+    transition: all 0.3s ease;
+}
+

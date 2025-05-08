@@ -1,3 +1,30 @@
+<?php
+require_once '../mainmenu/common/db.php';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $title = $_POST['title'] ?? '';
+    $content = $_POST['content'] ?? '';
+
+    if ($title === '' || $content === '') {
+        echo "<script>alert('제목과 내용을 모두 입력해주세요.'); history.back();</script>";
+        exit;
+    }
+
+    $sql = "INSERT INTO notices (title, content, created_at)
+            VALUES ('$title', '$content', NOW())";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "<script>alert('공지사항이 등록되었습니다.'); location.href='notices.php';</script>";
+    } else {
+        echo "<script>alert('등록 실패: " . mysqli_error($conn) . "');</script>";
+    }
+
+    mysqli_close($conn);
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -98,7 +125,7 @@
             </header>
 
             <div class="content-wrapper">
-                <form class="admin-form" method="post" enctype="multipart/form-data">
+                <form class="admin-form" method="POST" action="">
                     <!-- 제목 -->
                     <label>
                         제목

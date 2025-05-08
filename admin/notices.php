@@ -43,19 +43,24 @@
                             //공지사항
                             if ($result && mysqli_num_rows($result) > 0) {
                                 while ($notices = mysqli_fetch_assoc($result)) {
-                                    echo "<tr>";
+                                    echo "<tr class='notice-row' data-id='" . $notices['id'] . "'>";
                                     echo "<td>" . $notices['id'] . "</td>";
                                     echo "<td>" . $notices['title'] . "</td>";
                                     echo "<td>관리자</td>";
                                     echo "<td>" . $notices['created_at'] . "</td>";
                                     echo "<td>
-                                        <a href='admin_edit.php?id=" . $notices['id'] . "' class='edit-btn' title='확인 및 수정'>
+                                        <a href='notices_edit.php?id=" . $notices['id'] . "' class='edit-btn' title='게시글 수정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $notices['id'] . "' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . $notices['id'] . "&type=notices' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";
+                                    echo "</tr>";
+                                    echo "<tr id='notice_detail-" . $notices['id'] . "' class='notice-detail'>";
+                                    echo "<td colspan='5'>";
+                                    echo "<strong>공지 내용:</strong><br>" . nl2br($notices['content']) . "<br>";
+                                    echo "</td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -67,5 +72,22 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.notice-row').forEach(row => {
+            row.addEventListener('click', function (e) {
+                if (e.target.closest('a')) return; // 수정/삭제 버튼 클릭 시 무시
+
+                const id = this.getAttribute('data-id');
+                const detailRow = document.getElementById('notice_detail-' + id);
+                if (detailRow) {
+                    detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
+                }
+            });
+        });
+    });
+    </script>
+
+
 </body>
 </html> 
