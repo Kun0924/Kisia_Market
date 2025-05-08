@@ -39,12 +39,12 @@
                         <?php
                         require_once '../mainmenu/common/db.php'; // mysqli 연결됨
                         
-                        $sql = "SELECT id, userId, name, email, created_at FROM users ORDER BY id ASC";
+                        $sql = "SELECT * FROM users ORDER BY id ASC";
                         $result = mysqli_query($conn, $sql);
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($users = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
+                                echo "<tr onclick=\"toggleDetail(" . $users['id'] . ")\" style=\"cursor: pointer;\">";
                                 echo "<td>" . $users['id'] . "</td>";
                                 echo "<td>" . $users['userId'] . "</td>";
                                 echo "<td>" . $users['name'] . "</td>";
@@ -58,8 +58,18 @@
                                     </td>";
                         
                                 echo "</tr>";
-                            }
 
+                                // 상세 정보 추가
+                                echo "<tr id='detail-" . $users['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                echo "<td colspan='7'>";
+                                echo "<strong>아이디:</strong> " . $users['userId'] . "<br>";
+                                echo "<strong>이름:</strong> " . $users['name'] . "<br>";
+                                echo "<strong>이메일:</strong> " . $users['email'] . "<br>";
+                                echo "<strong>전화번호:</strong> " . $users['phone'] . "<br>";
+                                echo "<strong>가입일:</strong> " . $users['created_at'] . "<br>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
                         } else {
                             echo "<tr><td colspan='7' class='no-data'>등록된 회원이 없습니다.</td></tr>";
                         }
@@ -69,5 +79,14 @@
             </div>
         </div>
     </div>
+    <script>
+    function toggleDetail(id) {
+        const detailRow = document.getElementById('detail-' + id);
+        if (detailRow) {
+            detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+        }
+    }
+    </script>
+
 </body>
 </html> 

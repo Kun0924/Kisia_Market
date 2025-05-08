@@ -51,7 +51,7 @@
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($product = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
+                                echo "<tr class='product-row' data-id='" . $product['id'] . "'>";
                                 echo "<td>" . $product['id'] . "</td>";
                                 echo "<td>" . $product['name'] . "</td>";
                                 echo "<td>" . $product['category'] . "</td>";
@@ -67,6 +67,17 @@
                                         </a>
                                       </td>";
                                 echo "</tr>";
+
+                                // 상세 정보 행
+                                echo "<tr class='product-detail' id='detail-" . $product['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                echo "<td colspan='7'>";
+                                echo "<strong>상품명:</strong> " . $product['name'] . "<br>";
+                                echo "<strong>카테고리:</strong> " . $product['category'] . "<br>";
+                                echo "<strong>가격:</strong> " . number_format($product['price']) . "원<br>";
+                                echo "<strong>재고:</strong> " . $product['stock'] . "<br>";
+                                echo "<strong>등록일:</strong> " . $product['created_at'] . "<br>";
+                                echo "</td>";
+                                echo "</tr>";
                             }
                         } else {
                             echo "<tr><td colspan='7' class='no-data'>등록된 상품이 없습니다.</td></tr>";
@@ -81,18 +92,33 @@
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const categoryFilter = document.getElementById('category-filter');
-        const rows = document.querySelectorAll('tbody tr');
+        const rows = document.querySelectorAll('tbody tr.product-row');
 
         categoryFilter.addEventListener('change', function () {
-            const selectedCategory = this.value;
+            const selected = this.value;
 
             rows.forEach(row => {
-                const category = row.children[2].textContent.trim(); // 3번째 컬럼 = 카테고리
+                const id = row.getAttribute('data-id');
+                const category = row.cells[2].textContent.trim(); // 3번째 열 = 카테고리
+                const detailRow = document.getElementById('detail-' + id);
 
-                if (selectedCategory === 'all' || category === selectedCategory) {
+                if (selected === 'all' || category === selected) {
                     row.style.display = '';
+                    if (detailRow) detailRow.style.display = 'none';
                 } else {
                     row.style.display = 'none';
+                    if (detailRow) detailRow.style.display = 'none';
+                }
+            });
+        });
+
+        // 상세보기 토글
+        document.querySelectorAll('.product-row').forEach(row => {
+            row.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const detailRow = document.getElementById('detail-' + id);
+                if (detailRow) {
+                    detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
                 }
             });
         });

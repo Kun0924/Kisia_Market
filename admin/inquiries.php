@@ -45,59 +45,86 @@
                     </thead>
                     <tbody>
                         <?php
-                            require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+                            require_once '../mainmenu/common/db.php';
 
-                            $sql = " SELECT i.*, u.name AS user_name
-                            FROM inquiry i
-                            JOIN users u ON i.user_id = u.id
-                            ORDER BY i.created_at DESC";
+                            $sql = "SELECT i.*, u.name AS user_name
+                                    FROM inquiry i
+                                    JOIN users u ON i.user_id = u.id
+                                    ORDER BY i.created_at DESC";
                             $result = mysqli_query($conn, $sql);
 
                             if ($result && mysqli_num_rows($result) > 0) {
                                 while ($inquiry = mysqli_fetch_assoc($result)) {
-                                    echo "<tr>";
-                                    echo "<td>" . $inquiry['id'] . "</td>";// 문의 사항 번호
-                                    echo "<td>" . $inquiry['type'] . "</td>"; //문의 유형
+                                    echo "<tr onclick=\"toggleDetail(" . $inquiry['id'] . ")\" style=\"cursor: pointer;\">";
+                                    echo "<td>" . $inquiry['id'] . "</td>";
+                                    echo "<td>" . $inquiry['type'] . "</td>";
                                     echo "<td>" . $inquiry['title'] . "</td>";
                                     echo "<td>" . $inquiry['user_name'] . "</td>";
                                     echo "<td>" . $inquiry['created_at'] . "</td>";
-                                    echo "<td>" . $inquiry['inquiry_status'] . "</td>"; // 문의 사항 상태
+                                    echo "<td>" . $inquiry['inquiry_status'] . "</td>";
                                     echo "<td>
-                                        <a href='answer.php?id=" . $inquiry['id'] . "' class='edit-btn' title='문의답변'>
-                                            <i class='fa fa-reply'></i>
-                                        </a>
-                                        <a href='admin_delete.php?id=" . $inquiry['id'] . "&type=inquiry' class='delete-btn' title='삭제'>
-                                            <i class='fas fa-trash'></i>
-                                        </a>
-                                      </td>";
+                                            <a href='inquiries_answer.php?id=" . $inquiry['id'] . "' class='edit-btn' title='문의답변'>
+                                                <i class='fa fa-reply'></i>
+                                            </a>
+                                            <a href='admin_delete.php?id=" . $inquiry['id'] . "&type=inquiry' class='delete-btn' title='삭제'>
+                                                <i class='fas fa-trash'></i>
+                                            </a>
+                                          </td>";
+                                    echo "</tr>";
+
+                                    // 상세내용 행 추가
+                                    echo "<tr id='detail-" . $inquiry['id'] . "' style='display: none; background-color: #f9f9f9;'>";
+                                    echo "<td colspan='7'>";
+                                    echo "<strong>문의 내용:</strong><br>" . nl2br($inquiry['content']) . "<br><br>";
+                                    if (!empty($inquiry['answer'])) {
+                                        echo "<strong>답변:</strong><br>" . nl2br($inquiry['answer']);
+                                        echo "<form action='answer_delete.php' method='POST' style='margin-top:10px;'>
+                                                <input type='hidden' name='inquiry_id' value='" . $inquiry['id'] . "'>
+                                                <button type='submit' class='delete-btn' onclick=\"return confirm('정말 답변을 삭제하시겠습니까?');\">답변 삭제</button>
+                                            </form>";
+                                    } else {
+                                        echo "<p style='color: red;'>아직 답변이 등록되지 않았습니다.</p>";
+                                    }
+                                    echo "</td>";
                                     echo "</tr>";
                                 }
                             } else {
                                 echo "<tr><td colspan='7' class='no-data'>등록된 문의사항이 없습니다.</td></tr>";
                             }
-                            ?>
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
     <script>
     document.getElementById('typeFilter').addEventListener('change', function () {
         const selectedType = this.value;
         const rows = document.querySelectorAll('table tbody tr');
 
         rows.forEach(row => {
-            const typeCell = row.cells[1]; // 두 번째 열: 문의유형
-            if (!typeCell) return;
+            const typeCell = row.cells[1];
+            if (!typeCell || row.id.startsWith("detail-")) return;
 
             if (selectedType === '전체' || typeCell.textContent.trim() === selectedType) {
                 row.style.display = '';
+                const detailRow = document.getElementById('detail-' + row.cells[0].textContent);
+                if (detailRow) detailRow.style.display = 'none'; // 필터시 상세 내용 숨기기
             } else {
                 row.style.display = 'none';
+                const detailRow = document.getElementById('detail-' + row.cells[0].textContent);
+                if (detailRow) detailRow.style.display = 'none';
             }
         });
     });
-    </script>
 
+    function toggleDetail(id) {
+        const row = document.getElementById('detail-' + id);
+        if (row) {
+            row.style.display = row.style.display === 'none' ? '' : 'none';
+        }
+    }
+    </script>
 </body>
-</html> 
+</html>

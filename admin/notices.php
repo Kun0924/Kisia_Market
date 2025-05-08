@@ -43,7 +43,7 @@
                             //공지사항
                             if ($result && mysqli_num_rows($result) > 0) {
                                 while ($notices = mysqli_fetch_assoc($result)) {
-                                    echo "<tr>";
+                                    echo "<tr class='notice-row' data-id='" . $notices['id'] . "'>";
                                     echo "<td>" . $notices['id'] . "</td>";
                                     echo "<td>" . $notices['title'] . "</td>";
                                     echo "<td>관리자</td>";
@@ -57,6 +57,11 @@
                                         </a>
                                       </td>";
                                     echo "</tr>";
+                                    echo "<tr id='detail-" . $notices['id'] . "' class='notice-detail' style='display:none; background-color:#f9f9f9;'>";
+                                    echo "<td colspan='5'>";
+                                    echo "<strong>공지 내용:</strong><br>" . nl2br($notices['content']) . "<br>";
+                                    echo "</td>";
+                                    echo "</tr>";
                                 }
                             } else {
                                 echo "<tr><td colspan='7' class='no-data'>등록된 공지사항이 없습니다.</td></tr>";
@@ -67,5 +72,20 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('.notice-row');
+        rows.forEach(row => {
+            row.addEventListener('click', function () {
+                const id = row.getAttribute('data-id');
+                const detailRow = document.getElementById('detail-' + id);
+                if (detailRow) {
+                    detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+                }
+            });
+        });
+    });
+    </script>
+
 </body>
 </html> 
