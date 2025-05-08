@@ -198,6 +198,15 @@ CREATE TABLE orders (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
+-- 주문 초기 데이터 삽입
+INSERT INTO orders (user_id, user_name, order_amount, order_status, payment_method, depositor_name, 
+bank_name, deposit_confirmed, receiver_name, receiver_phone, receiver_email, receiver_address, 
+receiver_postcode, receiver_address_detail, delivery_memo)
+VALUES 
+(1, '홍길동', 100000, 'pending', 'bank_transfer', '홍길동', '국민은행', FALSE, '홍길동', '01012345678', 
+'hong@example.com', '서울시 강남구 테헤란로 123', '12345', '2층 123호', '메모입니다다');
+
+-- 주문 상세 테이블 생성
 CREATE TABLE order_items (
   id INT PRIMARY KEY AUTO_INCREMENT,
   order_id INT NOT NULL,                    -- 주문 ID (orders 테이블 FK)
@@ -211,3 +220,9 @@ CREATE TABLE order_items (
   FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
 );
+
+-- 주문 상세 초기 데이터 삽입
+INSERT INTO order_items (order_id, product_id, product_name, product_image_url, quantity, price, deliver_price)
+VALUES 
+(1, 1, '상품1', 'uploads/accessory/keyboard1.png', 2, 50000, 2500),
+(1, 2, '상품2', 'uploads/accessory/keyboard2.png', 1, 30000, 1500);
