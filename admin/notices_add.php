@@ -5,11 +5,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = $_POST['title'] ?? '';
     $content = $_POST['content'] ?? '';
 
-    if ($title === '' || $content === '') {
-        echo "<script>alert('제목과 내용을 모두 입력해주세요.'); history.back();</script>";
-        exit;
-    }
-
     $sql = "INSERT INTO notices (title, content, created_at)
             VALUES ('$title', '$content', NOW())";
 
@@ -136,12 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label>
                         내용
                         <textarea name="content" rows="6" placeholder="공지 내용을 입력하세요" required></textarea>
-                    </label>
-
-                    <!-- 첨부파일 -->
-                    <label>
-                        첨부 파일 (선택)
-                        <input type="file" name="attachment" accept=".pdf,.doc,.docx,.txt,.jpg,.png">
                     </label>
 
                     <!-- 버튼 -->

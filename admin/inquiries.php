@@ -100,42 +100,44 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // 필터링 기능
-        const typeFilter = document.getElementById('typeFilter');
-        const rows = document.querySelectorAll('table tbody tr');
-
-        typeFilter.addEventListener('change', function () {
-            const selectedType = this.value;
-
-            rows.forEach(row => {
-                // 원래 데이터 행인지 확인
-                if (!row.id.startsWith('inquiries_detail-')) {
-                    const typeCell = row.cells[1];
-                    const id = row.cells[0].textContent.trim();
-                    const detailRow = document.getElementById('inquiries_detail-' + id);
-
-                    if (selectedType === '전체' || typeCell.textContent.trim() === selectedType) {
-                        row.style.display = '';
-                        if (detailRow) detailRow.style.display = 'none';
-                    } else {
-                        row.style.display = 'none';
-                        if (detailRow) detailRow.style.display = 'none';
-                    }
+        // 상세보기 토글
+        document.querySelectorAll('tr:not(.inquiry-detail)').forEach(row => {
+            row.addEventListener('click', function (e) {
+                if (e.target.closest('a')) return; // 링크 클릭 시 무시
+                const id = this.cells[0]?.textContent.trim();
+                const detailRow = document.getElementById('inquiries_detail-' + id);
+                if (detailRow) {
+                    detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') 
+                        ? 'table-row' : 'none';
                 }
             });
         });
 
-        // 상세보기 토글 기능
-        window.toggleDetail = function (id) {
-            const detailRow = document.getElementById('inquiries_detail-' + id);
-            if (detailRow) {
-                detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
-            }
-        };
+        // 문의유형 필터
+        const typeFilter = document.getElementById('typeFilter');
+        const allRows = document.querySelectorAll('tbody tr');
+
+        typeFilter.addEventListener('change', function () {
+            const selectedType = this.value;
+
+            allRows.forEach(row => {
+                const isDetailRow = row.classList.contains('inquiry-detail');
+                const id = !isDetailRow ? row.cells[0]?.textContent.trim() : row.id.replace('inquiries_detail-', '');
+                const detailRow = document.getElementById('inquiries_detail-' + id);
+
+                if (!isDetailRow) {
+                    const type = row.cells[1].textContent.trim();
+                    const visible = (selectedType === '전체' || type === selectedType);
+                    row.style.display = visible ? '' : 'none';
+                    if (detailRow) detailRow.style.display = 'none';
+                }
+            });
+        });
     });
     </script>
 
-    </script>
+
+
 
 </body>
 </html>
