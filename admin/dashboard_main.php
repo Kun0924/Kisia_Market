@@ -22,10 +22,10 @@
         $product_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM products"))[0];
 
         // 주문 수 조회
-        $order_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM orders WHERE deposit_confirmed = 1"))[0];
+        $order_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM orders"))[0];
 
         // 총 매출 조회
-        $total_sales = mysqli_fetch_row(mysqli_query($conn, "SELECT COALESCE(SUM(order_amount), 0) FROM orders WHERE order_status = 'completed'"))[0];
+        $total_sales = mysqli_fetch_row(mysqli_query($conn, "SELECT COALESCE(SUM(order_amount), 0) FROM orders WHERE order_status = 'paid'"))[0];
 
         // 리뷰 수 조회
         $review_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM reviews"))[0];
