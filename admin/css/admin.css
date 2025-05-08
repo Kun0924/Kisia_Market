@@ -94,6 +94,13 @@ body {
     color: #2c3e50;
 }
 
+.admin-menu a.active {
+    color: #f1c40f;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+
 /* 통계 카드 */
 .dashboard-stats {
     display: grid;

@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>KISIA Shop Admin</title>
-
-    <!-- 구글 폰트, 아이콘 및 스타일 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     
     <!-- 추가 스타일 -->
-    <link rel="stylesheet" href="css/admin.css"> <!-- 너가 따로 사용하는 스타일 파일 -->
+    <link rel="stylesheet" href="css/admin.css"> 
 </head>
 <body>
 
@@ -20,47 +16,60 @@
         </div>
         <nav class="admin-menu">
 
-            <a href="dashboard_main.php">
+            <a href="dashboard_main.php" data-page="dashboard_main.php">
                 <i class="fas fa-home"></i>
                 <span>대시보드</span>
             </a>
 
-            <a href="members.php">
+            <a href="members.php" data-page="members.php">
                 <i class="fas fa-users"></i>
                 <span>회원 관리</span>
             </a>
 
-            <a href="products.php">
+            <a href="products.php" data-page="products.php">
                 <i class="fas fa-cube"></i>
                 <span>상품 관리</span>
             </a>
 
-            <a href="orders.php">
+            <a href="orders.php" data-page="orders.php">
                 <i class="fas fa-shopping-cart"></i>
                 <span>주문 관리</span>
             </a>
 
-            <a href="reviews.php">
+            <a href="reviews.php" data-page="reviews.php">
                 <i class="fas fa-pencil-alt"></i>
                 <span>리뷰 관리</span>
             </a>
 
-            <a href="notices.php">
+            <a href="notices.php" data-page="notices.php">
                 <i class="fas fa-bullhorn"></i>
                 <span>공지사항</span>
             </a>
 
-            <a href="inquiries.php">
+            <a href="inquiries.php" data-page="inquiries.php">
                 <i class="fas fa-question-circle"></i>
                 <span>문의사항</span>
             </a>
 
-            <a href="logout.php">
+            <a href="logout.php" data-page="logout.php">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>로그아웃</span>
             </a>
         </nav>
     </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".admin-menu a");
+        const current = window.location.pathname.split("/").pop(); // 현재 파일명만 추출
+
+        links.forEach(link => {
+            if (link.dataset.page === current) {
+                link.classList.add("active");
+            }
+        });
+    });
+    </script>
 
 </body>
 </html>
