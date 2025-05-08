@@ -363,6 +363,7 @@ body {
     font-size: 15px;
 }
 
+/* 상세 정보 섹션 스타일 */
 .user-detail,
 .inquiries_detail,
 .notice-detail,
@@ -370,6 +371,9 @@ body {
 .review-detail {
     display: none;
     background-color: #f9f9f9;
+    color: #333333;
+    font-size: 17px;
+    line-height: 1.5;
     transition: all 0.3s ease;
 }
 
