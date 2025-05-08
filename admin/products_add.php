@@ -2,20 +2,32 @@
 require_once '../mainmenu/common/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = $_POST['name'] ?? '';
-    $category = $_POST['category'] ?? '';
-    $price = $_POST['price'] ?? '';
-    $stock = $_POST['stock'] ?? '';
-    $image_url = $_FILES['image']['name'] ?? '';
-    $desc_url = $_FILES['description']['name'] ?? '';
+    $name = $_POST['product_name'] ?? '';
+    $category = $_POST['category'] ?? '';  // 카테고리 항목이 현재 없음
+    $short_description = $_POST['product_short_description'] ?? '';
+    $price = $_POST['price'] ?? 0;
+    $stock = $_POST['stock'] ?? 0;
 
-    // 파일 업로드
     $uploadDir = '../uploads/';
-    move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $image_url);
-    move_uploaded_file($_FILES['description']['tmp_name'], $uploadDir . $desc_url);
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
 
-    $sql = "INSERT INTO products (name, category, price, stock, image_url, description, created_at)
-            VALUES ('$name', '$category', '$price', '$stock', 'uploads/$image_url', 'uploads/$desc_url', NOW())";
+    // 파일 이름 처리
+    $image_url = $_FILES['product_image']['name'] ?? '';
+    $desc_url = $_FILES['description_file']['name'] ?? '';
+
+    // 실제 업로드 수행
+    $image_uploaded = move_uploaded_file($_FILES['product_image']['tmp_name'], $uploadDir . $image_url);
+    $desc_uploaded = move_uploaded_file($_FILES['description_file']['tmp_name'], $uploadDir . $desc_url);
+
+    if (!$image_uploaded || !$desc_uploaded) {
+        echo "<script>alert('파일 업로드에 실패했습니다.'); history.back();</script>";
+        exit;
+    }
+
+    $sql = "INSERT INTO products (name, category, short_description, price, stock, image_url, description, created_at)
+            VALUES ('$name', '$category', '$short_description', '$price', '$stock', 'uploads/$image_url', 'uploads/$desc_url', NOW())";
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('상품이 등록되었습니다.'); location.href='products.php';</script>";
@@ -26,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     mysqli_close($conn);
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -129,6 +142,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="content-wrapper">
                 <form class="admin-form" method="post" enctype="multipart/form-data">
+
+                    <!-- 카테고리 -->
+                    <label>
+                        카테고리
+                        <select name="category" required>
+                            <option value="">카테고리를 선택하세요</option>
+                            <option value="keyboard">키보드</option>
+                            <option value="mouse">마우스</option>
+                            <option value="mousepad">마우스패드</option>
+                            <option value="accessory">악세사리</option>
+                        </select>
+                    </label>
+
+
                     <!-- 상품명 -->
                     <label>
                         상품명
@@ -139,6 +166,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label>
                         상품 이미지 업로드
                         <input type="file" name="product_image" accept="../uploads/*">
+                    </label>
+
+                    <label>
+                        상품 간단 설명
+                        <input type="text" name="product_short_description" placeholder="상품 설명을 간단하게 입력하세요" required>
                     </label>
 
                     <!-- 가격 -->
@@ -153,16 +185,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <input type="number" name="stock" placeholder="재고 수량을 입력하세요" required>
                     </label>
 
-                    <!-- 설명 텍스트 -->
-                    <label>
-                        상품 설명
-                        <textarea name="description" rows="4" placeholder="상품 설명을 입력하세요" required></textarea>
-                    </label>
-
                     <!-- 설명 파일 업로드 -->
                     <label>
-                        설명 파일 첨부 (PDF, Word 등)
-                        <input type="file" name="description_file" accept=".pdf,.doc,.docx,.txt">
+                        설명 파일 첨부
+                        <input type="file" name="description_file" accept="../product_dec/*">
                     </label>
 
                     <!-- 버튼 -->

@@ -31,7 +31,6 @@
                             <th>이름</th>
                             <th>이메일</th>
                             <th>가입일</th>
-                            <th>최근 접속</th>
                             <th>관리</th>
                         </tr>
                     </thead>
@@ -50,7 +49,6 @@
                                 echo "<td>" . $users['name'] . "</td>";
                                 echo "<td>" . $users['email'] . "</td>";
                                 echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
-                                echo "<td>-</td>";
                                 echo "<td>
                                         <a href='admin_delete.php?id=" . $users['id'] . "&type=users' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>

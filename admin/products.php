@@ -22,10 +22,10 @@
                 <div class="filters">
                     <select id="category-filter">
                         <option value="all">전체 카테고리</option>
-                        <option value="accessory">액세서리</option>
                         <option value="keyboard">키보드</option>
                         <option value="mouse">마우스</option>
                         <option value="mousepad">마우스패드</option>
+                        <option value="accessory">액세서리</option>
                     </select>
                     <input type="text" placeholder="상품명 검색">
                     <button>검색</button>
