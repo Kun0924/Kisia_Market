@@ -27,11 +27,11 @@ include 'queries/get_header_session.php';
             $row = mysqli_fetch_assoc($get_product_detail);
             echo '<div class="product-detail">';
             echo '<div class="product-image">';
-            echo '<img src="../' . htmlspecialchars($row['image_url']) . '" alt="' . htmlspecialchars($row['name']) . '">';
+            echo '<img src="/' . $row['image_url'] . '" alt="' . $row['name'] . '">';
             echo '</div>';
             echo '<div class="product-info">';
-            echo '<h1>' . htmlspecialchars($row['name']) . '</h1>';
-            echo '<p class="short-description">' . htmlspecialchars($row['short_description']) . '</p>';
+            echo '<h1>' . $row['name'] . '</h1>';
+            echo '<p class="short-description">' . $row['short_description'] . '</p>';
             
             // 평균 평점 표시 수정
             $avg_rating = isset($row['avg_rating']) ? number_format($row['avg_rating'], 1) : 0;
@@ -115,61 +115,61 @@ include 'queries/get_header_session.php';
                 <?php
                 if (mysqli_num_rows($get_reviews) > 0) {
                     while ($review = mysqli_fetch_assoc($get_reviews)) {
-                        echo '<div class="review-item" id="review-' . $review['id'] . '">';
+                        echo '<div class="review-item" id="review-' . $reviews['id'] . '">';
                         // 일반 리뷰 보기 영역
                         echo '<div class="review-view">';
                         echo '<div class="review-header">';
-                            echo '<span class="review-author">' . ($review['name'] ? $review['name'] : '탈퇴한 회원') . '</span>';
-                            echo '<span class="review-date">' . $review['created_at'] . '</span>';
-                            echo '<span class="review-rating">' . str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
+                            echo '<span class="review-author">' . $reviews['name'] . '</span>';
+                            echo '<span class="review-date">' . $reviews['created_at'] . '</span>';
+                            echo '<span class="review-rating">' . str_repeat('★', $reviews['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
                             
-                            if (isset($_SESSION['id']) && $_SESSION['id'] == $review['user_id']) {
+                            if (isset($_SESSION['id']) && $_SESSION['id'] == $reviews['user_id']) {
                                 echo '<div class="review-actions">';
-                                echo '<button class="edit-btn" onclick="toggleReviewEdit(' . $review['id'] . ')">수정</button>';
-                                echo '<button class="delete-btn" onclick="if(confirm(\'정말로 삭제하시겠습니까?\')) deleteReview(' . $review['id'] . ')">삭제</button>';
+                                echo '<button class="edit-btn" onclick="toggleReviewEdit(' . $reviews['id'] . ')">수정</button>';
+                                echo '<button class="delete-btn" onclick="if(confirm(\'정말로 삭제하시겠습니까?\')) deleteReview(' . $reviews['id'] . ')">삭제</button>';
                                 echo '</div>';
                             }
                         echo '</div>';
-                        if ($review['image_url']) {
+                        if ($reviews['image_url']) {
                             echo '<div class="review-image">';
-                                echo '<a href="/' . $review['image_url'] . '" target="_blank"><img src="../' . $review['image_url'] . '" alt="리뷰 이미지"></a>';
+                                echo '<a href="/' . $reviews['image_url'] . '" target="_blank"><img src="../' . $reviews['image_url'] . '" alt="리뷰 이미지"></a>';
                             echo '</div>';
                         }
-                        echo '<p class="review-content">' . $review['content'] . '</p>';
+                        echo '<p class="review-content">' . $reviews['content'] . '</p>';
                         echo '</div>';
 
                         // 리뷰 수정 폼 영역
                         echo '<div class="review-edit" style="display: none;">';
-                        echo '<form class="edit-review-form" onsubmit="updateReview(event, ' . $review['id'] . ')">';
+                        echo '<form class="edit-review-form" onsubmit="updateReview(event, ' . $reviews['id'] . ')">';
                         echo '<input type="hidden" name="image_url" value="' . $review['image_url'] . '">';
                         echo '<div class="form-group">';
-                        echo '<label for="editRating-' . $review['id'] . '">평점</label>';
-                        echo '<select id="editRating-' . $review['id'] . '" name="rating" required>';
+                        echo '<label for="editRating-' . $reviews['id'] . '">평점</label>';
+                        echo '<select id="editRating-' . $reviews['id'] . '" name="rating" required>';
                         for ($i = 5; $i >= 1; $i--) {
-                            $selected = ($i == $review['rating']) ? 'selected' : '';
+                            $selected = ($i == $reviews['rating']) ? 'selected' : '';
                             echo '<option value="' . $i . '" ' . $selected . '>' . str_repeat('★', $i) . str_repeat('☆', 5-$i) . '</option>';
                         }
                         echo '</select>';
                         echo '</div>';
                         echo '<div class="form-group">';
-                        echo '<label for="editContent-' . $review['id'] . '">내용</label>';
-                        echo '<textarea id="editContent-' . $review['id'] . '" name="content" rows="5" required>' . htmlspecialchars($review['content']) . '</textarea>';
+                        echo '<label for="editContent-' . $reviews['id'] . '">내용</label>';
+                        echo '<textarea id="editContent-' . $reviesw['id'] . '" name="content" rows="5" required>' . $reviews['content'] . '</textarea>';
                         echo '</div>';
                         echo '<div class="form-group">';
-                        if ($review['image_url']) {
+                        if ($reviews['image_url']) {
                             echo '<div class="current-image">';
                             echo '<p>현재 이미지:</p>';
-                            echo '<img src="../' . $review['image_url'] . '" alt="현재 이미지" style="max-width: 200px;">';
-                            echo '<label><input type="checkbox" name="delete_image" id="deleteImage-' . $review['id'] . '"> 이미지 삭제</label>';
+                            echo '<img src="../' . $reviews['image_url'] . '" alt="현재 이미지" style="max-width: 200px;">';
+                            echo '<label><input type="checkbox" name="delete_image" id="deleteImage-' . $reviews['id'] . '"> 이미지 삭제</label>';
                             echo '</div>';
                         }
-                        echo '<label for="editImage-' . $review['id'] . '">파일 첨부</label>';
-                        echo '<input type="file" id="editImage-' . $review['id'] . '" name="file">';
+                        echo '<label for="editImage-' . $reviews['id'] . '">파일 첨부</label>';
+                        echo '<input type="file" id="editImage-' . $reviews['id'] . '" name="file">';
                         echo '<p class="file-info">* 파일을 첨부할 수 있습니다</p>';
                         echo '</div>';
                         echo '<div class="form-buttons">';
                         echo '<button type="submit" class="submit-btn">수정하기</button>';
-                        echo '<button type="button" class="cancel-btn" onclick="toggleReviewEdit(' . $review['id'] . ')">취소</button>';
+                        echo '<button type="button" class="cancel-btn" onclick="toggleReviewEdit(' . $reviews['id'] . ')">취소</button>';
                         echo '</div>';
                         echo '</form>';
                         echo '</div>';
