@@ -7,7 +7,6 @@ $id = $_GET['id'] ?? $_POST['id'] ?? 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['answer'])) {
     $answer = $_POST['answer'];
 
-    // 보안 없이 직접 쿼리 실행
     $sql = "UPDATE inquiry SET answer = '$answer', inquiry_status = '답변 완료' WHERE id = $id";
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('답변이 등록되었습니다.'); location.href='inquiries.php';</script>";
@@ -96,7 +95,7 @@ $inquiry = mysqli_fetch_assoc($result);
 </head>
 <body>
 <div class="admin-container">
-    <?php include 'sidebar.php'; ?>
+    <?php include 'topbar.php'; ?>
 
     <div class="main-content">
         <header class="admin-header">
@@ -119,12 +118,13 @@ $inquiry = mysqli_fetch_assoc($result);
 
                 <div class="form-group">
                     <label for="answer">답변 작성</label>
-                    <textarea name="answer" id="answer" rows="6" required></textarea>
+                    <textarea name="answer" id="answer" rows="6" required><?= $inquiry['answer'] ?? '' ?></textarea>
                 </div>
 
                 <div class="form-buttons">
                     <button type="button" class="cancel-btn" onclick="history.back()">취소</button>
-                    <button type="submit" class="submit-btn">답변 등록</button>
+                    <?php $is_edit = !empty($inquiry['answer']); ?>
+                    <button type="submit" class="submit-btn"><?= $is_edit ? '답변 수정' : '답변 등록' ?></button>
                 </div>
             </form>
         </div>

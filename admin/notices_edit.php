@@ -77,7 +77,7 @@ $notice = mysqli_fetch_assoc($result);
 </head>
 <body>
 <div class="admin-container">
-    <?php include 'sidebar.php'; ?>
+    <?php include 'topbar.php'; ?>
 
     <div class="main-content">
         <header class="admin-header">
@@ -99,8 +99,8 @@ $notice = mysqli_fetch_assoc($result);
                 <input type="hidden" name="id" value="<?= $notice['id'] ?>">
 
                 <div class="form-buttons">
-                    <button type="submit" class="submit-btn">수정 완료</button>
                     <button type="button" class="cancel-btn" onclick="history.back()">취소</button>
+                    <button type="submit" class="submit-btn">수정 완료</button>
                 </div>
             </form>
         </div>

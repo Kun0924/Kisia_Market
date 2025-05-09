@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'topbar.php'; ?>
 
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
@@ -20,8 +20,10 @@
             </header>
             <div class="content-wrapper">
                 <div class="filters">
-                    <input type="text" placeholder="회원명/아이디 검색">
-                    <button>검색</button>
+                    <form method="GET" action="">
+                        <input type="text" name="search_query" placeholder="회원명/아이디 검색" value="<?= $_GET['search_query'] ?? '' ?>">
+                        <button type="submit">검색</button>
+                    </form>
                 </div>
                 <table class="table">
                     <thead>
@@ -38,8 +40,15 @@
                         <?php
                         require_once '../mainmenu/common/db.php'; // mysqli 연결됨
                         
-                        $sql = "SELECT * FROM users ORDER BY id ASC";
+                        $search_query = $_GET['search_query'] ?? '';
+                        if ($search_query !== '') {
+                            $sql = "SELECT * FROM users WHERE name LIKE '%$search_query%' OR userId LIKE '%$search_query%' ORDER BY id ASC";
+                        } else {
+                            $sql = "SELECT * FROM users ORDER BY id ASC";
+                        }
+
                         $result = mysqli_query($conn, $sql);
+
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($users = mysqli_fetch_assoc($result)) {

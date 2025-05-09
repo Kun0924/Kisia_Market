@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'topbar.php'; ?>
 
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
@@ -27,19 +27,21 @@
                         <option value="반품/교환">반품/교환</option>
                         <option value="기타">기타</option>
                     </select>
-                    <input type="text" placeholder="제목/내용 검색">
-                    <button class="edit-btn">검색</button>
+                    <form method="GET" action="">
+                        <input type="text" name="search_query" placeholder="작성자 및 답변 상태 검색" value="<?= $_GET['search_query'] ?? '' ?>">
+                        <button type="submit">검색</button>
+                    </form>
                 </div>
 
                 <table class="table">
                     <thead>
                         <tr>
                             <th>번호</th>
-                            <th>문의유형</th>
+                            <th>문의 유형</th>
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
-                            <th>답변상태</th>
+                            <th>답변 상태</th>
                             <th>관리</th>
                         </tr>
                     </thead>
@@ -47,10 +49,20 @@
                         <?php
                             require_once '../mainmenu/common/db.php';
 
-                            $sql = "SELECT i.*, u.name AS user_name
-                                    FROM inquiry i
-                                    JOIN users u ON i.user_id = u.id
-                                    ORDER BY i.created_at DESC";
+                            $search_query = $_GET['search_query'] ?? '';
+                            if ($search_query !== '') {
+                                $sql = "SELECT i.*, u.name AS user_name 
+                                        FROM inquiry i 
+                                        JOIN users u ON i.user_id = u.id
+                                        WHERE u.name LIKE '%$search_query%' OR inquiry_status LIKE '%$search_query%' 
+                                        ORDER BY id ASC";
+                            } else {
+                                $sql = "SELECT i.*, u.name AS user_name
+                                        FROM inquiry i
+                                        JOIN users u ON i.user_id = u.id
+                                        ORDER BY i.created_at DESC";
+                            }
+    
                             $result = mysqli_query($conn, $sql);
 
                             if ($result && mysqli_num_rows($result) > 0) {
@@ -77,11 +89,19 @@
                                     echo "<td colspan='7'>";
                                     echo "<strong>문의 내용:</strong><br>" . nl2br($inquiry['content']) . "<br><br>";
                                     if (!empty($inquiry['answer'])) {
-                                        echo "<strong>답변:</strong><br>" . nl2br($inquiry['answer']);
-                                        echo "<form action='answer_delete.php' method='POST' style='margin-top:10px;'>
+                                        $answerEscaped = htmlspecialchars($inquiry['answer']);
+                                        echo "<strong>답변:</strong><br>" . nl2br($answerEscaped);
+                                    
+                                        echo "<div style='margin-top: 10px; display: flex; gap: 10px;'>";                                  
+                                    
+                                        // 삭제 버튼
+                                        echo "<form action='answer_delete.php' method='POST' onsubmit=\"return confirm('정말 답변을 삭제하시겠습니까?');\">
                                                 <input type='hidden' name='inquiry_id' value='" . $inquiry['id'] . "'>
-                                                <button type='submit' class='delete-btn' onclick=\"return confirm('정말 답변을 삭제하시겠습니까?');\">답변 삭제</button>
-                                            </form>";
+                                                <button type='submit' class='delete-btn'>답변 삭제</button>
+                                              </form>";
+                                    
+                                        echo "</div>";                                   
+                                    
                                     } else {
                                         echo "<p style='color: red;'>아직 답변이 등록되지 않았습니다.</p>";
                                     }
@@ -135,9 +155,6 @@
         });
     });
     </script>
-
-
-
 
 </body>
 </html>

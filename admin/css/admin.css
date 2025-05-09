@@ -10,85 +10,74 @@ body {
     background-color: #f5f5f5;
 }
 
-/* 관리자 레이아웃 */
-.admin-container {
-    display: flex;
-    min-height: 100vh;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #2c3e50;
+/* 상단 네비게이션 바 */
+.topbar {
+    width: 100%;
+    background-color: #0c0521;
     color: white;
-    padding: 20px 0;
-    position: fixed;
-    height: 100vh;
-}
-
-.logo {
-    padding: 0 20px;
-    margin-bottom: 30px;
-}
-
-.logo h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-}
-
-/* 사이드바 메뉴 */
-.admin-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.admin-menu li {
-    margin-bottom: 5px;
-}
-
-/* 기본 a 스타일 */
-.admin-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.admin-menu li {
-    margin-bottom: 5px;
-}
-
-
-.admin-menu a {
+    padding: 20px 30px;
     display: flex;
     align-items: center;
-    padding: 15px 20px;
-    color: #ecf0f1;
-    text-decoration: none;
-    background-color: #2c3e50; /* ✅ 고정 배경 */
-    transition: background-color 0.3s;
+    justify-content: space-between;
+    border-radius: 0 0 50px 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
 }
 
-/* 마우스를 올렸을 때 살짝 진해지게 */
-.admin-menu a:hover {
-    background-color: #34495e;
+.topbar .logo h2 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.topbar .logo h2 a {
     color: white;
-    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
-/* 아이콘 정렬 */
-.admin-menu i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
+.topbar .admin-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    width: 100%;
 }
 
-/* 메인 콘텐츠 */
+.topbar .admin-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    width: 90px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.topbar .admin-menu a i {
+    font-size: 28px;
+}
+
+.topbar .admin-menu a:hover {
+    transform: scale(1.1);
+    color: #f1c40f;
+}
+
+.topbar .admin-menu a.active {
+    color: #f1c40f;
+}
+
+
+/* 메인 콘텐츠 영역 */
 .main-content {
-    flex: 1;
-    margin-left: 250px;
+    margin-top: 10px; /* 상단바 높이만큼 여백 */
     padding: 20px;
 }
 
+/* 콘텐츠 헤더 */
 .admin-header {
     background-color: white;
     padding: 20px;
@@ -96,15 +85,21 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 20px;
     display: flex;
-    justify-content: space-between; /* 좌우로 정렬 */
+    justify-content: space-between;
     align-items: center;
 }
-
 
 .admin-header h1 {
     font-size: 1.8rem;
     color: #2c3e50;
 }
+
+.admin-menu a.active {
+    color: #f1c40f;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
 
 /* 통계 카드 */
 .dashboard-stats {
@@ -133,7 +128,7 @@ body {
     font-weight: 500;
 }
 
-/* 공통 컨텐츠 래퍼 */
+/* 공통 콘텐츠 래퍼 */
 .content-wrapper {
     background-color: white;
     padding: 20px;
@@ -141,7 +136,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* 공통 필터 */
+/* 필터 영역 */
 .filters {
     display: flex;
     gap: 10px;
@@ -228,7 +223,6 @@ body {
     padding: 20px;
 }
 
-/* 공통 버튼 */
 /* 버튼 스타일 */
 .edit-btn,
 .delete-btn {
@@ -258,7 +252,6 @@ body {
     background-color: #c0392b;
 }
 
-
 .button.green {
     background-color: #2ecc71;
 }
@@ -284,7 +277,7 @@ body {
 .star-rating {
     color: #f1c40f;
     font-size: 16px;
-} 
+}
 
 /* 주문 상태 필터 */
 .order-status-list {
@@ -354,7 +347,7 @@ body {
     white-space: nowrap;
 }
 
-/* 데이터가 없을 때 */
+/* 데이터 없을 때 */
 .no-data {
     text-align: center;
     vertical-align: middle;
@@ -363,7 +356,7 @@ body {
     font-size: 15px;
 }
 
-/* 상세 정보 섹션 스타일 */
+/* 상세 정보 영역 */
 .user-detail,
 .inquiry-detail,
 .notice-detail,
@@ -377,4 +370,3 @@ body {
     line-height: 1.5;
     transition: all 0.3s ease;
 }
-
