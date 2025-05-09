@@ -3,6 +3,7 @@ require_once '../mainmenu/common/db.php';
 
 $id = $_GET['id'] ?? 0;
 $type = $_GET['type'] ?? '';
+$product_id = $_GET['product_id'] ?? 0;
 $sql = ''; // 미리 선언
 
 switch ($type) {
@@ -32,6 +33,15 @@ switch ($type) {
 
 if (!empty($sql)) {
     $result = mysqli_query($conn, $sql);
+    if ($type == 'reviews') {
+        // 평점 업데이트
+        $sql_avg = "UPDATE products SET avg_rating = (SELECT AVG(rating) FROM reviews WHERE product_id = '$product_id') WHERE id = '$product_id'";
+        $result_avg = mysqli_query($conn, $sql_avg);
+
+        // 리뷰 개수 업데이트
+        $sql_count = "UPDATE products SET review_count = (SELECT COUNT(*) FROM reviews WHERE product_id = '$product_id') WHERE id = '$product_id'";
+        $result_count = mysqli_query($conn, $sql_count);
+    }
     if ($result) {
         echo "<script>alert('삭제 성공!'); location.href=document.referrer;</script>";
     } else {

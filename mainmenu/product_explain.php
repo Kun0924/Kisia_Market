@@ -114,14 +114,14 @@ include 'queries/get_header_session.php';
             <div class="reviews-list">
                 <?php
                 if (mysqli_num_rows($get_reviews) > 0) {
-                    while ($review = mysqli_fetch_assoc($get_reviews)) {
+                    while ($reviews = mysqli_fetch_assoc($get_reviews)) {
                         echo '<div class="review-item" id="review-' . $reviews['id'] . '">';
                         // 일반 리뷰 보기 영역
                         echo '<div class="review-view">';
                         echo '<div class="review-header">';
                             echo '<span class="review-author">' . $reviews['name'] . '</span>';
                             echo '<span class="review-date">' . $reviews['created_at'] . '</span>';
-                            echo '<span class="review-rating">' . str_repeat('★', $reviews['rating']) . str_repeat('☆', 5 - $review['rating']) . '</span>';
+                            echo '<span class="review-rating">' . str_repeat('★', $reviews['rating']) . str_repeat('☆', 5 - $reviews['rating']) . '</span>';
                             
                             if (isset($_SESSION['id']) && $_SESSION['id'] == $reviews['user_id']) {
                                 echo '<div class="review-actions">';
