@@ -25,7 +25,7 @@ body {
 }
 
 .topbar .logo h2 {
-    font-size: 36px;
+    font-size: 30px;
     margin: 0;
 }
 
@@ -53,7 +53,7 @@ body {
     font-size: 16px;
     color: white;
     text-decoration: none;
-    width: 90px;
+    width: 70px;
     transition: transform 0.3s, color 0.3s;
 }
 
