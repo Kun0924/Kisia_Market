@@ -105,6 +105,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .cancel-btn:hover {
             background-color: #c0392b;
         }
+
+        .username-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .username-wrapper input {
+            margin-top: 0 !important;
+        }
+
+        .btn-check-duplicate {
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+        }
+
+        .btn-check-duplicate:hover {
+            background-color: #2980b9;
+        }
+
+        .validation-message {
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .validation-message.success {
+            color: #2ecc71;
+        }
+
+        .validation-message.error {
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +167,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <label>
                 아이디
-                <input type="text" name="userId" placeholder="아이디를 입력하세요" required>
+                <div class="username-wrapper">
+                    <input type="text" name="userId" id="userId" placeholder="아이디를 입력하세요" required>
+                    <button type="button" class="btn-check-duplicate">중복확인</button>
+                </div>
+                <span id="username_message" class="validation-message"></span>
             </label>
 
             <label>
@@ -152,5 +198,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
 </div>
+<script>
+    // 아이디 중복체크
+    let isUsernameDuplicate = true;
+    document.querySelector(".btn-check-duplicate").addEventListener("click", function () {
+        const username = document.getElementById("userId").value;
+        const message = document.getElementById("username_message");
+
+        if (username === "") {
+            message.textContent = "아이디를 입력하세요.";
+            message.style.color = "red";
+            isUsernameDuplicate = true;
+            return;
+        }
+
+        fetch("../mainmenu/queries/check_userId.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "username=" + username
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                message.textContent = "이미 사용 중인 아이디입니다.";
+                message.style.color = "red";
+                isUsernameDuplicate = true;
+            } else {
+                message.textContent = "사용 가능한 아이디입니다.";
+                message.style.color = "green";
+                isUsernameDuplicate = false;
+            }
+        });
+    });
+
+    // 폼 제출 전 중복확인 검사
+    document.querySelector(".admin-form").addEventListener("submit", function(e) {
+        if (isUsernameDuplicate) {
+            e.preventDefault();
+            alert("아이디 중복 확인을 해주세요.");
+            return false;
+        }
+    });
+</script>
 </body>
 </html>

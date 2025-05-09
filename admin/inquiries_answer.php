@@ -7,7 +7,7 @@ $id = $_GET['id'] ?? $_POST['id'] ?? 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['answer'])) {
     $answer = $_POST['answer'];
 
-    $sql = "UPDATE inquiry SET answer = '$answer', inquiry_status = '답변 완료' WHERE id = $id";
+    $sql = "UPDATE inquiry SET answer = '$answer', inquiry_status = '답변 완료', answer_at = NOW() WHERE id = $id";
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('답변이 등록되었습니다.'); location.href='inquiries.php';</script>";
         exit;

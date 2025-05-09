@@ -50,7 +50,7 @@
 
                         $search_query = $_GET['search_query'] ?? '';
                         if ($search_query !== '') {
-                            $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at,
+                            $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at, p.id AS product_id,
                                     u.name AS user_name, p.name AS product_name, p.category AS product_category 
                                     FROM reviews r
                                     LEFT JOIN users u ON r.user_id = u.id
@@ -58,7 +58,7 @@
                                     WHERE p.name LIKE '%$search_query%' or u.name LIKE '%$search_query%' 
                                     ORDER BY id ASC";
                         } else {
-                            $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at,
+                            $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at, p.id AS product_id,
                                     u.name AS user_name, p.name AS product_name, p.category AS product_category
                                     FROM reviews r
                                     LEFT JOIN users u ON r.user_id = u.id
@@ -77,7 +77,7 @@
                                 echo "<td class='star-rating' data-rating='" . (int)$reviews['rating'] . "'>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
                                 echo "<td>" . $reviews['created_at'] . "</td>";
                                 echo "<td>
-                                       <a href='admin_delete.php?id=" . $reviews['id'] . "&type=reviews' class='delete-btn' title='삭제'>
+                                       <a href='admin_delete.php?id=" . $reviews['id'] . "&type=reviews&product_id=" . $reviews['product_id'] . "' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";

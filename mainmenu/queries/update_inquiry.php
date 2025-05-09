@@ -8,7 +8,7 @@
     $isSecret = isset($_POST['isSecret']) ? 1 : 0;
     $secretPassword = isset($_POST['secretPassword']) ? $_POST['secretPassword'] : 'none';
     $userId = $_POST['user_id'] ?? 'none';
-    $delete_files = $_POST['delete_files'] ?? 'none';
+    $delete_files = $_POST['delete_files'] ?? '';
 
     if ($type == 'order') {
         $type = '주문/결제';
