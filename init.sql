@@ -10,7 +10,7 @@ USE kisia_market;
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
     name VARCHAR(50) NOT NULL,
     phone VARCHAR(20),
@@ -166,9 +166,9 @@ CREATE TABLE reviews (
 -- 리뷰 초기 데이터 삽입
 INSERT INTO reviews (user_id, product_id, content, rating, image_url, created_at)
 VALUES 
-(1, 22, '정말 만족스러운 상품이에요!', 5, 'review_images/review1.png', '2024-05-01 10:30:00'),
+(1, 22, '정말 만족스러운 상품이에요!', 5, 'review_images/IMG_8121.jpg', '2024-05-01 10:30:00'),
 (1, 22, '생각보다 품질이 떨어지네요.', 2, NULL, '2024-05-02 14:20:00'),
-(1, 22, '배송이 빨랐고, 제품도 좋아요.', 4, 'review_images/review2.png', '2024-05-03 09:10:00'),
+(1, 22, '배송이 빨랐고, 제품도 좋아요.', 4, 'review_images/IMG_8207.jpg', '2024-05-03 09:10:00'),
 (1, 22, '가격 대비 괜찮습니다.', 3, NULL, '2024-05-03 11:45:00');
 
 -- 주문 테이블 생성
