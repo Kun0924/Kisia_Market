@@ -30,18 +30,6 @@ services:
     networks:
       - kisia-network
 
-  # phpMyAdmin (선택사항)
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=root
-      - PMA_PASSWORD=root
-    depends_on:
-      - db
-    networks:
-      - kisia-network
-
 volumes:
   mysql_data:
 

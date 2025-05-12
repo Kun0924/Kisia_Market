@@ -18,12 +18,14 @@
 
         <div class="content-wrapper">
             <div class="filters">
-                <label for="date-from">날짜</label>
+                <!-- <label for="date-from">날짜</label>
                 <input type="date" id="date-from">
                 <span>~</span>
-                <input type="date" id="date-to">
-                <input type="text" placeholder="주문번호/사용자ID 검색">
-                <button>검색</button>
+                <input type="date" id="date-to"> -->
+                <form action="orders.php" method="get">
+                    <input type="text" name="search_query" placeholder="주문번호/사용자ID 검색">
+                    <button type="submit">검색</button>
+                </form>
             </div>
 
             <table class="table">
@@ -41,11 +43,19 @@
                     <?php
                     require_once '../mainmenu/common/db.php';
 
+                    $search_query = isset($_GET['search_query']) ? $_GET['search_query'] : '';
+
+                    $where_clause = '';
+                    if (!empty($search_query)) {
+                        $where_clause = "WHERE o.id LIKE '%$search_query%' OR u.userId LIKE '%$search_query%'";
+                    }
+
                     $sql = "SELECT o.id AS order_id, o.order_created_at, o.order_status, u.userId AS user_id,
                                    o.receiver_name, o.receiver_phone, o.receiver_address,
                                    o.payment_method, o.order_amount
                             FROM orders o
                             LEFT JOIN users u ON o.user_id = u.id
+                            $where_clause
                             ORDER BY o.order_created_at DESC";
                     $result = mysqli_query($conn, $sql);
 
@@ -86,7 +96,11 @@
                             echo "<strong>수령인:</strong> " . $order['receiver_name'] . "<br>";
                             echo "<strong>전화번호:</strong> " . $order['receiver_phone'] . "<br>";
                             echo "<strong>배송지:</strong> " . $order['receiver_address'] . "<br>";
-                            echo "<strong>결제방식:</strong> " . $order['payment_method'] . "<br>";
+                            if ($order['payment_method'] == 'point') {
+                                echo "<strong>결제방식:</strong> 포인트<br>";
+                            } else {
+                                echo "<strong>결제방식:</strong> 무통장 입금<br>";
+                            }
                             echo "<strong>주문금액:</strong> " . number_format($order['order_amount']) . "원<br>";
                             echo "</td>";
                             echo "</tr>";

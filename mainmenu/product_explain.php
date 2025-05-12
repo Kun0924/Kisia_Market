@@ -141,7 +141,7 @@ include 'queries/get_header_session.php';
                         // 리뷰 수정 폼 영역
                         echo '<div class="review-edit" style="display: none;">';
                         echo '<form class="edit-review-form" onsubmit="updateReview(event, ' . $reviews['id'] . ')">';
-                        echo '<input type="hidden" name="image_url" value="' . $review['image_url'] . '">';
+                        echo '<input type="hidden" name="previous_image" value="' . $reviews['image_url'] . '">';
                         echo '<div class="form-group">';
                         echo '<label for="editRating-' . $reviews['id'] . '">평점</label>';
                         echo '<select id="editRating-' . $reviews['id'] . '" name="rating" required>';
@@ -153,7 +153,7 @@ include 'queries/get_header_session.php';
                         echo '</div>';
                         echo '<div class="form-group">';
                         echo '<label for="editContent-' . $reviews['id'] . '">내용</label>';
-                        echo '<textarea id="editContent-' . $reviesw['id'] . '" name="content" rows="5" required>' . $reviews['content'] . '</textarea>';
+                        echo '<textarea id="editContent-' . $reviews['id'] . '" name="content" rows="5" required>' . $reviews['content'] . '</textarea>';
                         echo '</div>';
                         echo '<div class="form-group">';
                         if ($reviews['image_url']) {

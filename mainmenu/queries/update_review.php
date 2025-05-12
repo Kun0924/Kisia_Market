@@ -6,10 +6,10 @@
     $rating = $_POST['rating'] ?? '';
     $content = $_POST['content'] ?? '';
     $delete_image = isset($_POST['delete_image']) ? $_POST['delete_image'] : '';
-    $imageUrl = $_POST['image_url'] ?? '';
+    $previous_image = $_POST['previous_image'] ?? '';
 
     if ($delete_image) {
-        $imageUrl = '';
+        $previous_image = '';
     }
 
     if (!empty($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
@@ -22,6 +22,8 @@
     } else if (!empty($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
         echo "파일 업로드 오류";
         $result = false;
+    } else {
+        $imageUrl = $previous_image;
     }
 
     $sql = "UPDATE reviews SET rating = '$rating', content = '$content', image_url = '$imageUrl' WHERE id = '$review_id'";
