@@ -31,3 +31,6 @@ RUN chown -R www-data:www-data /var/www/html
 
 # mysqli 설치 추가
 RUN docker-php-ext-install mysqli
+
+# php.ini 설정 변경
+RUN echo "upload_max_filesize=20M\npost_max_size=20M" > /usr/local/etc/php/conf.d/uploads.ini
