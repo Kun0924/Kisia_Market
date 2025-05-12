@@ -7,6 +7,15 @@
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
+    $email_check = "SELECT * FROM users WHERE email = '$email'";
+    $email_result = mysqli_query($conn, $email_check);
+    $email_row = mysqli_fetch_assoc($email_result);
+
+    if ($email_row) {
+        echo "<script>alert('이미 사용중인 이메일입니다.'); history.back();</script>";
+        exit;
+    }
+
     $sql = "INSERT INTO users (userId, password, name, email, phone) VALUES ('$userId', '$password', '$name', '$email', '$phone')";
     $result = mysqli_query($conn, $sql);
 

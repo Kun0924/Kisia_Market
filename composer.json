@@ -1,0 +1,6 @@
+{
+    "name": "root/html",
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    }
+}

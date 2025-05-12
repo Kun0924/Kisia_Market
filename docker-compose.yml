@@ -8,11 +8,20 @@ services:
       - ./:/var/www/html
     depends_on:
       - db
+      - mailhog
     environment:
       - MYSQL_HOST=db
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=kisia_market
+    networks:
+      - kisia-network
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"  # MailHog 웹 UI
+      - "1025:1025"  # MailHog SMTP 포트
     networks:
       - kisia-network
 
@@ -35,4 +44,4 @@ volumes:
 
 networks:
   kisia-network:
-    driver: bridge 
+    driver: bridge

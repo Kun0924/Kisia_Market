@@ -25,10 +25,8 @@ CREATE TABLE IF NOT EXISTS users (
 -- 유저 초기 데이터 삽입 
 INSERT INTO users (userId, email, password, name, phone, address, postcode, address_detail)
 VALUES 
-('test', 'testuser01@example.com', '1234', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
+('test', 'ehddls1029@naver.com', '1234', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
 ('admin', 'admin@admin.com', 'admin', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
-
-
 
 -- 공지사항 테이블 생성
 CREATE TABLE IF NOT EXISTS notices (
