@@ -9,6 +9,7 @@
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
     $phone = $_POST['phone'] ?? '';
+    $profile = isset($_POST['profile']) ? $_POST['profile'] : '';
 
     $user_id = $_POST['user_id'] ?? '';
 
@@ -37,12 +38,20 @@
 
                 $mail->isHTML(true);
                 $mail->Subject = '비밀번호 재설정 안내';
-                $mail->Body    = '비밀번호를 재설정하려면 <a href="http://localhost/mainmenu/reset_password.php?email=' . $email . '">여기</a>를 클릭하세요.';
+                $mail->Body    = '비밀번호를 재설정하려면 <a href="http://localhost/mainmenu/reset_password.php?email=' . $email . '&profile=' . $profile . '">여기</a>를 클릭하세요.';
 
                 $mail->send();
             } catch (Exception $e) {
-                    echo '메일 전송 실패: ', $mail->ErrorInfo;
-                }
+                $error_msg = '메일 전송 실패: ' . $mail->ErrorInfo;
+            }
+        } else {
+            $error_msg = '존재하지 않는 사용자입니다.';
+        }
+
+        if ($profile == 'profile') {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
         }
     }
 
