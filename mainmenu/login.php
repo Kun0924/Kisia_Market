@@ -22,7 +22,7 @@
                 <form class="login-form" method="POST" action="queries/login_process.php">
                     <div class="form-group">
                         <label for="username">아이디</label>
-                        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" >
+                        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" value="<?php echo isset($_COOKIE['saved_id']) ? $_COOKIE['saved_id'] : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="password">비밀번호</label>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-options">
                         <div class="remember-me">
-                            <input type="checkbox" id="remember" name="remember">
+                            <input type="checkbox" id="remember" name="remember" <?php echo isset($_COOKIE['saved_id']) ? 'checked' : ''; ?>>
                             <label for="remember">아이디 저장</label>
                         </div>
                         <div class="find-links">

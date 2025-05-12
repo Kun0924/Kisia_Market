@@ -119,8 +119,18 @@
                             <form action="queries/update_user.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                                 <div class="form-group">
+                                    <label for="userId">아이디</label>
+                                    <input type="text" id="userId" name="userId" value="<?php echo $user['userId']; ?>" readonly>
+                                </div>
+                                <div class="form-group">
                                     <label for="name">이름</label>
                                     <input type="text" id="name" name="name" value="<?php echo $user['name']; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">비밀번호</label>
+                                    <div class="password-reset-wrapper">
+                                        <button type="button" id="btn-reset-password" class="btn-reset-password">비밀번호 재설정</button>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">이메일</label>
@@ -161,6 +171,21 @@
             </div>
         </div>
     </main>
+    <div id="passwordResetModal" class="password-reset-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>비밀번호 재설정</h3>
+            </div>
+            <div class="modal-body">
+                <p class="reset-message">비밀번호 재설정 링크를 이메일로 보내드리겠습니다.</p>
+                <p class="email-info"><?php echo $user['email']; ?></p>
+                <div class="modal-actions">
+                    <button type="button" class="btn-confirm" onclick="sendResetLink()">링크 보내기</button>
+                    <button type="button" class="btn-cancel" onclick="closePasswordModal()">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php include 'common/footer.php'; ?>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -198,6 +223,56 @@
                 }
             });
         });
+
+        document.getElementById('btn-reset-password').addEventListener('click', function() {
+                document.getElementById('passwordResetModal').style.display = 'block';
+            });
+
+            function closePasswordModal() {
+                document.getElementById('passwordResetModal').style.display = 'none';
+            }
+
+            // 모달 외부 클릭 시 닫기
+            window.onclick = function(event) {
+                const modal = document.getElementById('passwordResetModal');
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+        function sendResetLink() {
+            const email = '<?php echo $user['email']; ?>';
+            const userId = '<?php echo $user['userId']; ?>';
+            const name = '<?php echo $user['name']; ?>';
+            const phone = '<?php echo $user['phone']; ?>';
+
+            const profile = 'profile'
+
+            // FormData 객체 생성
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('user_id', userId);
+            formData.append('name', name);
+            formData.append('phone', phone);
+            formData.append('profile', profile);
+            
+            fetch('queries/get_user_id_pw.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('비밀번호 재설정 링크가 이메일로 전송되었습니다.');
+                    closePasswordModal();
+                } else {
+                    alert('이메일 전송에 실패했습니다. 다시 시도해주세요.');
+                }
+            })
+            .catch(error => {
+                alert('오류가 발생했습니다. 다시 시도해주세요. Error: ' + error);
+            });
+        }
     </script>
 </body>
 </html> 
