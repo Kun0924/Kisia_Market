@@ -1,9 +1,9 @@
 docker-compose down -v
 docker-compose up --build -d
 
+vendor 폴더 없을시 빌드 후 실행
+docker-compose run --rm web composer install
+
 shell 접속방법:
 mysql -u root -p --default-character-set=utf8mb4
 USE kisia_market;
-SET NAMES utf8mb4;
-
-- 유저 정보애 계좌 정보도 포함?

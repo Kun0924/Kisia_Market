@@ -32,5 +32,15 @@ RUN chown -R www-data:www-data /var/www/html
 # mysqli 설치 추가
 RUN docker-php-ext-install mysqli
 
-# php.ini 설정 변경
-RUN echo "upload_max_filesize=20M\npost_max_size=20M" > /usr/local/etc/php/conf.d/uploads.ini
+# sendmail 설치
+RUN apt-get update && apt-get install -y sendmail
+
+# php.ini 설정 추가 (파일 업로드 + sendmail)
+RUN echo "upload_max_filesize=20M\npost_max_size=20M" > /usr/local/etc/php/conf.d/uploads.ini \
+ && echo "sendmail_path = /usr/sbin/sendmail -S mailhog:1025" > /usr/local/etc/php/conf.d/mailhog.ini
+ 
+# Composer 복사
+COPY composer.json composer.lock ./
+
+# 의존성 설치
+RUN composer install
