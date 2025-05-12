@@ -104,6 +104,12 @@
                             echo '</div>';
                         }
                     }
+                    else if ($_GET['search_query'] && mysqli_num_rows($get_all_products) == 0) {
+                        echo '<p>"' . $_GET['search_query'] . '"의 검색 결과가 없습니다.</p>';
+                    }
+                    else {
+                        echo '<p>등록된 상품이 없습니다.</p>';
+                    }
                     ?>
                 </div>
             </div>

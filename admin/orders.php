@@ -65,11 +65,20 @@
                                 $status_html = '<span class="order-status status-cancelled">주문 취소</span>';
                             }
                             echo "<td>$status_html</td>";
-                            echo "<td>
-                                    <a href='admin_delete.php?id=" . $order['order_id'] . "&type=orders' class='delete-btn' title='삭제'>
-                                        <i class='fas fa-trash'></i>
-                                    </a>
-                                  </td>";
+                            echo "<td>";
+                            if ($order['order_status'] == 'pending') {
+                                echo "<button class='btn btn-success btn-sm confirm-payment' data-id='" . $order['order_id'] . "' title='결제 확인'>
+                                        <i class='fas fa-check'></i> 결제 확인
+                                    </button>";
+                            } elseif ($order['order_status'] == 'paid') {
+                                echo "<button class='btn btn-danger btn-sm cancel-payment' data-id='" . $order['order_id'] . "' title='결제 취소'>
+                                        <i class='fas fa-times'></i> 결제 취소
+                                    </button>";
+                            }
+                            echo "<a href='admin_delete.php?id=" . $order['order_id'] . "&type=orders' class='delete-btn' title='삭제'>
+                                    <i class='fas fa-trash'></i>
+                                </a>";
+                            echo "</td>";
                             echo "</tr>";
 
                             echo "<tr id='detail-" . $order['order_id'] . "' class='order-detail' style='display: none; background-color: #f9f9f9;'>";
@@ -102,6 +111,61 @@ document.addEventListener('DOMContentLoaded', function () {
                 detailRow.style.display = (detailRow.style.display === 'none' || detailRow.style.display === '') ? 'table-row' : 'none';
             }
         });
+    });
+});
+// 결제 확인 버튼 클릭 이벤트
+document.querySelectorAll('.confirm-payment').forEach(button => {
+        button.addEventListener('click', function() {
+            const orderId = this.dataset.id;
+            if (confirm('이 주문의 결제를 확인하시겠습니까?')) {
+                fetch('confirm_payment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `order_id=${orderId}&status=paid`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('결제 확인 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('결제 확인 중 오류가 발생했습니다.');
+                });
+            }
+        });
+    });
+
+// 결제 취소 버튼 클릭 이벤트
+document.querySelectorAll('.cancel-payment').forEach(button => {
+    button.addEventListener('click', function() {
+        const orderId = this.dataset.id;
+        if (confirm('이 주문의 결제를 취소하시겠습니까?')) {
+            fetch('confirm_payment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `order_id=${orderId}&status=cancelled`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('결제 취소 중 오류가 발생했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('결제 취소 중 오류가 발생했습니다.');
+            });
+        }
     });
 });
 </script>
