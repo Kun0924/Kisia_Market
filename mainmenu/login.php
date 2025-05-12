@@ -31,7 +31,7 @@
                     <div class="form-options">
                         <div class="remember-me">
                             <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">로그인 상태 유지</label>
+                            <label for="remember">아이디 저장</label>
                         </div>
                         <div class="find-links">
                             <a href="find_id.php">아이디 찾기</a>

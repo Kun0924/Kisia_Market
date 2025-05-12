@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">휴대폰 번호</label>
-                        <input type="tel" id="phone" name="phone" placeholder="01000000000" required>
+                        <input type="tel" id="phone" name="phone" required>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn-find">비밀번호 찾기</button>
