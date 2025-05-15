@@ -26,6 +26,9 @@ RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 # 작업 디렉토리 설정
 WORKDIR /var/www/html
 
+# 로컬 소스 복사 (반드시 작업 디렉토리 설정 후)
+COPY ./ /var/www/html/
+
 # 파일 권한 설정
 RUN chown -R www-data:www-data /var/www/html 
 
