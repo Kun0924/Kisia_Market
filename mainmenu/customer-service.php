@@ -43,7 +43,7 @@
                         <?php while ($row = mysqli_fetch_assoc($get_notice)): ?>
                             <div class="qna-item notice-item">
                                 <div class="qna-info">
-                                    <a href="notice_detail.php?id=<?= $row['id'] ?>" class="qna-title"><?= htmlspecialchars($row['title']) ?></a>
+                                    <a href="notice_detail.php?id=<?= $row['id'] ?>" class="qna-title"><?= $row['title'] ?></a>
                                     <span class="qna-meta"><?= $row['id'] ?></span>
                                     <span class="qna-user">관리자</span>
                                     <span class="qna-date"><?= date('Y-m-d', strtotime($row['created_at'])) ?></span>

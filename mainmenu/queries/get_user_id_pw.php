@@ -38,7 +38,7 @@
 
                 $mail->isHTML(true);
                 $mail->Subject = '비밀번호 재설정 안내';
-                $mail->Body    = '비밀번호를 재설정하려면 <a href="/mainmenu/reset_password.php?email=' . $email . '&profile=' . $profile . '">여기</a>를 클릭하세요.';
+                $mail->Body    = '비밀번호를 재설정하려면 <a href="http://kisia-shop1.koreacentral.cloudapp.azure.com/mainmenu/reset_password.php?email=' . $email . '&profile=' . $profile . '">여기</a>를 클릭하세요.';
 
                 $mail->send();
             } catch (Exception $e) {
