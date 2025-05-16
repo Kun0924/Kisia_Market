@@ -43,7 +43,7 @@
                     <ul class="attachment-list">
                         <?php while ($row_images = mysqli_fetch_assoc($get_inquiry_images)) { ?>
                             <li>
-                                <a href="http://kisia-shop1.koreacentral.cloudapp.azure.com/mainmenu<?= $row_images['image_url'] ?>" target="_blank" download>
+                                <a href="http://kisia-shop1.koreacentral.cloudapp.azure.com<?= $row_images['image_url'] ?>" target="_blank" download>
                                     <i class="fas fa-paperclip"></i> <?= basename($row_images['image_url']) ?>
                                 </a>
                             </li>
