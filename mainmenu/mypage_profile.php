@@ -264,6 +264,7 @@
             .then(data => {
                 if (data.success) {
                     alert('비밀번호 재설정 링크가 이메일로 전송되었습니다.');
+                    window.open('http://kisia-shop1.koreacentral.cloudapp.azure.com:8025/', '_blank');
                     closePasswordModal();
                 } else {
                     alert('이메일 전송에 실패했습니다. 다시 시도해주세요.');
