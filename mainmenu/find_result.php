@@ -32,7 +32,7 @@
                     <?php if ($user_pw): ?>
                     <p class="result-message">메일을 확인해주세요.</p>
                     <p class="result-value"><?php echo $email; ?> 로 메일이 전송되었습니다.</p>
-                    <p class="result-value"><a>http://kisia-shop1.koreacentral.cloudapp.azure.com:8025/</a></p>
+                    <p class="result-value"><a href="http://kisia-shop1.koreacentral.cloudapp.azure.com:8025/">메일로 가기</a></p>
                     <?php else: ?>
                         <p class="result-message">일치하는 회원 정보를 찾을 수 없습니다.</p>
                     <?php endif; ?>
