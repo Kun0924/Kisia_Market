@@ -15,7 +15,8 @@
             <i class="fas fa-sign-out-alt logout-icon"></i>
             <h2 class="logout-title">로그아웃</h2>
             <div class="logout-buttons">
-                <button class="logout-btn logout-confirm" onclick="location.href='../index.php'">로그아웃</button>
+                <button class="logout-btn logout-confirm" onclick="location.href='/mainmenu/queries/logout_process.php'">로그아웃
+                </button>
                 <button class="logout-btn logout-cancel" onclick="location.href='dashboard_main.php'">취소</button>
             </div>
         </div>
