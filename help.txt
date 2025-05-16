@@ -7,3 +7,6 @@ docker-compose run --rm web composer install
 shell 접속방법:
 mysql -u root -p --default-character-set=utf8mb4
 USE kisia_market;
+
+azure 접속속
+sudo -i
