@@ -89,9 +89,9 @@
                             echo '<a href="product_explain.php?id=' . $row['id'] . '">';
                             // 이미지 경로
                             $image_path = '/' . $row['image_url']; 
-                            echo '<img src="' . htmlspecialchars($image_path) . '" alt="' . htmlspecialchars($row['name']) . '">';
+                            echo '<img src="' . $image_path . '" alt="' . $row['name'] . '">';
                             echo '</a>';
-                            echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+                            echo '<h3>' . $row['name'] . '</h3>';
                             
                             // 평균 평점 표시 수정
                             $avg_rating = isset($row['avg_rating']) ? number_format($row['avg_rating'], 1) : 0;

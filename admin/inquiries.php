@@ -89,7 +89,7 @@
                                     echo "<td colspan='7'>";
                                     echo "<strong>문의 내용:</strong><br>" . nl2br($inquiry['content']) . "<br><br>";
                                     if (!empty($inquiry['answer'])) {
-                                        $answerEscaped = htmlspecialchars($inquiry['answer']);
+                                        $answerEscaped = $inquiry['answer'];
                                         echo "<strong>답변:</strong><br>" . nl2br($answerEscaped);
                                     
                                         echo "<div style='margin-top: 10px; display: flex; gap: 10px;'>";                                  
