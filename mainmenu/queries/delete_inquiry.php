@@ -9,7 +9,7 @@
     $msg = '';
 
     if ($img_result && mysqli_num_rows($img_result) > 0) {
-        $msg = '명령어 실행 전전' . $img_path;
+        $msg = '명령어 실행 전전';
         while ($img_row = mysqli_fetch_assoc($img_result)) {
             $img_path = '/var/www/html/inquiry_uploads' . $img_row['image_url'];
             $msg = '명령어 실행 전' . $img_path;
