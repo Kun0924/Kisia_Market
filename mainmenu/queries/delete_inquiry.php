@@ -26,8 +26,11 @@
 
 
     if ($result) {
-        echo "<script>alert('문의글 삭제에 성공했습니다.' . $msg);</script>";
-        echo "<script>window.location.href = '/mainmenu/mypage.php?tab=mypage_inquiry.php';</script>";
+        echo "<script>alert('문의글 삭제에 성공했습니다.' . $msg);
+            setTimeout(function() {
+            window.location.href = '/mainmenu/mypage.php?tab=mypage_inquiry.php';
+        }, 500);
+        </script>";
     } else {
         echo "<script>alert('문의글 삭제에 실패했습니다.');</script>";
     }

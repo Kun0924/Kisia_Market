@@ -10,3 +10,7 @@ USE kisia_market;
 
 azure 접속
 sudo -i
+
+azure DB 접속속
+docker exec -it kisia_market_db_1 bash
+mysql -u root -p --default-character-set=utf8mb4
