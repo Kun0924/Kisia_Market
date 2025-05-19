@@ -8,5 +8,5 @@ shell 접속방법:
 mysql -u root -p --default-character-set=utf8mb4
 USE kisia_market;
 
-azure 접속속
+azure 접속
 sudo -i

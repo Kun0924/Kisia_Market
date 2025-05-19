@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $phone = $_POST['phone'] ?? '';
 
     $sql = "INSERT INTO users (userId, name, email, password, phone, created_at)
-            VALUES ('$userId', '$name', '$email', '$hashed_password', '$phone', NOW())";
+            VALUES ('$userId', '$name', '$email', '$password', '$phone', NOW())";
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('회원이 등록되었습니다.'); location.href='members.php';</script>";
