@@ -24,7 +24,7 @@
             <h1 class="order-complete-title">주문이 완료되었습니다!</h1>
             <p class="order-complete-message">주문해 주셔서 감사합니다. 주문 내역은 마이페이지에서 확인하실 수 있습니다.</p>
             <div class="order-complete-actions">
-                <button class="btn-order-detail" onclick="location.href='mypage.php'">주문 상세 보기</button>
+                <button class="btn-order-detail" onclick="location.href='mypage.php?tab=mypage_order.php'">주문 상세 보기</button>
                 <button class="btn-continue-shopping" onclick="location.href='all.php'">쇼핑 계속하기</button>
             </div>
         </div>

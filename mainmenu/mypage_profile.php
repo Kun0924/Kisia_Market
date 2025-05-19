@@ -1,22 +1,5 @@
-<?php include '/var/www/html/mainmenu/queries/get_header_session.php'; ?>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지 - KISIA SHOP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/mypage.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <?php include 'common/header.php'; ?>
-    <?php require_once 'queries/get_mypage_user.php'; ?>
-    <?php mysqli_close($conn); ?>
-
-    <!-- Main Content -->
-    <main class="main-content">
+<?php require_once 'queries/get_mypage_user.php'; ?>
+<?php mysqli_close($conn); ?>
         <div class="container">
             <div class="mypage-container">
                 <h2 class="page-title">마이페이지</h2>
@@ -36,10 +19,10 @@
                         </div>
                         
                         <ul class="mypage-menu">
-                            <li><a href="mypage_profile.php" data-section="profile-edit-section" class="active">회원 정보</a></li>
-                            <li><a href="mypage.php" data-section="order-section">주문/배송</a></li>
-                            <li><a href="mypage_review.php" data-section="review-section">나의 리뷰</a></li>
-                            <li><a href="mypage_inquiry.php" data-section="inquiry-section">1:1 문의내역</a></li>
+                            <li><a href="mypage.php?tab=mypage_profile.php" data-section="profile-edit-section" class="active">회원 정보</a></li>
+                            <li><a href="mypage.php?tab=mypage_order.php" data-section="order-section">주문/배송</a></li>
+                            <li><a href="mypage.php?tab=mypage_review.php" data-section="review-section">나의 리뷰</a></li>
+                            <li><a href="mypage.php?tab=mypage_inquiry.php" data-section="inquiry-section">1:1 문의내역</a></li>
                         </ul>
                     </div>
 
@@ -170,7 +153,6 @@
                 </div>
             </div>
         </div>
-    </main>
     <div id="passwordResetModal" class="password-reset-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -187,7 +169,6 @@
         </div>
     </div>
 
-    <?php include 'common/footer.php'; ?>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
     document.getElementById('btn-search-address')?.addEventListener('click', function() {
@@ -275,5 +256,3 @@
             });
         }
     </script>
-</body>
-</html> 
