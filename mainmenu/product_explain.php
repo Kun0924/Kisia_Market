@@ -63,7 +63,6 @@ include 'queries/get_header_session.php';
             <?php
             if (!empty($row)) {
                 echo '<h2>상품 설명</h2>';
-                // echo '<p>' . htmlspecialchars($row['description']) . '</p>';
                 echo '<img src="/' . $row['description'] . '" alt="상세 이미지">';
             } else {
                 echo '<p>상품 정보가 없습니다.</p>';

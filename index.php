@@ -48,9 +48,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
                                 echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
-                                echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '<img src="' . $row_best['image_url'] . '" alt="' . $row_best['name'] . '">';
                                 echo '</a>';
-                                echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                echo '<h3>' . $row_best['name'] . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
                             }
@@ -80,9 +80,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
                                 echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
-                                echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '<img src="' . $row_best['image_url'] . '" alt="' . $row_best['name'] . '">';
                                 echo '</a>';
-                                echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                echo '<h3>' . $row_best['name'] . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
                             }
@@ -112,9 +112,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
                                 echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
-                                echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '<img src="' . $row_best['image_url'] . '" alt="' . $row_best['name'] . '">';
                                 echo '</a>';
-                                echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                echo '<h3>' . $row_best['name'] . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
                             }
@@ -144,9 +144,9 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
                                 // 상품 하나당 하나의 카드 출력
                                 echo '<div class="product-card">';
                                 echo '<a href="mainmenu/product_explain.php?id=' . $row_best['id'] . '">';
-                                echo '<img src="' . htmlspecialchars($row_best['image_url']) . '" alt="' . htmlspecialchars($row_best['name']) . '">';
+                                echo '<img src="' . $row_best['image_url'] . '" alt="' . $row_best['name'] . '">';
                                 echo '</a>';
-                                echo '<h3>' . htmlspecialchars($row_best['name']) . '</h3>';
+                                echo '<h3>' . $row_best['name'] . '</h3>';
                                 echo '<p class="price">' . number_format($row_best['price']) . '원</p>';
                                 echo '</div>';
                             }
