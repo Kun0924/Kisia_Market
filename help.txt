@@ -4,13 +4,36 @@ docker-compose up --build -d
 vendor 폴더 없을시 빌드 후 실행
 docker-compose run --rm web composer install
 
-shell 접속방법:
+## shell 접속방법:
 mysql -u root -p --default-character-set=utf8mb4
 USE kisia_market;
 
-azure 접속
+## azure 접속
 sudo -i
 
-azure DB 접속속
+## azure DB 접속
 docker exec -it kisia_market_db_1 bash
 mysql -u root -p --default-character-set=utf8mb4
+
+## 디렉터리 취약점 만들기
+1. 도커 웹 컨테이너 진입
+docker exec -it [컨테이너 이름] bash  
+
+2.  /etc/apache2/apache2.conf 파일 수정
+vi /etc/apache2/apache2.conf
+
+3. /etc/apache2/apache2.conf에서 /var/www/html 디렉토리를 아래와 같이 설정.
+<Directory /var/www/html>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+4. /etc/apache2/conf-available/docker-php.conf 파일 수정
+vi /etc/apache2/conf-available/docker-php.conf
+
+5. Options 수정
+Options -Indexes이거를 Options +Indexes로 수정.
+
+5. 아파치 재시작
+service apache2 restart
