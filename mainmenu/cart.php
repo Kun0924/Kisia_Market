@@ -29,7 +29,7 @@
                         </div>
                         <p class="empty-cart-message">장바구니가 비어있습니다.</p>
                         <a href="all.php" class="btn-shop">쇼핑하기</a>
-                    </div>';
+                    </div>
                 <?php else : ?>
                     <table class="cart-table">
                         <thead>
