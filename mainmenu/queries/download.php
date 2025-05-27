@@ -1,5 +1,5 @@
 <?php
-$file = $_GET['file'];
+$file = $_GET['file'] ?? '';
 $path = "/var/www/html" . $file;
 
 if (file_exists($path)) {

@@ -59,8 +59,14 @@
     }
 
     // 상품 목록 쿼리
-    $sql = "SELECT * FROM products $price_condition $category $search_query ORDER BY $order_by LIMIT $offset, $items_per_page";
-    $get_all_products = mysqli_query($conn, $sql);
+    // $sql = "SELECT * FROM products $price_condition $category $search_query ORDER BY $order_by LIMIT $offset, $items_per_page";
+    // $get_all_products = mysqli_query($conn, $sql);
+
+    $sql = "SELECT * FROM products $price_condition $category $search_query ORDER BY $order_by LIMIT ?, ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $offset, $items_per_page);
+    $stmt->execute();
+    $get_all_products = $stmt->get_result();
 
     // 전체 상품 개수 쿼리 (페이징용)
     $count_sql = "SELECT COUNT(*) as total FROM products $price_condition $category $search_query";
