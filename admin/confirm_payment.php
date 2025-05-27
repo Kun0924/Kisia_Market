@@ -1,4 +1,5 @@
 <?php
+    require_once 'admin_check.php';
     require_once '/var/www/html/mainmenu/common/db.php';
 
     $order_id = $_POST['order_id'];

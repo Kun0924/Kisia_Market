@@ -1,11 +1,6 @@
 <?php
-session_start();
+require_once 'admin_check.php'; 
 require_once '../mainmenu/common/db.php';
-
-if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
-    header('Location: /mainmenu/login.php');
-    exit();
-} 
 
 // 회원 수 조회
 $member_count = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM users"))[0];

@@ -1,4 +1,6 @@
 <?php
+require_once 'admin_check.php';
+
 require_once '../mainmenu/common/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inquiry_id'])) {

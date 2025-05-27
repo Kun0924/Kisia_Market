@@ -1,12 +1,6 @@
 <?php
-session_start();
+require_once 'admin_check.php';
 require_once '../mainmenu/common/db.php';
-
-if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
-    header('Location: /mainmenu/login.php');
-    exit();
-}
-require_once '../mainmenu/common/db.php'; // mysqli 연결됨
 
 $search_query = $_GET['search_query'] ?? '';
 ?>

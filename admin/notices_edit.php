@@ -1,4 +1,5 @@
 <?php
+require_once 'admin_check.php';
 require_once '../mainmenu/common/db.php';
 
 // 공지 ID 받아오기
