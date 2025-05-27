@@ -28,6 +28,8 @@ VALUES
 ('test', 'ehddls1029@naver.com', '1234', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
 ('admin', 'admin@admin.com', 'admin', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
 
+UPDATE users SET role = 'ADMIN' WHERE userId = 'admin';
+
 -- 공지사항 테이블 생성
 CREATE TABLE IF NOT EXISTS notices (
     id INT AUTO_INCREMENT PRIMARY KEY,

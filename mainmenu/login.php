@@ -19,18 +19,20 @@
         <div class="container">
             <div class="login-container">
                 <h2 class="page-title">로그인</h2>
-                <form class="login-form" method="POST" action="queries/login_process.php">
+                <form class="login-form" method="POST" action="queries/login_process.php" autocomplete="off">
                     <div class="form-group">
                         <label for="username">아이디</label>
-                        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" value="<?php echo isset($_COOKIE['saved_id']) ? $_COOKIE['saved_id'] : ''; ?>">
+                        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required
+                               value="<?= isset($_COOKIE['saved_id']) ? htmlspecialchars($_COOKIE['saved_id']) : '' ?>">
                     </div>
                     <div class="form-group">
                         <label for="password">비밀번호</label>
-                        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" >
+                        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
                     </div>
                     <div class="form-options">
                         <div class="remember-me">
-                            <input type="checkbox" id="remember" name="remember" <?php echo isset($_COOKIE['saved_id']) ? 'checked' : ''; ?>>
+                            <input type="checkbox" id="remember" name="remember" 
+                                   <?= isset($_COOKIE['saved_id']) ? 'checked' : '' ?>>
                             <label for="remember">아이디 저장</label>
                         </div>
                         <div class="find-links">
@@ -49,22 +51,5 @@
             </div>
         </div>
     </main>
-
-    <script>
-        // 관리자 페이지로 이동
-        // function validateLogin() {
-        //     const id = document.getElementById('username').value.trim();
-        //     const pw = document.getElementById('password').value.trim();
-
-        //     if (id === 'admin' && pw === 'admin') {
-        //         window.location.href = '../admin/dashboard_main.php';
-        //         return false;
-        //     } else {
-        //         alert('아이디 또는 비밀번호가 잘못되었습니다.');
-        //     }
-
-        // return false;
-        // }       
-    </script>
 </body>
 </html>
