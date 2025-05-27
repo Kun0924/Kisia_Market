@@ -71,7 +71,6 @@ $search_query = $_GET['search_query'] ?? '';
                                 echo "<td>" . htmlspecialchars($users['email']) . "</td>"; // 이메일
                                 echo "<td>" . htmlspecialchars(date('Y-m-d', strtotime($users['created_at']))) . "</td>"; // 가입일
 
-                                // 관리 (삭제 버튼)
                                 echo "<td>";
                                 if ($users['userId'] !== 'admin') {
                                     echo "<a href='admin_delete.php?id=" . urlencode($users['id']) . "&type=users' class='delete-btn' title='삭제'>
