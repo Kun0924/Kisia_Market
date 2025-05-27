@@ -6,10 +6,11 @@ $userId = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 $remember = $_POST['remember'] ?? '';
 
-// 로그인 쿼리 (SQL Injection 방지 없이 단순 버전)
-$sql = "SELECT * FROM users WHERE userId = '$userId' AND password = '$password'";
-$result = mysqli_query($conn, $sql);
-$user = $result ? mysqli_fetch_assoc($result) : null;
+$stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE userId = ? AND password = ?");
+mysqli_stmt_bind_param($stmt, "ss", $userId, $password);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
 
 if ($user) {
     $_SESSION['id'] = $user['id'];
@@ -24,15 +25,14 @@ if ($user) {
         setcookie('saved_id', '', time() - 3600, "/");
     }
 
-    // ✅ 진짜 핵심 부분: 대소문자 무시하고 'ADMIN'이면 관리자 페이지로 이동
     if (isset($user['role']) && strtoupper($user['role']) === 'ADMIN') {
         header("Location: /admin/dashboard_main.php");
     } else {
         header("Location: /index.php");
     }
-
     exit;
 } else {
+    // 오류 페이지로 이동가능?
     echo "<script>
         alert('아이디 또는 비밀번호가 잘못되었습니다.');
         window.location.href = '/mainmenu/login.php';

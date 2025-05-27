@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once '../mainmenu/common/db.php';
+
+if (isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+    header('Location: /mainmenu/login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -42,7 +51,7 @@
                         
                         $search_query = $_GET['search_query'] ?? '';
                         if ($search_query !== '') {
-                            $sql = "SELECT * FROM users WHERE name LIKE '%$search_query%' OR userId LIKE '%$search_query%' ORDER BY id ASC";
+                            $sql = "SELECT * FROM users WHERE name LIKE '%$safe_query%' OR userId LIKE '%$safe_query%' ORDER BY id ASC";
                         } else {
                             $sql = "SELECT * FROM users ORDER BY id ASC";
                         }
@@ -52,14 +61,14 @@
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($users = mysqli_fetch_assoc($result)) {
-                                echo "<tr onclick=\"toggleDetail(" . $users['id'] . ")\" style=\"cursor: pointer;\">";
-                                echo "<td>" . $users['id'] . "</td>";
-                                echo "<td>" . $users['userId'] . "</td>";
-                                echo "<td>" . $users['name'] . "</td>";
-                                echo "<td>" . $users['email'] . "</td>";
-                                echo "<td>" . date('Y-m-d', strtotime($users['created_at'])) . "</td>";
+                                echo "<tr onclick=\"toggleDetail($id)\" style=\"cursor: pointer;\">";
+                                echo "<td>" . htmlspecialchars($users['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($users['userId']) . "</td>";
+                                echo "<td>" . htmlspecialchars($users['name']) . "</td>";
+                                echo "<td>" . htmlspecialchars($users['email']) . "</td>";
+                                echo "<td>" . htmlspecialchars(date('Y-m-d', strtotime($users['created_at']))) . "</td>";
                                 echo "<td>
-                                        <a href='admin_delete.php?id=" . $users['id'] . "&type=users' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . urlencode($users['id']) . "&type=users' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                     </td>";
@@ -67,13 +76,13 @@
                                 echo "</tr>";
 
                                 // 상세 정보 추가
-                                echo "<tr id='user_detail-" . $users['id'] . "' class='user-detail'>";
+                                echo "<tr id='user_detail-" . htmlspecialchars($users['id']) . "' class='user-detail'>";
                                 echo "<td colspan='7'>";
-                                echo "<strong>아이디:</strong> " . $users['userId'] . "<br>";
-                                echo "<strong>이름:</strong> " . $users['name'] . "<br>";
-                                echo "<strong>이메일:</strong> " . $users['email'] . "<br>";
-                                echo "<strong>전화번호:</strong> " . $users['phone'] . "<br>";
-                                echo "<strong>가입일:</strong> " . $users['created_at'] . "<br>";
+                                echo "<strong>아이디:</strong> " . htmlspecialchars($users['userId']) . "<br>";
+                                echo "<strong>이름:</strong> " . htmlspecialchars($users['name']) . "<br>";
+                                echo "<strong>이메일:</strong> " . htmlspecialchars($users['email']) . "<br>";
+                                echo "<strong>전화번호:</strong> " . htmlspecialchars($users['phone']) . "<br>";
+                                echo "<strong>가입일:</strong> " . htmlspecialchars($users['created_at']) . "<br>";
                                 echo "</td>";
                                 echo "</tr>";
                             }
