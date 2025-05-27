@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
+    header('Location: /mainmenu/login.php');
+    exit();
+}
+
+$search_query = $_GET['search_query'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -46,50 +57,52 @@
                     </thead>
                     <tbody>
                         <?php
-                        require_once '../mainmenu/common/db.php'; // mysqli 연결됨
-
-                        $search_query = $_GET['search_query'] ?? '';
                         if ($search_query !== '') {
-                            $sql = "SELECT * FROM products WHERE name LIKE '%$search_query%' ORDER BY id ASC";
+                            $sql = "SELECT * FROM products WHERE name LIKE ? ORDER BY id ASC";
+                            $stmt = mysqli_prepare($conn, $sql);
+                            $param = '%' . $search_query . '%';
+                            mysqli_stmt_bind_param($stmt, 's', $param);
+                            mysqli_stmt_execute($stmt);
+                            $result = mysqli_stmt_get_result($stmt);
                         } else {
                             $sql = "SELECT * FROM products ORDER BY id ASC";
+                            $result = mysqli_query($conn, $sql);
                         }
-
-                        $result = mysqli_query($conn, $sql);
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($product = mysqli_fetch_assoc($result)) {
-                                echo "<tr class='product-row' data-id='" . $product['id'] . "'>";
-                                echo "<td>" . $product['id'] . "</td>";
-                                echo "<td>" . $product['name'] . "</td>";
-                                echo "<td>" . $product['category'] . "</td>";
+                                echo "<tr class='product-row' data-id='" . htmlspecialchars($product['id']) . "'>";
+                                echo "<td>" . htmlspecialchars($product['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($product['name']) . "</td>";
+                                echo "<td>" . htmlspecialchars($product['category']) . "</td>";
                                 echo "<td>" . number_format($product['price']) . "원</td>";
-                                echo "<td>" . $product['stock'] . "</td>";
-                                echo "<td>" . date('Y-m-d', strtotime($product['created_at'])) . "</td>";
+                                echo "<td>" . htmlspecialchars($product['stock']) . "</td>";
+                                echo "<td>" . htmlspecialchars(date('Y-m-d', strtotime($product['created_at']))) . "</td>";
                                 echo "<td>
-                                        <a href='products_edit.php?id=" . $product['id'] . "' class='edit-btn' title='상품 수정정'>
+                                        <a href='products_edit.php?id=" . urlencode($product['id']) . "' class='edit-btn' title='상품 수정정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $product['id'] . "&type=products' class='delete-btn'>
+                                        <a href='admin_delete.php?id=" . urlencode($product['id']) . "&type=products' class='delete-btn'>
                                             <i class='fas fa-trash'></i>
                                         </a>
-                                      </td>";
+                                    </td>";
                                 echo "</tr>";
 
                                 // 상세 정보 행
-                                echo "<tr id='product_detail-" . $product['id'] . "' class='product-detail'>";
+                                echo "<tr id='product_detail-" . htmlspecialchars($product['id']) . "' class='product-detail'>";
                                 echo "<td colspan='7'>";
-                                echo "<strong>상품명:</strong> " . $product['name'] . "<br>";
-                                echo "<strong>카테고리:</strong> " . $product['category'] . "<br>";
+                                echo "<strong>상품명:</strong> " . htmlspecialchars($product['name']) . "<br>";
+                                echo "<strong>카테고리:</strong> " . htmlspecialchars($product['category']) . "<br>";
                                 echo "<strong>가격:</strong> " . number_format($product['price']) . "원<br>";
-                                echo "<strong>재고:</strong> " . $product['stock'] . "<br>";
-                                echo "<strong>등록일:</strong> " . $product['created_at'] . "<br>";
+                                echo "<strong>재고:</strong> " . htmlspecialchars($product['stock']) . "<br>";
+                                echo "<strong>등록일:</strong> " . htmlspecialchars($product['created_at']) . "<br>";
                                 echo "</td>";
                                 echo "</tr>";
                             }
                         } else {
                             echo "<tr><td colspan='7' class='no-data'>등록된 상품이 없습니다.</td></tr>";
                         }
+
                         ?>
                     </tbody>
                 </table>

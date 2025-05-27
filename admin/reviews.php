@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
+    header('Location: /mainmenu/login.php');
+    exit();
+}
+
+$search_query = $_GET['search_query'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -46,56 +57,60 @@
                     </thead>
                     <tbody>
                     <?php
-                        require_once '../mainmenu/common/db.php'; // mysqli 연결됨
-
-                        $search_query = $_GET['search_query'] ?? '';
                         if ($search_query !== '') {
                             $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at, p.id AS product_id,
-                                    u.name AS user_name, p.name AS product_name, p.category AS product_category 
+                                        u.name AS user_name, p.name AS product_name, p.category AS product_category 
                                     FROM reviews r
                                     LEFT JOIN users u ON r.user_id = u.id
                                     LEFT JOIN products p ON r.product_id = p.id
-                                    WHERE p.name LIKE '%$search_query%' or u.name LIKE '%$search_query%' 
-                                    ORDER BY id ASC";
+                                    WHERE p.name LIKE ? OR u.name LIKE ?
+                                    ORDER BY r.id ASC";
+                            $stmt = mysqli_prepare($conn, $sql);
+                            $param = '%' . $search_query . '%';
+                            mysqli_stmt_bind_param($stmt, 'ss', $param, $param);
+                            mysqli_stmt_execute($stmt);
+                            $result = mysqli_stmt_get_result($stmt);
                         } else {
                             $sql = "SELECT r.id, r.rating, r.content, r.image_url, r.created_at, p.id AS product_id,
-                                    u.name AS user_name, p.name AS product_name, p.category AS product_category
+                                        u.name AS user_name, p.name AS product_name, p.category AS product_category
                                     FROM reviews r
                                     LEFT JOIN users u ON r.user_id = u.id
                                     LEFT JOIN products p ON r.product_id = p.id
                                     ORDER BY r.created_at ASC";
+                            $result = mysqli_query($conn, $sql);
                         }
-                        $result = mysqli_query($conn, $sql);
+
 
                         if ($result && $result->num_rows > 0) {
                             while ($reviews = $result->fetch_assoc()) {
-                                echo "<tr class='review-row' data-id='" . $reviews['id'] . "'>";
-                                echo "<td>" . $reviews['id'] . "</td>";
-                                echo "<td>" . $reviews['product_category'] . "</td>";
-                                echo "<td>" . $reviews['product_name'] . "</td>";
-                                echo "<td>" . $reviews['user_name'] . "</td>";
+                                echo "<tr class='review-row' data-id='" . htmlspecialchars($reviews['id']) . "'>";
+                                echo "<td>" . htmlspecialchars($reviews['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['product_category']) . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['product_name']) . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['user_name']) . "</td>";
                                 echo "<td class='star-rating' data-rating='" . (int)$reviews['rating'] . "'>" . str_repeat('★', (int)$reviews['rating']) . "</td>";
-                                echo "<td>" . $reviews['created_at'] . "</td>";
+                                echo "<td>" . htmlspecialchars($reviews['created_at']) . "</td>";
                                 echo "<td>
-                                       <a href='admin_delete.php?id=" . $reviews['id'] . "&type=reviews&product_id=" . $reviews['product_id'] . "' class='delete-btn' title='삭제'>
+                                    <a href='admin_delete.php?id=" . urlencode($reviews['id']) . "&type=reviews&product_id=" . urlencode($reviews['product_id']) . "' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
-                                      </td>";
+                                    </td>";
                                 echo "</tr>";
-                                echo "<tr id='review_detail-" . $reviews['id'] . "' class='review-detail'>";
+
+                                echo "<tr id='review_detail-" . htmlspecialchars($reviews['id']) . "' class='review-detail'>";
                                 echo "<td colspan='7'>";
-                                echo "<strong>상품명:</strong> " . ($reviews['product_name'] ?? '알 수 없음') . "<br>";
-                                echo "<strong>작성자:</strong> " . ($reviews['user_name'] ?? '알 수 없음') . "<br>";
+                                echo "<strong>상품명:</strong> " . htmlspecialchars($reviews['product_name'] ?? '알 수 없음') . "<br>";
+                                echo "<strong>작성자:</strong> " . htmlspecialchars($reviews['user_name'] ?? '알 수 없음') . "<br>";
                                 echo "<strong>평점:</strong> " . (int)$reviews['rating'] . "점<br>";
-                                echo "<strong>작성일:</strong> " . $reviews['created_at'] . "<br>";
-                                echo "<strong>리뷰 내용:</strong><br>" . nl2br($reviews['content']) . "<br><br>";
+                                echo "<strong>작성일:</strong> " . htmlspecialchars($reviews['created_at']) . "<br>";
+                                echo "<strong>리뷰 내용:</strong><br>" . nl2br(htmlspecialchars($reviews['content'])) . "<br><br>";
                                 echo "</td>";
                                 echo "</tr>";
-                                
                             }
                         } else {
                             echo "<tr><td colspan='7' class='no-data'>등록된 리뷰가 없습니다.</td></tr>";
                         }
+
                     ?>
                     </tbody>
                 </table>

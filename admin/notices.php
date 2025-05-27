@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
+    header('Location: /mainmenu/login.php');
+    exit();
+}
+
+$search_query = $_GET['search_query'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -37,37 +48,38 @@
                     </thead>
                     <tbody>
                         <?php
-                            require_once '../mainmenu/common/db.php'; // mysqli 연결됨
-
-                            $search_query = $_GET['search_query'] ?? '';
                             if ($search_query !== '') {
-                                $sql = "SELECT * FROM notices WHERE title LIKE '%$search_query%' ORDER BY id ASC";
+                                $sql = "SELECT * FROM notices WHERE title LIKE ? ORDER BY id ASC";
+                                $stmt = mysqli_prepare($conn, $sql);
+                                $param = '%' . $search_query . '%';
+                                mysqli_stmt_bind_param($stmt, 's', $param);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
                             } else {
                                 $sql = "SELECT * FROM notices ORDER BY created_at DESC";
+                                $result = mysqli_query($conn, $sql);
                             }
-
-                            $result = mysqli_query($conn, $sql);
 
                             //공지사항
                             if ($result && mysqli_num_rows($result) > 0) {
                                 while ($notices = mysqli_fetch_assoc($result)) {
-                                    echo "<tr class='notice-row' data-id='" . $notices['id'] . "'>";
-                                    echo "<td>" . $notices['id'] . "</td>";
-                                    echo "<td>" . $notices['title'] . "</td>";
+                                    echo "<tr class='notice-row' data-id='" . htmlspecialchars($notices['id']) . "'>";
+                                    echo "<td>" . htmlspecialchars($notices['id']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($notices['title']) . "</td>";
                                     echo "<td>관리자</td>";
-                                    echo "<td>" . $notices['created_at'] . "</td>";
+                                    echo "<td>" . htmlspecialchars($notices['created_at']) . "</td>";
                                     echo "<td>
-                                        <a href='notices_edit.php?id=" . $notices['id'] . "' class='edit-btn' title='게시글 수정'>
+                                        <a href='notices_edit.php?id=" . htmlspecialchars($notices['id']) . "' class='edit-btn' title='게시글 수정'>
                                             <i class='fas fa-edit'></i>
                                         </a>
-                                        <a href='admin_delete.php?id=" . $notices['id'] . "&type=notices' class='delete-btn' title='삭제'>
+                                        <a href='admin_delete.php?id=" . htmlspecialchars($notices['id']) . "&type=notices' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
                                         </a>
                                       </td>";
                                     echo "</tr>";
-                                    echo "<tr id='notice_detail-" . $notices['id'] . "' class='notice-detail'>";
+                                    echo "<tr id='notice_detail-" . htmlspecialchars($notices['id']) . "' class='notice-detail'>";
                                     echo "<td colspan='5'>";
-                                    echo "<strong>공지 내용:</strong><br>" . nl2br($notices['content']) . "<br>";
+                                    echo "<strong>공지 내용:</strong><br>" . nl2br(htmlspecialchars($notices['content'])) . "<br>";
                                     echo "</td>";
                                     echo "</tr>";
                                 }

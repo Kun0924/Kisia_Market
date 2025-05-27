@@ -2,10 +2,13 @@
 session_start();
 require_once '../mainmenu/common/db.php';
 
-if (isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
     header('Location: /mainmenu/login.php');
-    exit;
+    exit();
 }
+require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+$search_query = $_GET['search_query'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -47,33 +50,38 @@ if (isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
                     </thead>
                     <tbody>
                         <?php
-                        require_once '../mainmenu/common/db.php'; // mysqli 연결됨
-                        
-                        $search_query = $_GET['search_query'] ?? '';
                         if ($search_query !== '') {
-                            $sql = "SELECT * FROM users WHERE name LIKE '%$safe_query%' OR userId LIKE '%$safe_query%' ORDER BY id ASC";
+                            $sql = "SELECT * FROM users WHERE name LIKE ? OR userId LIKE ? ORDER BY id ASC";
+                            $stmt = mysqli_prepare($conn, $sql);
+                            $param = '%' . $search_query . '%';
+                            mysqli_stmt_bind_param($stmt, 'ss', $param, $param);
+                            mysqli_stmt_excute($stmt);
+                            $result = mysqli_stmt_get_result($stmt);
                         } else {
                             $sql = "SELECT * FROM users ORDER BY id ASC";
+                            $result = mysqli_query($conn, $sql);
                         }
-
-                        $result = mysqli_query($conn, $sql);
-
 
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($users = mysqli_fetch_assoc($result)) {
-                                echo "<tr onclick=\"toggleDetail($id)\" style=\"cursor: pointer;\">";
-                                echo "<td>" . htmlspecialchars($users['id']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['userId']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($users['email']) . "</td>";
-                                echo "<td>" . htmlspecialchars(date('Y-m-d', strtotime($users['created_at']))) . "</td>";
-                                echo "<td>
-                                        <a href='admin_delete.php?id=" . urlencode($users['id']) . "&type=users' class='delete-btn' title='삭제'>
+                                echo "<tr onclick=\"toggleDetail(" . htmlspecialchars($users['id']) . ")\" style=\"cursor: pointer;\">";
+                                echo "<td>" . htmlspecialchars($users['id']) . "</td>"; // 회원 ID
+                                echo "<td>" . htmlspecialchars($users['userId']) . "</td>"; // 아이디
+                                echo "<td>" . htmlspecialchars($users['name']) . "</td>"; // 이름
+                                echo "<td>" . htmlspecialchars($users['email']) . "</td>"; // 이메일
+                                echo "<td>" . htmlspecialchars(date('Y-m-d', strtotime($users['created_at']))) . "</td>"; // 가입일
+
+                                // 관리 (삭제 버튼)
+                                echo "<td>";
+                                if ($users['userId'] !== 'admin') {
+                                    echo "<a href='admin_delete.php?id=" . urlencode($users['id']) . "&type=users' class='delete-btn' title='삭제'>
                                             <i class='fas fa-trash'></i>
-                                        </a>
-                                    </td>";
-                        
+                                        </a>";
+                                }
+                                echo "</td>";
+
                                 echo "</tr>";
+
 
                                 // 상세 정보 추가
                                 echo "<tr id='user_detail-" . htmlspecialchars($users['id']) . "' class='user-detail'>";

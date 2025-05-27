@@ -1,4 +1,14 @@
-<!-- orders.php -->
+<?php
+session_start();
+require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
+    header('Location: /mainmenu/login.php');
+    exit();
+}
+
+$search_query = $_GET['search_query'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,31 +51,39 @@
                 </thead>
                 <tbody>
                     <?php
-                    require_once '../mainmenu/common/db.php';
-
-                    $search_query = isset($_GET['search_query']) ? $_GET['search_query'] : '';
-
-                    $where_clause = '';
-                    if (!empty($search_query)) {
-                        $where_clause = "WHERE o.id LIKE '%$search_query%' OR u.userId LIKE '%$search_query%'";
-                    }
-
-                    $sql = "SELECT o.id AS order_id, o.order_created_at, o.order_status, u.userId AS user_id,
+                    if ($search_query !== '') {
+                        $sql = "SELECT o.id AS order_id, o.order_created_at, o.order_status, u.userId AS user_id,
                                    o.receiver_name, o.receiver_phone, o.receiver_address,
                                    o.payment_method, o.order_amount
-                            FROM orders o
-                            LEFT JOIN users u ON o.user_id = u.id
-                            $where_clause
-                            ORDER BY o.order_created_at DESC";
-                    $result = mysqli_query($conn, $sql);
+                                FROM orders o
+                                LEFT JOIN users u ON o.user_id = u.id
+                                WHERE o.id LIKE ? OR u.userId LIKE ?
+                                ORDER BY o.order_created_at DESC";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        $param = '%' . $search_query . '%';
+                        mysqli_stmt_bind_param($stmt, 's', $param);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+                        
+                    } else {
+                        $sql = "SELECT o.id AS order_id, o.order_created_at, o.order_status, u.userId AS user_id,
+                                   o.receiver_name, o.receiver_phone, o.receiver_address,
+                                   o.payment_method, o.order_amount
+                                FROM orders o
+                                LEFT JOIN users u ON o.user_id = u.id
+                                ORDER BY o.order_created_at DESC";
+                        
+                        $result = mysqli_query($conn, $sql);
+
+                    }
 
                     if ($result && mysqli_num_rows($result) > 0) {
                         while ($order = mysqli_fetch_assoc($result)) {
-                            echo "<tr class='order-row' data-id='" . $order['order_id'] . "' style='cursor:pointer;'>";
+                            echo "<tr class='order-row' data-id='" . htmlspecialchars($order['order_id']) . "' style='cursor:pointer;'>";
                             echo "<td><input type='checkbox'></td>";
-                            echo "<td>" . date('Y-m-d', strtotime($order['order_created_at'])) . "</td>";
-                            echo "<td>" . $order['order_id'] . "</td>";
-                            echo "<td>" . $order['user_id'] . "</td>";
+                            echo "<td>" . htmlspecialchars(date('Y-m-d', strtotime($order['order_created_at']))) . "</td>";
+                            echo "<td>" . htmlspecialchars($order['order_id']) . "</td>";
+                            echo "<td>" . htmlspecialchars($order['user_id']) . "</td>";
                             $status_html = '';
                             if ($order['order_status'] == 'pending') {
                                 $status_html = '<span class="order-status status-pending">결제 대기</span>';
@@ -77,25 +95,25 @@
                             echo "<td>$status_html</td>";
                             echo "<td>";
                             if ($order['order_status'] == 'pending') {
-                                echo "<button class='btn btn-success btn-sm confirm-payment' data-id='" . $order['order_id'] . "' title='결제 확인'>
+                                echo "<button class='btn btn-success btn-sm confirm-payment' data-id='" . htmlspecialchars($order['order_id']) . "' title='결제 확인'>
                                         <i class='fas fa-check'></i> 결제 확인
                                     </button>";
                             } elseif ($order['order_status'] == 'paid') {
-                                echo "<button class='btn btn-danger btn-sm cancel-payment' data-id='" . $order['order_id'] . "' title='결제 취소'>
+                                echo "<button class='btn btn-danger btn-sm cancel-payment' data-id='" . htmlspecialchars($order['order_id']) . "' title='결제 취소'>
                                         <i class='fas fa-times'></i> 결제 취소
                                     </button>";
                             }
-                            echo "<a href='admin_delete.php?id=" . $order['order_id'] . "&type=orders' class='delete-btn' title='삭제'>
+                            echo "<a href='admin_delete.php?id=" . htmlspecialchars($order['order_id']) . "&type=orders' class='delete-btn' title='삭제'>
                                     <i class='fas fa-trash'></i>
                                 </a>";
                             echo "</td>";
                             echo "</tr>";
 
-                            echo "<tr id='detail-" . $order['order_id'] . "' class='order-detail' style='display: none; background-color: #f9f9f9;'>";
+                            echo "<tr id='detail-" . htmlspecialchars($order['order_id']) . "' class='order-detail' style='display: none; background-color: #f9f9f9;'>";
                             echo "<td colspan='6'>";
-                            echo "<strong>수령인:</strong> " . $order['receiver_name'] . "<br>";
-                            echo "<strong>전화번호:</strong> " . $order['receiver_phone'] . "<br>";
-                            echo "<strong>배송지:</strong> " . $order['receiver_address'] . "<br>";
+                            echo "<strong>수령인:</strong> " . htmlspecialchars($order['receiver_name']) . "<br>";
+                            echo "<strong>전화번호:</strong> " . htmlspecialchars($order['receiver_phone']) . "<br>";
+                            echo "<strong>배송지:</strong> " . htmlspecialchars($order['receiver_address']) . "<br>";
                             if ($order['payment_method'] == 'point') {
                                 echo "<strong>결제방식:</strong> 포인트<br>";
                             } else {

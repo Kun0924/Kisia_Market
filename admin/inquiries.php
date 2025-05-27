@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once '../mainmenu/common/db.php'; // mysqli 연결됨
+
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] !== 'admin') {
+    header('Location: /mainmenu/login.php');
+    exit();
+}
+
+$search_query = $_GET['search_query'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,56 +58,55 @@
                     </thead>
                     <tbody>
                         <?php
-                            require_once '../mainmenu/common/db.php';
-
-                            $search_query = $_GET['search_query'] ?? '';
                             if ($search_query !== '') {
                                 $sql = "SELECT i.*, u.name AS user_name 
                                         FROM inquiry i 
                                         JOIN users u ON i.user_id = u.id
-                                        WHERE u.name LIKE '%$search_query%' OR inquiry_status LIKE '%$search_query%' 
+                                        WHERE u.name LIKE ? OR inquiry_status LIKE ?
                                         ORDER BY id ASC";
+                                $stmt = mysqli_prepare($conn, $sql);
+                                $param = '%' . $search_query . '%';
+                                mysqli_stmt_bind_param($stmt, 'ss', $param, $param);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
                             } else {
                                 $sql = "SELECT i.*, u.name AS user_name
                                         FROM inquiry i
                                         JOIN users u ON i.user_id = u.id
                                         ORDER BY i.created_at DESC";
+                                $result = mysqli_query($conn, $sql);
                             }
-    
-                            $result = mysqli_query($conn, $sql);
 
                             if ($result && mysqli_num_rows($result) > 0) {
                                 while ($inquiry = mysqli_fetch_assoc($result)) {
-                                    echo "<tr onclick=\"toggleDetail(" . $inquiry['id'] . ")\" style=\"cursor: pointer;\">";
-                                    echo "<td>" . $inquiry['id'] . "</td>";
-                                    echo "<td>" . $inquiry['type'] . "</td>";
-                                    echo "<td>" . $inquiry['title'] . "</td>";
-                                    echo "<td>" . $inquiry['user_name'] . "</td>";
-                                    echo "<td>" . $inquiry['created_at'] . "</td>";
-                                    echo "<td>" . $inquiry['inquiry_status'] . "</td>";
+                                    echo "<tr onclick=\"toggleDetail(" . htmlspecialchars($inquiry['id']) . ")\" style=\"cursor: pointer;\">";
+                                    echo "<td>" . htmlspecialchars($inquiry['id']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['type']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['title']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['user_name']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['created_at']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($inquiry['inquiry_status']) . "</td>";
                                     echo "<td>
-                                            <a href='inquiries_answer.php?id=" . $inquiry['id'] . "' class='edit-btn' title='문의답변'>
+                                            <a href='inquiries_answer.php?id=" . htmlspecialchars($inquiry['id']) . "' class='edit-btn' title='문의답변'>
                                                 <i class='fa fa-reply'></i>
                                             </a>
-                                            <a href='admin_delete.php?id=" . $inquiry['id'] . "&type=inquiry' class='delete-btn' title='삭제'>
+                                            <a href='admin_delete.php?id=" . htmlspecialchars($inquiry['id']) . "&type=inquiry' class='delete-btn' title='삭제'>
                                                 <i class='fas fa-trash'></i>
                                             </a>
                                           </td>";
                                     echo "</tr>";
 
                                     // 상세내용 행 추가
-                                    echo "<tr id='inquiries_detail-" . $inquiry['id'] . "' class='inquiry-detail'>";
+                                    echo "<tr id='inquiries_detail-" . htmlspecialchars($inquiry['id']) . "' class='inquiry-detail'>";
                                     echo "<td colspan='7'>";
-                                    echo "<strong>문의 내용:</strong><br>" . nl2br($inquiry['content']) . "<br><br>";
+                                    echo "<strong>문의 내용:</strong><br>" . nl2br(htmlspecialchars($inquiry['content'])) . "<br><br>";
                                     if (!empty($inquiry['answer'])) {
-                                        $answerEscaped = $inquiry['answer'];
-                                        echo "<strong>답변:</strong><br>" . nl2br($answerEscaped);
-                                    
+                                        echo "<strong>답변:</strong><br>" . nl2br(htmlspecialchars($inquiry['answer']));
                                         echo "<div style='margin-top: 10px; display: flex; gap: 10px;'>";                                  
                                     
                                         // 삭제 버튼
                                         echo "<form action='answer_delete.php' method='POST' onsubmit=\"return confirm('정말 답변을 삭제하시겠습니까?');\">
-                                                <input type='hidden' name='inquiry_id' value='" . $inquiry['id'] . "'>
+                                                <input type='hidden' name='inquiry_id' value='" . htmlspecialchars($inquiry['id']) . "'>
                                                 <button type='submit' class='delete-btn'>답변 삭제</button>
                                               </form>";
                                     
