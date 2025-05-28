@@ -2,6 +2,16 @@
 session_start();
 require_once '/var/www/html/mainmenu/common/db.php';
 
+$inactive = 1800; // 30분
+
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $inactive)) {
+    session_unset();
+    session_destroy();
+    header("Location: /login.php?timeout=1");
+    exit();
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
 $userId = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 $remember = $_POST['remember'] ?? '';
