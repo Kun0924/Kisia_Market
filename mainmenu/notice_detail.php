@@ -21,14 +21,14 @@
             <?php if (mysqli_num_rows($get_notice) > 0) { ?>
             <?php $row = mysqli_fetch_assoc($get_notice); ?>
             <div class="notice-post-header">
-                <h2 class="notice-post-title"><?= $row['title'] ?></h2>
+                <h2 class="notice-post-title"><?= htmlspecialchars($row['title']) ?></h2>
                 <div class="notice-post-meta">
                     <span class="notice-author">작성자: 관리자</span>
                     <span class="notice-date">작성일: <?= date("Y-m-d", strtotime($row['created_at'])) ?></span>
                 </div>
             </div>
             <div class="notice-post-content">
-                <p><?= nl2br($row['content']) ?></p>
+                <p><?= htmlspecialchars(nl2br($row['content'])) ?></p>
             </div>
             <?php } else { ?>
                 <p>공지사항이 없습니다.</p>

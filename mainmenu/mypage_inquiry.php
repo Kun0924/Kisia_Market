@@ -12,8 +12,8 @@
                                 <img src="profile/default-profile.svg" alt="프로필 이미지">
                             </div>
                             <div class="profile-info">
-                                <h3 class="profile-name"><?php echo $name; ?></h3>
-                                <p class="profile-email"><?php echo $email; ?></p>
+                                <h3 class="profile-name"><?php echo htmlspecialchars($name); ?></h3>
+                                <p class="profile-email"><?php echo htmlspecialchars($email); ?></p>
                             </div>
                         </div>
                         
@@ -41,7 +41,7 @@
                                         <a href="inquiry_detail.php?id=<?php echo $i['id']; ?>">
                                             <h4>
                                                 <?php if($i['is_secret']) echo '<i class="fas fa-lock"></i> '; ?>
-                                                <?php echo $i['title']; ?>
+                                                <?php echo htmlspecialchars($i['title']); ?>
                                             </h4>
                                         </a>
                                         <div class="inquiry-info-group">

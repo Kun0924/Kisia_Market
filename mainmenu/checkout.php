@@ -154,7 +154,7 @@
                                     <label for="payment-card">
                                         포인트
                                         <span style="color:#1976d2; font-size:14px; margin-left:8px;">
-                                            (사용 가능: <?php echo $user['point']; ?>P)
+                                            (사용 가능: <?php echo number_format($user['point']); ?>P)
                                         </span>
                                     </label>
                                 </div>

@@ -30,8 +30,8 @@ include 'queries/get_header_session.php';
             echo '<img src="/' . $row['image_url'] . '" alt="' . $row['name'] . '">';
             echo '</div>';
             echo '<div class="product-info">';
-            echo '<h1>' . $row['name'] . '</h1>';
-            echo '<p class="short-description">' . $row['short_description'] . '</p>';
+            echo '<h1>' . htmlspecialchars($row['name']) . '</h1>';
+            echo '<p class="short-description">' . htmlspecialchars($row['short_description']) . '</p>';
             
             // 평균 평점 표시 수정
             $avg_rating = isset($row['avg_rating']) ? number_format($row['avg_rating'], 1) : 0;
@@ -118,7 +118,7 @@ include 'queries/get_header_session.php';
                         // 일반 리뷰 보기 영역
                         echo '<div class="review-view">';
                         echo '<div class="review-header">';
-                            echo '<span class="review-author">' . $reviews['name'] . '</span>';
+                            echo '<span class="review-author">' . htmlspecialchars($reviews['name']) . '</span>';
                             echo '<span class="review-date">' . $reviews['created_at'] . '</span>';
                             echo '<span class="review-rating">' . str_repeat('★', $reviews['rating']) . str_repeat('☆', 5 - $reviews['rating']) . '</span>';
                             
@@ -134,7 +134,7 @@ include 'queries/get_header_session.php';
                                 echo '<a href="/' . $reviews['image_url'] . '" target="_blank"><img src="../' . $reviews['image_url'] . '" alt="리뷰 이미지"></a>';
                             echo '</div>';
                         }
-                        echo '<p class="review-content">' . $reviews['content'] . '</p>';
+                        echo '<p class="review-content">' . htmlspecialchars($reviews['content']) . '</p>';
                         echo '</div>';
 
                         // 리뷰 수정 폼 영역
@@ -152,7 +152,7 @@ include 'queries/get_header_session.php';
                         echo '</div>';
                         echo '<div class="form-group">';
                         echo '<label for="editContent-' . $reviews['id'] . '">내용</label>';
-                        echo '<textarea id="editContent-' . $reviews['id'] . '" name="content" rows="5" required>' . $reviews['content'] . '</textarea>';
+                        echo '<textarea id="editContent-' . $reviews['id'] . '" name="content" rows="5" required>' . htmlspecialchars($reviews['content']) . '</textarea>';
                         echo '</div>';
                         echo '<div class="form-group">';
                         if ($reviews['image_url']) {
