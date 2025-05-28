@@ -6,7 +6,7 @@ http_response_code(500);
 <head>
     <meta charset="UTF-8">
     <title>서버 오류 - KISIA SHOP</title>
-    <link rel="stylesheet" href="errorpage.css">
+    <link rel="stylesheet" href="/errorpage/errorpage.css">
 </head>
 <body>
 <main class="error-main-content">
