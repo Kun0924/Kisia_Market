@@ -37,3 +37,10 @@ Options -Indexes이거를 Options +Indexes로 수정.
 
 5. 아파치 재시작
 service apache2 restart
+
+
+    <?php
+    $password_plain = 'qwe';
+    $hashed = password_hash($password_plain, PASSWORD_DEFAULT);
+    echo $hashed;
+    ?>
