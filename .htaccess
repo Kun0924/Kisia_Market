@@ -1,0 +1,8 @@
+# 404 Not Found 에러 발생 시
+ErrorDocument 404 /errorpage/404.php
+
+# 500 Internal Server Error
+ErrorDocument 500 /errorpage/500.php
+
+# 403 Internal Server Error
+ErrorDocument 403 /errorpage/403.php

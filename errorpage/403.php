@@ -6,7 +6,7 @@ http_response_code(403);
 <head>
     <meta charset="UTF-8">
     <title>접근 거부 - KISIA SHOP</title>
-    <link rel="stylesheet" href="css/errorpage.css">
+    <link rel="stylesheet" href="/errorpage/errorpage.css">
 </head>
 <body>
 <main class="error-main-content">

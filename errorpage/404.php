@@ -6,7 +6,7 @@ http_response_code(404);
 <head>
     <meta charset="UTF-8">
     <title>페이지를 찾을 수 없습니다 - KISIA SHOP</title>
-    <link rel="stylesheet" href="errorpage.css">
+    <link rel="stylesheet" href="/errorpage/errorpage.css">
 </head>
 <body>
 <main class="error-main-content">

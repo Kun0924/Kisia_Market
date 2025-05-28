@@ -17,8 +17,20 @@
     <!-- Main Content -->
     <main class="main-content">
     <?php
-    $page = $_GET['tab'];
-    include($page);
+    $pages = [
+        'mypage_profile.php' => 'mypage_profile.php',
+        'mypage_order.php' => 'mypage_order.php',
+        'mypage_review.php' => 'mypage_review.php',
+        'mypage_inquiry.php' => 'mypage_inquiry.php'
+    ];
+
+    $page = $_GET['tab'] ?? 'mypage_profile.php';
+
+    if (array_key_exists($page, $pages)) {
+        include($pages[$page]);
+    } else {
+        include('../errorpage/404.php'); // 에러 처리
+    }
     ?>
     </main>
     <?php include 'common/footer.php'; ?>
