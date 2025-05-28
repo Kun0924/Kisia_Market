@@ -24,11 +24,21 @@
 
         $currentUserId = $_SESSION['id'] ?? null;
         $currentUserRole = $_SESSION['role'] ?? null;
+        
+        if(isset($edit_page)){
+            if (($currentUserId != $row['user_id'] && $currentUserRole != 'ADMIN')) {
+                echo "<script>
+                    alert('접근 권한이 없습니다.');
+                    window.location.href = 'inquiry_list.php';
+                </script>";
+                exit;
+            }
+        }
 
         if ($row['is_secret']) {
             if (!isset($currentUserId) || ($currentUserId != $row['user_id'] && $currentUserRole != 'ADMIN')) {
                 echo "<script>
-                    alert('비밀글입니다. 접근 권한이 없습니다.');
+                    alert('접근 권한이 없습니다.');
                     window.location.href = 'inquiry_list.php';
                 </script>";
                 exit;

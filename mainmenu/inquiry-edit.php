@@ -12,8 +12,8 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
+    <?php $edit_page = true ?>
     <?php require_once 'queries/get_inquiry_detail.php';?>
-    <?php $row = mysqli_fetch_assoc($get_inquiry);?>
 
     <!-- Main Content -->
     <main class="main-content">
