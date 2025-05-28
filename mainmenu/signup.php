@@ -30,11 +30,14 @@
                     <div class="form-group">
                         <label for="password">비밀번호</label>
                         <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+                        <small id="password_help" style="color: #888;">※ 영문 대/소문자, 숫자, 특수문자를 포함한 8~20자리</small>
+                        <span id="password_valid_message" style="display: block; margin-top: 4px; font-size: 0.9em;"></span>
                     </div>
+
                     <div class="form-group">
                         <label for="password_check">비밀번호 확인</label> 
-                        <span id="password_message"></span>
-                        <input type="password" id="password_check" name="password_check" placeholder="비밀번호를 입력하세요" required>
+                        <input type="password" id="password_check" name="password_check" placeholder="비밀번호를 다시 입력하세요" required>
+                        <span id="password_message" style="display: block; margin-top: 4px; font-size: 0.9em;"></span>
                     </div>
                     <div class="form-group">
                         <label for="name">이름</label>
@@ -59,14 +62,31 @@
         const password = document.getElementById('password');
         const passwordCheck = document.getElementById('password_check');
         const message = document.getElementById('password_message');
+        const message2 = document.getElementById('password_valid_message');
+
+        function validatePasswordComplexity(pw) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/;
+            return regex.test(pw);
+        }
 
         function validatePassword() {
-            if (passwordCheck.value === "") {
+            const pw = password.value;
+            const pwCheck = passwordCheck.value;
+
+            if (!validatePasswordComplexity(pw)) {
+                message2.style.color = "red";
+                message2.textContent = "비밀번호는 대/소문자, 숫자, 특수문자를 포함해 8~20자여야 합니다.";
+                return;
+            } else{
+                message2.textContent = "";
+            }
+
+            if (pwCheck === "") {
                 message.textContent = "";
                 return;
             }
 
-            if (password.value === passwordCheck.value) {
+            if (pw === pwCheck) {
                 message.style.color = "green";
                 message.textContent = "비밀번호가 일치합니다.";
             } else {
