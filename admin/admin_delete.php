@@ -1,6 +1,5 @@
 <?php
 require_once 'admin_check.php';
-
 require_once '../mainmenu/common/db.php';
 
 $id = $_GET['id'] ?? 0;
