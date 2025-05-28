@@ -167,7 +167,7 @@
             </table>
 
             <div class="button-group" style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
-                <a href="mypage.php" class="btn-back">목록으로</a>
+                <a href="mypage.php?tab=mypage_order.php" class="btn-back">목록으로</a>
                 <form action="queries/cancel_order.php" method="post">
                     <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
                     <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">

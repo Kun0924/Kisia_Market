@@ -3,16 +3,30 @@
 
     $userId = $_SESSION['id'];
 
-    $sql = "SELECT * FROM users WHERE id = '$userId'";
-    $get_user = mysqli_query($conn, $sql);
+    // 유저 정보 조회
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $user = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    $user = mysqli_fetch_assoc($get_user);
+    // 주문 수 조회
+    $sql = "SELECT COUNT(*) as order_count FROM orders WHERE user_id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $order_count = mysqli_fetch_assoc($result)['order_count'];
+    mysqli_stmt_close($stmt);
 
-    $sql = "SELECT COUNT(*) as order_count FROM orders WHERE user_id = '$userId'";
-    $get_order_count = mysqli_query($conn, $sql);
-    $order_count = mysqli_fetch_assoc($get_order_count)['order_count'];
-
-    $sql = "SELECT COUNT(*) as shipping_count FROM orders WHERE user_id = '$userId' AND order_status = 'paid'";
-    $get_shipping_count = mysqli_query($conn, $sql);
-    $shipping_count = mysqli_fetch_assoc($get_shipping_count)['shipping_count'];
+    // 배송 준비중 수 조회
+    $sql = "SELECT COUNT(*) as shipping_count FROM orders WHERE user_id = ? AND order_status = 'paid'";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $shipping_count = mysqli_fetch_assoc($result)['shipping_count'];
+    mysqli_stmt_close($stmt);
 ?>

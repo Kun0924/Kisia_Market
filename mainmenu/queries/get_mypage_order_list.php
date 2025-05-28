@@ -6,6 +6,7 @@
     $items_per_page = 3;
     $offset = ($page - 1) * $items_per_page;
 
+    // 주문 목록 조회
     $sql = "
         SELECT 
             o.*, 
@@ -26,18 +27,27 @@
             FROM order_items
             GROUP BY order_id
         ) item_count_table ON o.id = item_count_table.order_id
-        WHERE o.user_id = '$userId'
+        WHERE o.user_id = ?
         ORDER BY o.id DESC
-        LIMIT $offset, $items_per_page
+        LIMIT ?, ?
     ";
-    $result = mysqli_query($conn, $sql);
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $userId, $offset, $items_per_page);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt);
     
-    $count_sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = '$userId'";
-    $result_count = mysqli_query($conn, $count_sql);
+    // 전체 개수 조회
+    $count_sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ?";
+    $stmt_count = mysqli_prepare($conn, $count_sql);
+    mysqli_stmt_bind_param($stmt_count, "i", $userId);
+    mysqli_stmt_execute($stmt_count);
+    $result_count = mysqli_stmt_get_result($stmt_count);
     $total_row = mysqli_fetch_assoc($result_count);
     $total_items = (int)$total_row['total'];
     $total_pages = ceil($total_items / $items_per_page);
+    mysqli_stmt_close($stmt_count);
 
     mysqli_close($conn);
 ?>

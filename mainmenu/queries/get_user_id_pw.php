@@ -14,13 +14,22 @@
     $user_id = $_POST['user_id'] ?? '';
 
     if ($find_type == 'find_id') {
-        $sql = "SELECT * FROM users WHERE name = '$name' AND email = '$email' AND phone = '$phone'";
-        $result = mysqli_query($conn, $sql);
-        $user = $result->fetch_assoc();
+        $sql = "SELECT * FROM users WHERE name = ? AND email = ? AND phone = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $name, $email, $phone);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $user = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
     } else {
-        $sql = "SELECT * FROM users WHERE name = '$name' AND email = '$email' AND phone = '$phone' AND userId = '$user_id'";
-        $result = mysqli_query($conn, $sql);
-        $user_pw = $result->fetch_assoc();
+        $sql = "SELECT * FROM users WHERE name = ? AND email = ? AND phone = ? AND userId = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $phone, $user_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $user_pw = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
 
         if ($user_pw) {
             $mail = new PHPMailer(true);

@@ -3,6 +3,7 @@
 
     $orderId = $_GET['order_id'];
 
+    // 첫 번째 쿼리 - 주문 + 주문상품 + 개수
     $sql = "
         SELECT 
             o.*, 
@@ -20,14 +21,23 @@
             FROM order_items
             GROUP BY order_id
         ) item_count_table ON o.id = item_count_table.order_id
-        WHERE o.id = '$orderId'
+        WHERE o.id = ?
     ";
-    $result = mysqli_query($conn, $sql);
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $orderId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     $order = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    $sql = "SELECT * FROM order_items WHERE order_id = '$orderId'";
-    $result = mysqli_query($conn, $sql);
-    $order_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    // 두 번째 쿼리 - 주문상품 전체
+    $sql_items = "SELECT * FROM order_items WHERE order_id = ?";
+    $stmt_items = mysqli_prepare($conn, $sql_items);
+    mysqli_stmt_bind_param($stmt_items, "i", $orderId);
+    mysqli_stmt_execute($stmt_items);
+    $result_items = mysqli_stmt_get_result($stmt_items);
+    $order_items = mysqli_fetch_all($result_items, MYSQLI_ASSOC);
+    mysqli_stmt_close($stmt_items);
     
     $subtotal = 0;
     $shippingTotal = 0;
