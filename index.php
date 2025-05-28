@@ -26,7 +26,7 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
             <div class="container">
                 <div class="banner-content">
                     <h1>KISIA SHOP</h1>
-                    <p>최고의 품질과 서비스를 제공합니다 test</p>
+                    <p>최고의 품질과 서비스를 제공합니다</p>
                 </div>
             </div>
         </section>
