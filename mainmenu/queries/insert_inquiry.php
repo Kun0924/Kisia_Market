@@ -1,68 +1,77 @@
 <?php
 require_once '/var/www/html/mainmenu/common/db.php';
 
-$type = $_POST['category'] ?? '';
-$title = $_POST['title'] ?? '';
-$content = $_POST['content'] ?? '';
+$type_map = [
+    'order' => '주문/결제',
+    'delivery' => '배송',
+    'return' => '반품/교환',
+    'product' => '상품',
+    'etc' => '기타'
+];
+
+$type = $type_map[$_POST['category'] ?? ''] ?? '기타';
+$title = trim($_POST['title'] ?? '');
+$content = trim($_POST['content'] ?? '');
 $isSecret = isset($_POST['isSecret']) ? 1 : 0;
 $secretPassword = isset($_POST['secretPassword']) ? $_POST['secretPassword'] : '';
 $userId = $_POST['id'] ?? '';
 
-if ($type == 'order') {
-    $type = '주문/결제';
-} else if ($type == 'delivery') {
-    $type = '배송';
-} else if ($type == 'return') {
-    $type = '반품/교환';
-} else if ($type == 'product') {
-    $type = '상품';
-} else if ($type == 'etc') {
-    $type = '기타';
+if ($title === '' || $content === '' || $userId === '') {
+    echo "<script>alert('모든 필드를 입력해 주세요.'); history.back();</script>";
+    exit;
 }
 
-$sql = "INSERT INTO inquiry (user_id, type, title, content, is_secret, secret_password)
-        VALUES ('$userId', '$type', '$title', '$content', '$isSecret', '$secretPassword')";
-$result = mysqli_query($conn, $sql);
+// 비밀글 비밀번호는 해싱 (선택적)
+if ($isSecret && $secretPassword !== '') {
+    $secretPassword = password_hash($secretPassword, PASSWORD_DEFAULT);
+}
 
-// 새로 생성된 문의글 ID 가져오기
+// 1. 문의글 INSERT
+$stmt = mysqli_prepare($conn, "INSERT INTO inquiry (user_id, type, title, content, is_secret, secret_password) VALUES (?, ?, ?, ?, ?, ?)");
+mysqli_stmt_bind_param($stmt, "ssssis", $userId, $type, $title, $content, $isSecret, $secretPassword);
+$result = mysqli_stmt_execute($stmt);
 $inquiry_id = mysqli_insert_id($conn);
+mysqli_stmt_close($stmt);
 
-// 첨부파일 업로드
+// 2. 파일 업로드 처리
 $uploadDir = '/var/www/html/inquiry_uploads';
+$webPathPrefix = '/inquiry_uploads/';
 
-// 폴더가 없으면 생성하고 권한 설정
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
 
+$allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+
 for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
-    if ($_FILES['file']['name'][$i] == '') {
-        continue;
+    if ($_FILES['file']['error'][$i] !== UPLOAD_ERR_OK) continue;
+
+    $tmpName = $_FILES['file']['tmp_name'][$i];
+    $fileName = basename($_FILES['file']['name'][$i]);
+    $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+    if (!in_array($ext, $allowed_ext)) {
+        echo "<script>
+            alert('허용되지 않은 파일 형식입니다. [허용 형식: " . implode(', ', $allowed_ext) . "]');
+            history.back();
+        </script>";
+        exit;
     }
 
-    if ($_FILES['file']['error'][$i] === UPLOAD_ERR_OK) {
-        $tmpName = $_FILES['file']['tmp_name'][$i];
-        $fileName = $_FILES['file']['name'][$i];
+    $uniqueFileName = uniqid('inq_', true) . '.' . $ext;
+    $destination = $uploadDir . '/' . $uniqueFileName;
+    $image_url = $webPathPrefix . $uniqueFileName;
 
-        $uniqueFileName = uniqid() . '_' . $fileName;
-        $destination = $uploadDir . '/' . $uniqueFileName;
-
-        if (move_uploaded_file($tmpName, $destination)) {
-            chmod($destination, 0644); // 파일 권한 설정
-            $image_url = '/inquiry_uploads/' . $uniqueFileName;
-
-            $sql = "INSERT INTO inquiry_images (inquiry_id, image_url) VALUES ($inquiry_id, '$image_url')";
-            mysqli_query($conn, $sql);
-        } else {
-            echo "파일 이동 실패: " . $fileName;
-            $result = false;
-        }
-    } else {
-        echo "파일 업로드 오류: " . $_FILES['file']['error'][$i];
-        $result = false;
+    if (move_uploaded_file($tmpName, $destination)) {
+        chmod($destination, 0644);
+        $stmt = mysqli_prepare($conn, "INSERT INTO inquiry_images (inquiry_id, image_url) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt, "is", $inquiry_id, $image_url);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
     }
 }
 
+// 3. 결과 처리
 if ($result) {
     echo "<script>
         alert('문의가 완료되었습니다.');
@@ -70,7 +79,7 @@ if ($result) {
     </script>";
 } else {
     echo "<script>
-        alert('문의에 실패했습니다.');
+        alert('문의 등록에 실패했습니다.');
         history.back();
     </script>";
 }

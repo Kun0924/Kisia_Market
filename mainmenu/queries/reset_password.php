@@ -5,8 +5,13 @@
     $password = $_POST['password'] ?? '';
     $profile = $_POST['profile'] ?? '';
 
-    $sql = "UPDATE users SET password = '$password' WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // prepared statement 사용
+    $stmt = mysqli_prepare($conn, "UPDATE users SET password = ? WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, "ss", $hashedPassword, $email);
+    $result = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 
     if ($result) {
         if ($profile == 'profile') {

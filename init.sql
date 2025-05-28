@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS users (
 -- 유저 초기 데이터 삽입 
 INSERT INTO users (userId, email, password, name, phone, address, postcode, address_detail)
 VALUES 
-('test', 'ehddls1029@naver.com', '1234', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
-('admin', 'admin@admin.com', 'admin', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
+('test', 'ehddls1029@naver.com', '$2y$10$6ceCHmBsZ4RnZWNmHgtlZuQ2WdYu1.WuU/Y/57dNPdVChVo890Gnm', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
+('admin', 'admin@admin.com', '$2y$10$Ei4qFcfLVQldbhQ4a6/Wn.VU8VebFFL6aH2BvbikDS2ouyv7Bb2l.', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
 
 UPDATE users SET role = 'ADMIN' WHERE userId = 'admin';
 
