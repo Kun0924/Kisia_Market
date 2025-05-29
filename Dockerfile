@@ -54,6 +54,8 @@ RUN a2enmod ssl
 # SSL 설정 복사
 COPY apache/conf/extra/httpd-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 COPY apache/conf/kisia.conf /etc/apache2/sites-available/kisia.conf
+RUN a2ensite kisia.conf && a2dissite 000-default.conf
+RUN echo "ServerName kisia-shop-secure.koreasouth.cloudapp.azure.com" >> /etc/apache2/apache2.conf
 
 # SSL 인증서 복사
 COPY apache/certs/server.crt /etc/ssl/certs/server.crt
@@ -61,5 +63,3 @@ COPY apache/certs/server.key /etc/ssl/private/server.key
 
 # SSL 사이트 활성화
 RUN a2ensite default-ssl.conf
-
-RUN echo "ServerName kisia-shop-secure.koreasouth.cloudapp.azure.com" >> /etc/apache2/apache2.conf
