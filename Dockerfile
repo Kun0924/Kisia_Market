@@ -1,5 +1,9 @@
 FROM php:8.2-apache
 
+# Apache MPM 및 SSL 모듈 활성화
+RUN a2dismod mpm_event \
+ && a2enmod mpm_prefork rewrite ssl socache_shmcb
+
 # 시스템 패키지 설치
 RUN apt-get update && apt-get install -y \
     git \
@@ -44,3 +48,18 @@ COPY composer.json composer.lock ./
 
 # 의존성 설치
 RUN composer install
+
+RUN a2enmod ssl
+
+# SSL 설정 복사
+COPY apache/conf/extra/httpd-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+COPY apache/conf/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# SSL 인증서 복사
+COPY apache/certs/server.crt /etc/ssl/certs/server.crt
+COPY apache/certs/server.key /etc/ssl/private/server.key
+
+# SSL 사이트 활성화
+RUN a2ensite default-ssl.conf
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
