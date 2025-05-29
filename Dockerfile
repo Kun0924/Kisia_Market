@@ -62,4 +62,4 @@ COPY apache/certs/server.key /etc/ssl/private/server.key
 # SSL 사이트 활성화
 RUN a2ensite default-ssl.conf
 
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN echo "ServerName kisia-shop-secure.koreasouth.cloudapp.azure.com" >> /etc/apache2/apache2.conf
