@@ -11,6 +11,7 @@ if(file_exists($path)) {
     readfile($path);
     exit;
 } else {
+    echo $path;
     echo "File not found.";
 }
 ?>
