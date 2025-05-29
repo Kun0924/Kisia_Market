@@ -3,7 +3,8 @@ session_start();
 
 // 로그인 여부 확인
 if (!isset($_SESSION['userId'])) {
-    echo "<script>alert('로그인이 필요합니다.'); location.href='/mainmenu/login.php';</script>";
+    // echo "<script>alert('로그인이 필요합니다.'); location.href='/mainmenu/login.php';</script>";
+    header('Location: /errorpage/404.php');
     exit;
 }
 
