@@ -14,10 +14,10 @@
     <?php include 'common/header.php'; ?>
     <?php require_once 'queries/get_all_products.php';?>
     <?php
-        $sort = htmlspecialchars($_GET['sort']) ?? 'newest';
-        $price_range = htmlspecialchars($_GET['price_range']) ?? 'all';
-        $category = htmlspecialchars($_GET['category']) ?? 'all';
-        $search_query = htmlspecialchars($_GET['search_query']) ?? '';
+        $sort = isset($_GET['sort']) ? htmlspecialchars($_GET['sort']) : 'newest';
+        $price_range = isset($_GET['price_range']) ? htmlspecialchars($_GET['price_range']) : 'all';
+        $category = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : 'all';
+        $search_query = isset($_GET['search_query']) ? htmlspecialchars($_GET['search_query']) : '';
         $category_korean = '';
         switch ($category) {
             case 'keyboard':
