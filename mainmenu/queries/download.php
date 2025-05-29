@@ -2,7 +2,8 @@
 $file = $_GET['file'] ?? '';
 $file = basename($file); // 디렉터리 트래버설 방지
 $path = "/var/www/html" . $file;
-var_dump($path)
+var_dump("파일일: ".$file)
+var_dump("패스: ".$path)
 
 if (file_exists($path)) {
     header('Content-Description: File Transfer');
