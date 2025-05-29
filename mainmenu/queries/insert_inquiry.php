@@ -24,7 +24,7 @@ if ($title === '' || $content === '' || $userId === '') {
 
 // 업로드 파일 유효성 검사
 $uploadDir = '/var/www/html/inquiry_uploads';
-$webPathPrefix = '/inquiry_uploads/';
+$webPathPrefix = 'inquiry_uploads/';
 $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
 $uploadFiles = [];
 
