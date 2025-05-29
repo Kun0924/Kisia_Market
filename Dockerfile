@@ -53,7 +53,7 @@ RUN a2enmod ssl
 
 # SSL 설정 복사
 COPY apache/conf/extra/httpd-ssl.conf /etc/apache2/sites-available/default-ssl.conf
-COPY apache/conf/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY apache/conf/kisia.conf /etc/apache2/sites-available/kisia.conf
 
 # SSL 인증서 복사
 COPY apache/certs/server.crt /etc/ssl/certs/server.crt
