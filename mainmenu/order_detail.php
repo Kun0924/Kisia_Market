@@ -78,7 +78,7 @@
                 <?php if ($order['payment_method'] === 'bank_transfer'): ?>
                 <tr>
                     <th>입금자명</th>
-                    <td><?php echo $order['depositor_name']; ?></td>
+                    <td><?php echo htmlspecialchars($order['depositor_name']); ?></td>
                 </tr>
                 <tr>
                     <th>입금은행</th>
@@ -140,7 +140,7 @@
             <table class="order-info-table">
                 <tr>
                     <th>수령인</th>
-                    <td><?php echo $order['receiver_name']; ?></td>
+                    <td><?php echo htmlspecialchars($order['receiver_name']); ?></td>
                 </tr>
                 <tr>
                     <th>연락처</th>
@@ -156,13 +156,13 @@
                         (<?php echo $order['receiver_postcode']; ?>)
                         <?php echo $order['receiver_address']; ?>
                         <?php if (!empty($order['receiver_address_detail'])): ?>
-                            <?php echo $order['receiver_address_detail']; ?>
+                            <?php echo htmlspecialchars($order['receiver_address_detail']); ?>
                         <?php endif; ?>
                     </td>
                 </tr>
                 <tr>
                     <th>배송메모</th>
-                    <td><?php echo $order['delivery_memo']; ?></td>
+                    <td><?php echo htmlspecialchars($order['delivery_memo']); ?></td>
                 </tr>
             </table>
 

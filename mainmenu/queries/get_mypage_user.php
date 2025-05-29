@@ -1,7 +1,14 @@
 <?php
     require_once '/var/www/html/mainmenu/common/db.php';
 
-    $userId = $_SESSION['id'];
+    $userId = isset($_SESSION['id']);
+    if(!$userId){
+        echo "<script>
+            alert('접근 권한이 없습니다.');
+            window.location.href = '../index.php';
+        </script>";
+        exit;
+    }
 
     // 유저 정보 조회
     $sql = "SELECT * FROM users WHERE id = ?";

@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS users (
 INSERT INTO users (userId, email, password, name, phone, address, postcode, address_detail)
 VALUES 
 ('test', 'ehddls1029@naver.com', '$2y$10$6ceCHmBsZ4RnZWNmHgtlZuQ2WdYu1.WuU/Y/57dNPdVChVo890Gnm', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
+('qwe', 'qwe@naver.com', '$2y$10$Ygw1RHCD8RbHyOER5UFfXug.Xdp2tQXD/R82rj9znFIdNtY9nw7tm', 'qwe유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
 ('admin', 'admin@admin.com', '$2y$10$Ei4qFcfLVQldbhQ4a6/Wn.VU8VebFFL6aH2BvbikDS2ouyv7Bb2l.', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
 
 UPDATE users SET role = 'ADMIN' WHERE userId = 'admin';
@@ -224,5 +225,5 @@ CREATE TABLE order_items (
 -- 주문 상세 초기 데이터 삽입
 INSERT INTO order_items (order_id, product_id, product_name, product_image_url, quantity, price, deliver_price)
 VALUES 
-(1, 1, '상품1', 'uploads/keyboard1.png', 2, 50000, 2500),
+(1, 1, '한성컴퓨터 GK698', 'uploads/keyboard1.png', 2, 50000, 2500),
 (1, 2, '상품2', 'uploads/keyboard2.png', 1, 30000, 1500);

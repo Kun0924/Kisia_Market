@@ -4,6 +4,15 @@
     session_start();
 
     $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+    $currentUserId = $_SESSION['id'] ?? null;
+
+    if ($currentUserId != $user_id) {
+        echo "<script>
+            alert('접근 권한이 없습니다.');
+            window.location.href = 'inquiry_list.php';
+        </script>";
+        exit;
+    }
 
     // $sql = "DELETE FROM users WHERE id = $user_id";
     // $result = mysqli_query($conn, $sql);

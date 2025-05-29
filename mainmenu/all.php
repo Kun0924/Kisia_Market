@@ -14,10 +14,10 @@
     <?php include 'common/header.php'; ?>
     <?php require_once 'queries/get_all_products.php';?>
     <?php
-        $sort = $_GET['sort'] ?? 'newest';
-        $price_range = $_GET['price_range'] ?? 'all';
-        $category = $_GET['category'] ?? 'all';
-        $search_query = $_GET['search_query'] ?? '';
+        $sort = isset($_GET['sort']) ? htmlspecialchars($_GET['sort']) : 'newest';
+        $price_range = isset($_GET['price_range']) ? htmlspecialchars($_GET['price_range']) : 'all';
+        $category = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : 'all';
+        $search_query = isset($_GET['search_query']) ? htmlspecialchars($_GET['search_query']) : '';
         $category_korean = '';
         switch ($category) {
             case 'keyboard':
@@ -86,12 +86,12 @@
                         while ($row = mysqli_fetch_assoc($get_all_products)) {
                             //상품 하나당 하나의 카드
                             echo '<div class="product-card">';
-                            echo '<a href="product_explain.php?id=' . $row['id'] . '">';
+                            echo '<a href="product_explain.php?id=' . htmlspecialchars($row['id']) . '">';
                             // 이미지 경로
                             $image_path = '/' . $row['image_url']; 
-                            echo '<img src="' . $image_path . '" alt="' . $row['name'] . '">';
+                            echo '<img src="' . $image_path . '" alt="' . htmlspecialchars($row['name']) . '">';
                             echo '</a>';
-                            echo '<h3>' . $row['name'] . '</h3>';
+                            echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
                             
                             // 평균 평점 표시 수정
                             $avg_rating = isset($row['avg_rating']) ? number_format($row['avg_rating'], 1) : 0;
@@ -105,7 +105,7 @@
                         }
                     }
                     else if ($_GET['search_query'] && mysqli_num_rows($get_all_products) == 0) {
-                        echo '<p>"' . $_GET['search_query'] . '"의 검색 결과가 없습니다.</p>';
+                        echo '<p>"' . htmlspecialchars($_GET['search_query']) . '"의 검색 결과가 없습니다.</p>';
                     }
                     else {
                         echo '<p>등록된 상품이 없습니다.</p>';

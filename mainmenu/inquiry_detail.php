@@ -26,7 +26,7 @@
                     </span>
                     <h2 class="inquiry-post-title"><?= $row['title'] ?></h2>
                     <div class="inquiry-post-meta">
-                        <span class="inquiry-author">작성자: <?= $row['name'] ? $row['name'] : '탈퇴한 회원' ?></span>
+                        <span class="inquiry-author">작성자: <?= $row['name'] ? htmlspecialchars($row['name']) : '탈퇴한 회원' ?></span>
                         <span class="inquiry-date">작성일: <?= date("Y-m-d", strtotime($row['created_at'])) ?></span>
                         <?php if ($row['is_secret']) { ?>
                             <span class="inquiry-secret"><i class="fas fa-lock"></i> 비밀글</span>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="inquiry-post-content">
-                    <?= nl2br($row['content']) ?>
+                    <?= htmlspecialchars(nl2br($row['content'])) ?>
                 </div>
                 
                 <?php if (mysqli_num_rows($get_inquiry_images) > 0) { ?>
@@ -43,7 +43,7 @@
                     <ul class="attachment-list">
                         <?php while ($row_images = mysqli_fetch_assoc($get_inquiry_images)) { ?>
                             <li>
-                                <a href="queries/download.php?file=<?= $row_images['image_url'] ?>" target="_blank" download>
+                                <a href="https://kisia-shop-secure.koreasouth.cloudapp.azure.com/mainmenu/<?= $row_images['image_url'] ?>" target="_blank" download>
                                     <i class="fas fa-paperclip"></i> <?= basename($row_images['image_url']) ?>
                                 </a>
                             </li>

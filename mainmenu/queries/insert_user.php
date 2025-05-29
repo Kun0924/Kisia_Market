@@ -9,6 +9,19 @@ $phone = $_POST['phone'];
 
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+function isValidPassword($password) {
+    // 영문 대/소문자, 숫자, 특수문자 각각 하나 이상 포함, 8~20자
+    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/', $password);
+}
+
+if (!isValidPassword($password)) {
+    echo "<script>
+        alert('비밀번호는 대/소문자, 숫자, 특수문자를 포함한 8~20자여야 합니다.');
+        history.back();
+    </script>";
+    exit;
+}
+
 // 이메일 중복 확인 (prepared statement 적용)
 $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE email = ?");
 mysqli_stmt_bind_param($stmt, "s", $email);

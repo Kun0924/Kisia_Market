@@ -12,8 +12,8 @@
 </head>
 <body>
     <?php include 'common/header.php'; ?>
+    <?php $edit_page = true ?>
     <?php require_once 'queries/get_inquiry_detail.php';?>
-    <?php $row = mysqli_fetch_assoc($get_inquiry);?>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -36,11 +36,11 @@
                     </div>
                     <div class="form-group">
                         <label for="title">제목</label>
-                        <input type="text" id="title" name="title" value="<?php echo $row['title']; ?>" required>
+                        <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($row['title']); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="content">내용</label>
-                        <textarea id="content" name="content" rows="10" required><?php echo $row['content']; ?></textarea>
+                        <textarea id="content" name="content" rows="10" required><?php echo htmlspecialchars($row['content']); ?></textarea>
                     </div>
                     <div class="form-group">
                         <table class="file-table">

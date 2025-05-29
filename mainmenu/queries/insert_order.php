@@ -33,6 +33,50 @@
     $result = mysqli_stmt_get_result($stmt);
     $user = mysqli_fetch_assoc($result);
 
+
+    // 총 주문 금액 재계산
+    $calculated_order_amount = 0;
+
+    if ($type == 'cart') {
+        foreach ($product_id as $key => $pid) {
+            $qty = (int)$quantity[$key];
+            $stmt = mysqli_prepare($conn, "SELECT price, deliver_price FROM products WHERE id = ?");
+            mysqli_stmt_bind_param($stmt, "i", $pid);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $product = mysqli_fetch_assoc($result);
+
+            if (!$product) {
+                $all_success = false;
+                $fail_message = "상품 정보를 찾을 수 없습니다.";
+                break;
+            }
+
+            $item_total = ($product['price'] * $qty) + $product['deliver_price'];
+            $calculated_order_amount += $item_total;
+        }
+    } else if ($type == 'direct') {
+        $stmt = mysqli_prepare($conn, "SELECT price, deliver_price FROM products WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "i", $product_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $product = mysqli_fetch_assoc($result);
+
+        if (!$product) {
+            $all_success = false;
+            $fail_message = "상품 정보를 찾을 수 없습니다.";
+        } else {
+            $item_total = ($product['price'] * (int)$quantity) + $product['deliver_price'];
+            $calculated_order_amount += $item_total;
+        }
+    }
+
+    // 클라이언트에서 보낸 금액과 비교
+    if ((int)$order_amount !== (int)$calculated_order_amount) {
+        $all_success = false;
+        $fail_message = '결제 금액이 위조되었습니다.';
+    }
+
     if ($payment_method == 'point') {
         $order_status = 'paid';
         if ($user['point'] < $order_amount) {

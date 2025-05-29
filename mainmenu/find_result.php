@@ -24,7 +24,7 @@
                 <?php if ($find_type === 'find_id'): ?>
                     <?php if ($user): ?>
                         <p class="result-message">회원님의 아이디는 다음과 같습니다.</p>
-                        <p class="result-value"><?php echo $user['userId']; ?></p>
+                        <p class="result-value"><?php echo htmlspecialchars($user['userId']); ?></p>
                     <?php else: ?>
                         <p class="result-message">일치하는 회원 정보를 찾을 수 없습니다.</p>
                     <?php endif; ?>

@@ -13,8 +13,8 @@
                                 <img src="profile/default-profile.svg" alt="프로필 이미지">
                             </div>
                             <div class="profile-info">
-                                <h3 class="profile-name"><?php echo $user['name']; ?></h3>
-                                <p class="profile-email"><?php echo $user['email']; ?></p>
+                                <h3 class="profile-name"><?php echo htmlspecialchars($user['name']); ?></h3>
+                                <p class="profile-email"><?php echo htmlspecialchars($user['email']); ?></p>
                             </div>
                         </div>
                         
@@ -103,11 +103,11 @@
                                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                                 <div class="form-group">
                                     <label for="userId">아이디</label>
-                                    <input type="text" id="userId" name="userId" value="<?php echo $user['userId']; ?>" readonly>
+                                    <input type="text" id="userId" name="userId" value="<?php echo htmlspecialchars($user['userId']); ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="name">이름</label>
-                                    <input type="text" id="name" name="name" value="<?php echo $user['name']; ?>">
+                                    <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">비밀번호</label>
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email">이메일</label>
-                                    <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>">
+                                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">휴대폰 번호</label>
@@ -126,7 +126,7 @@
                                 <div class="form-group">
                                     <label for="postcode">우편번호</label>
                                     <div style="display:flex; gap:8px;">
-                                        <input type="text" id="postcode" name="postcode" value="<?php echo isset($user['postcode']) ? $user['postcode'] : ''; ?>" placeholder="우편번호" readonly style="flex:1;">
+                                        <input type="text" id="postcode" name="postcode" value="<?php echo htmlspecialchars($user['postcode']) ? $user['postcode'] : ''; ?>" placeholder="우편번호" readonly style="flex:1;">
                                         <button type="button" id="btn-search-address" style="flex:none; padding:8px 14px;">주소 검색</button>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="address_detail">상세주소</label>
-                                    <input type="text" id="address_detail" name="address_detail" value="<?php echo isset($user['address_detail']) ? $user['address_detail'] : ''; ?>" placeholder="상세주소를 입력하세요">
+                                    <input type="text" id="address_detail" name="address_detail" value="<?php echo htmlspecialchars($user['address_detail']) ? $user['address_detail'] : ''; ?>" placeholder="상세주소를 입력하세요">
                                 </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-save">저장하기</button>
@@ -160,7 +160,7 @@
             </div>
             <div class="modal-body">
                 <p class="reset-message">비밀번호 재설정 링크를 이메일로 보내드리겠습니다.</p>
-                <p class="email-info"><?php echo $user['email']; ?></p>
+                <p class="email-info"><?php echo htmlspecialchars($user['email']); ?></p>
                 <div class="modal-actions">
                     <button type="button" class="btn-confirm" onclick="sendResetLink()">링크 보내기</button>
                     <button type="button" class="btn-cancel" onclick="closePasswordModal()">취소</button>

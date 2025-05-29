@@ -12,8 +12,8 @@
                                 <img src="profile/default-profile.svg" alt="프로필 이미지">
                             </div>
                             <div class="profile-info">
-                                <h3 class="profile-name"><?php echo $name; ?></h3>
-                                <p class="profile-email"><?php echo $email; ?></p>
+                                <h3 class="profile-name"><?php echo htmlspecialchars($name); ?></h3>
+                                <p class="profile-email"><?php echo htmlspecialchars($email); ?></p>
                             </div>
                         </div>
                         
@@ -40,7 +40,7 @@
                                 <div class="review-item">
                                     <div class="review-header">
                                         <img src="/<?php echo $r['image_url']; ?>" alt="상품 이미지">
-                                        <a href="product_explain.php?id=<?php echo $r['product_id']; ?>"><h4><?php echo $r['name']; ?></h4></a>
+                                        <a href="product_explain.php?id=<?php echo $r['product_id']; ?>"><h4><?php echo htmlspecialchars($r['name']); ?></h4></a>
                                         <span class="review-rating"><?php echo str_repeat('★', $r['rating']) . str_repeat('☆', 5 - $r['rating']); ?></span>
                                         <span class="review-date"><?php echo $r['created_at']; ?></span>
                                     </div>

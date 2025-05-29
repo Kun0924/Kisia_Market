@@ -2,8 +2,11 @@ services:
   # Apache 웹 서버
   web:
     build: .
+    env_file:
+      - .env
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./:/var/www/html
     depends_on:
