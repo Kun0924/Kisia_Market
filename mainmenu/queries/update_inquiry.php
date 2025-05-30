@@ -10,6 +10,16 @@ $secretPassword = $_POST['secretPassword'] ?? 'none';
 $userId = $_POST['user_id'] ?? 'none';
 $delete_files = $_POST['delete_files'] ?? '';
 
+if (strlen($title) > 1000) {
+    echo "<script>alert('제목은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
+
+if (strlen($content) > 1000) {
+    echo "<script>alert('내용은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
+
 // 카테고리 번역
 $category_map = [
     'order' => '주문/결제',
@@ -35,34 +45,48 @@ if (!empty($delete_files) && is_array($delete_files)) {
     mysqli_stmt_close($stmt_del);
 }
 
-// 파일 업로드 처리
-$allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'webp'];
+// 업로드 파일 유효성 검사
+$uploadDir = '/var/www/html/inquiry_uploads';
+$webPathPrefix = 'inquiry_uploads/';
+$allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+$uploadFiles = [];
 
-for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
-    $fileName = $_FILES['file']['name'][$i] ?? '';
-    $tmpName = $_FILES['file']['tmp_name'][$i] ?? '';
-    $error = $_FILES['file']['error'][$i];
+if (isset($_FILES['file']['name'])) {
+    for ($i = 0; $i < count($_FILES['file']['name']); $i++) {
+        if ($_FILES['file']['error'][$i] !== UPLOAD_ERR_OK) continue;
 
-    if ($fileName === '' || $error !== UPLOAD_ERR_OK) continue;
+        $tmpName = $_FILES['file']['tmp_name'][$i];
+        $fileName = basename($_FILES['file']['name'][$i]);
+        $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-    $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowed_extensions)) {
-        echo "<script>alert('허용되지 않은 파일 형식입니다.'); history.back();</script>";
-        exit;
+        if (!in_array($ext, $allowed_ext)) {
+            echo "<script>
+                alert('허용되지 않은 파일 형식입니다. [허용 형식: " . implode(', ', $allowed_ext) . "]');
+                history.back();
+            </script>";
+            exit;
+        }
+
+        $uniqueFileName = uniqid('inq_', true) . '.' . $ext;
+        $destination = $uploadDir . '/' . $uniqueFileName;
+        $image_url = $webPathPrefix . $uniqueFileName;
+
+        $uploadFiles[] = [
+            'tmp' => $tmpName,
+            'dest' => $destination,
+            'url' => $image_url
+        ];
     }
+}
 
-    $uniqueFileName = uniqid() . '_' . basename($fileName);
-    $uploadPath = '/var/www/html/inquiry_uploads/' . $uniqueFileName;
-
-    if (move_uploaded_file($tmpName, $uploadPath)) {
-        $image_url = '/inquiry_uploads/' . $uniqueFileName;
-        $stmt_img = mysqli_prepare($conn, "INSERT INTO inquiry_images (inquiry_id, image_url) VALUES (?, ?)");
-        mysqli_stmt_bind_param($stmt_img, "is", $inquiry_id, $image_url);
-        mysqli_stmt_execute($stmt_img);
-        mysqli_stmt_close($stmt_img);
-    } else {
-        echo "<script>alert('파일 업로드 실패'); history.back();</script>";
-        exit;
+// 첨부파일 저장 및 이미지 DB INSERT
+foreach ($uploadFiles as $file) {
+    if (move_uploaded_file($file['tmp'], $file['dest'])) {
+        chmod($file['dest'], 0644);
+        $stmt = mysqli_prepare($conn, "INSERT INTO inquiry_images (inquiry_id, image_url) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt, "is", $inquiry_id, $file['url']);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
     }
 }
 

@@ -22,6 +22,16 @@ if ($title === '' || $content === '' || $userId === '') {
     exit;
 }
 
+if (strlen($title) > 1000) {
+    echo "<script>alert('제목은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
+
+if (strlen($content) > 1000) {
+    echo "<script>alert('내용은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
+
 // 업로드 파일 유효성 검사
 $uploadDir = '/var/www/html/inquiry_uploads';
 $webPathPrefix = 'inquiry_uploads/';

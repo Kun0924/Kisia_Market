@@ -83,6 +83,18 @@
 
     <?php include 'common/footer.php'; ?>
     <script>
+        document.querySelectorAll('input[id^="file"]').forEach(input => {
+            input.addEventListener("change", function () {
+                const file = this.files[0];
+                const maxSize = 20 * 1024 * 1024; // 20MB
+
+                if (file && file.size > maxSize) {
+                    alert("파일 크기가 20MB를 초과했습니다.");
+                    this.value = ""; // 선택된 파일 제거
+                }
+            });
+        });
+
         document.getElementById('isSecret').addEventListener('change', function() {
             const passwordInput = document.getElementById('secretPassword');
             if (this.checked) {

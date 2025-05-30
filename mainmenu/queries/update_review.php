@@ -14,6 +14,11 @@ if ($delete_image) {
     $imageUrl = '';
 }
 
+if (strlen($content) > 1000) {
+    echo "<script>alert('내용은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
+
 // 새 이미지 업로드
 if (!empty($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
     $tmpName = $_FILES['file']['tmp_name'];

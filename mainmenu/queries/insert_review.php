@@ -1,11 +1,25 @@
 <?php
 require_once '/var/www/html/mainmenu/common/db.php';
 
-$userId = $_POST['user_id'] ?? '';
-$productId = $_POST['product_id'] ?? '';
-$content = $_POST['content'] ?? '';
-$rating = $_POST['rating'] ?? '';
+$userId = isset($_POST['user_id']) && is_numeric($_POST['user_id']) ? (int)$_POST['user_id'] : null;
+$productId = isset($_POST['product_id']) && is_numeric($_POST['product_id']) ? (int)$_POST['product_id'] : null;
+$content = trim($_POST['content'] ?? '');
+$rating = isset($_POST['rating']) && is_numeric($_POST['rating']) ? (int)$_POST['rating'] : null;
 $imageName = $_FILES['file']['name'] ?? '';
+
+// 검증 실패 시 종료
+if (empty($userId) || empty($productId) || empty($rating)) {
+    echo "<script>
+        alert('입력값이 올바르지 않습니다.');
+        history.back();
+    </script>";
+    exit;
+}
+
+if (strlen($content) > 1000) {
+    echo "<script>alert('내용은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
 
 $imageUrl = '';
 
@@ -15,6 +29,13 @@ if (!empty($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
     $fileName = $_FILES['file']['name'];
     $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
     $allowedExt = ['jpg', 'jpeg', 'png', 'gif'];
+
+    $maxSize = 20 * 1024 * 1024; // 20MB
+
+    if ($_FILES['file']['size'] > $maxSize) {
+        echo "<script>alert('파일 크기가 20MB를 초과했습니다.'); history.back();</script>";
+        exit;
+    }
 
     if (!in_array($fileExt, $allowedExt)) {
         echo "<script>
