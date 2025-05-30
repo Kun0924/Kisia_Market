@@ -28,7 +28,7 @@
 
     if ($result) {
         if ($profile == 'profile') {
-            echo "<script>alert('비밀번호가 재설정되었습니다.'); window.location.href = '/mainmenu/mypage_profile.php';</script>";
+            echo "<script>alert('비밀번호가 재설정되었습니다.'); window.location.href = '/';</script>";
         } else {
             echo "<script>alert('비밀번호가 재설정되었습니다.'); window.location.href = '/';</script>";
         }
