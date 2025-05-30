@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS users (
     address_detail VARCHAR(255),
     point INT DEFAULT 0,
     role VARCHAR(10) NOT NULL DEFAULT 'USER',
+    reset_token VARCHAR(255),
+    reset_token_expiry DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -27,7 +29,7 @@ INSERT INTO users (userId, email, password, name, phone, address, postcode, addr
 VALUES 
 ('test', 'ehddls1029@naver.com', '$2y$10$6ceCHmBsZ4RnZWNmHgtlZuQ2WdYu1.WuU/Y/57dNPdVChVo890Gnm', '테스트유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
 ('qwe', 'qwe@naver.com', '$2y$10$Ygw1RHCD8RbHyOER5UFfXug.Xdp2tQXD/R82rj9znFIdNtY9nw7tm', 'qwe유저', '01000000000', '서울시 강남구 테헤란로 123', '12345', '2층 123호'),
-('admin', 'admin@admin.com', '$2y$10$Ei4qFcfLVQldbhQ4a6/Wn.VU8VebFFL6aH2BvbikDS2ouyv7Bb2l.', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
+('admin', 'admin@admin.com', '$2y$10$96zSCvvOPWVtjwvpHcuAAOsefMUZmTa3lwvitprMA0xBVEz30ttYi', '관리자 계정', '01012345678', '서울시 강남구 테헤란로 123', '12345', '2층 12호');
 
 UPDATE users SET role = 'ADMIN' WHERE userId = 'admin';
 

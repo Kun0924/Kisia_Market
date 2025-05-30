@@ -19,6 +19,7 @@ include '/var/www/html/mainmenu/queries/get_header_session.php';
     <!-- DB 연결 -->
     <?php require_once 'mainmenu/queries/get_index_products.php';?>
 
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- 메인 배너 -->

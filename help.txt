@@ -44,3 +44,5 @@ service apache2 restart
     $hashed = password_hash($password_plain, PASSWORD_DEFAULT);
     echo $hashed;
     ?>
+
+    RealAdmin0529$

@@ -29,6 +29,15 @@
         $result = mysqli_stmt_get_result($stmt);
         $user_pw = mysqli_fetch_assoc($result);
         mysqli_stmt_close($stmt);
+
+        $token = bin2hex(random_bytes(32)); // 랜덤 64자리 문자열
+        $expires = date("Y-m-d H:i:s", strtotime('+1 hour')); // 만료 시간 설정 (1시간 유효)
+
+        $sql = "UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $token, $expires, $email);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
     }
 
         if ($user_pw) {
@@ -47,7 +56,7 @@
 
                 $mail->isHTML(true);
                 $mail->Subject = '비밀번호 재설정 안내';
-                $mail->Body    = '비밀번호를 재설정하려면 <a href="https://kisia-shop-secure.koreasouth.cloudapp.azure.com//mainmenu/reset_password.php?email=' . $email . '&profile=' . $profile . '">여기</a>를 클릭하세요.';
+                $mail->Body    = '비밀번호를 재설정하려면 <a href="https://kisia-shop-secure.koreasouth.cloudapp.azure.com/mainmenu/reset_password.php?token=' . $token . '&profile=' . $profile . '">여기</a>를 클릭하세요.';
 
                 $mail->send();
             } catch (Exception $e) {

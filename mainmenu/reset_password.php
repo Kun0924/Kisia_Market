@@ -18,7 +18,7 @@
             <div class="find-form-container">
                 <h2 class="page-title">비밀번호 재설정</h2>
                 <form class="find-form" action="queries/reset_password.php" method="POST" onsubmit="return checkForm()">
-                    <input type="hidden" name="email" value="<?php echo $_GET['email'] ?? ''; ?>">
+                    <input type="hidden" name="token" value="<?php echo $_GET['token'] ?? ''; ?>">
                     <input type="hidden" name="profile" value="<?php echo $_GET['profile'] ?? ''; ?>">
                     <div class="form-group">
                         <label for="password">새 비밀번호</label>
