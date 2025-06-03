@@ -1,5 +1,11 @@
 <?php
 $file = $_GET['file'] ?? '';
+
+// php:// 등 우회 시도 차단
+if (preg_match('/php:\/\/|filter|base64/i', $file)) {
+    exit('허용되지 않는 요청입니다.');
+}
+
 $file = basename($file);
 $path = "/var/www/html/inquiry_uploads/" . $file;
 
