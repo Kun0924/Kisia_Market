@@ -26,6 +26,11 @@
 
     $page = $_GET['tab'] ?? 'mypage_profile.php';
 
+    // php:// 등 우회 시도 차단
+    if (preg_match('/php:\/\/|filter|base64/i', $page)) {
+        exit('허용되지 않는 요청입니다.');
+    }
+
     if (array_key_exists($page, $pages)) {
         include($pages[$page]);
     } else {
