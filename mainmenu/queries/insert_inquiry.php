@@ -17,13 +17,17 @@ $secretPassword = $_POST['secretPassword'] ?? '';
 $userId = $_POST['id'] ?? '';
 
 // 필수 입력값 검사
-if ($title === '' || $content === '' || $userId === '') {
-    echo "<script>alert('모든 필드를 입력해 주세요.'); history.back();</script>";
-    exit;
+if (!preg_match("/^[가-힣a-zA-Z0-9\s]{2,100}$/u", $title)) {
+    exit("제목은 한글, 영문, 숫자만 2~100자 이내로 입력하세요.");
 }
 
 if (strlen($title) > 1000) {
     echo "<script>alert('제목은 1000자 이하로 입력해주세요.'); history.back();</script>";
+    exit;
+}
+
+if ($title === '' || $content === '' || $userId === '') {
+    echo "<script>alert('모든 필드를 입력해 주세요.'); history.back();</script>";
     exit;
 }
 
