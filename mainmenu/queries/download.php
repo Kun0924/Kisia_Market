@@ -1,17 +1,25 @@
 <?php
 $file = $_GET['file'] ?? '';
-$file = basename($file); // 디렉터리 트래버설 방지
+$file = basename($file);
 $path = "/var/www/html/inquiry_uploads/" . $file;
 
-if(file_exists($path)) {
+$base_dir = realpath("/var/www/html/inquiry_uploads");
+$real_path = realpath($path);
+
+// 경로 우회 방지: 파일의 실 경로가 기준 디렉터리 하위인지 확인
+if ($real_path === false || strpos($real_path, $base_dir) !== 0) {
+    exit("허용되지 않는 경로입니다.");
+}
+
+if (file_exists($real_path)) {
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="' . basename($path) . '"');
-    header('Content-Length: ' . filesize($path));
-    readfile($path);
+    header('Content-Disposition: attachment; filename="' . basename($real_path) . '"');
+    header('Content-Length: ' . filesize($real_path));
+    readfile($real_path);
     exit;
 } else {
-    echo $path;
+    echo $real_path;
     echo "File not found.";
 }
 ?>
