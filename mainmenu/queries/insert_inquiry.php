@@ -18,7 +18,8 @@ $userId = $_POST['id'] ?? '';
 
 // 필수 입력값 검사
 if (!preg_match("/^[가-힣a-zA-Z0-9\s]{2,100}$/u", $title)) {
-    exit("제목은 한글, 영문, 숫자만 2~100자 이내로 입력하세요.");
+    echo "<script>alert('제목은 한글, 영문, 숫자만 2~100자 이내로 입력하세요.'); history.back();</script>";
+    exit;
 }
 
 if (strlen($title) > 1000) {
